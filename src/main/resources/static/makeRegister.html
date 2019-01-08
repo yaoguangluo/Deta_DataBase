@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浏阳乐好妇产医院个人中心</title>
+
+<!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300'
+	rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-responsive.css" rel="stylesheet">
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular/angular-cookies.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div ng-app="register" ng-controller="register">
+		<div class="login-container">
+			<div class="middle-login" style="top: 30%;">
+				<div class="block-web">
+					<div class="head">
+						<h3 class="text-center">浏阳乐好妇产医院新用户注册中心</h3>
+					</div>
+					<div style="background: #fff;">
+						<form style="margin-bottom: 0px !important;"
+							class="form-horizontal">
+							<div class="content">
+								<h4 class="title">免费注册</h4>
+								<fieldset>
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-user"></i></span>
+												<input class="inputWidth" type="text" placeholder="请输入用户名" name="usrname" ng-model = "$parent.usrname"></input>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="input-group">
+												<span class="input-group-addon"><i
+													class="fa fa-envelope"></i></span> 
+													<input class="inputWidth" type="text" placeholder="请输入邮件" name="email" ng-model = "$parent.email"></input>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+												<input class="inputWidth" type="text" placeholder="请输入密码" name="password" ng-model = "$parent.password"></input>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+												<input class="inputWidth" type="text" placeholder="请再次输入密码" name="Confirm password" ng-model = "$parent.repassword"></input>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+								<hr>
+								<fieldset>
+									<div class="form-group">
+										<div class = "col-sm-12">
+											<label class = "checkbox"> <input type = "checkbox"
+												id = "terms" name = "terms"> <span
+												class="custom-checkbox"></span> <i></i>我同意 <a
+												data-target="#myModal" data-toggle = "modal" href = "#">
+													注册须知 </a></label>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<div class="register-bottom">
+								<a href="#">
+									<button class="btn btn-primary"  ng-click = 'register(usrname, email, password, repassword)'>注册</button>
+								</a>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="text-center out-links">
+					<a href="#">&copy; 浏阳乐好妇产医院 2018. </a>
+				</div>
+			</div>
+		</div>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="js/jquery-2.0.2.min.js"></script>
+		<script src="test/register.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/accordion.js"></script>
+		<script src="js/common-script.js"></script>
+		<script src="js/jquery.nicescroll.js"></script>
+</body>
+</html>

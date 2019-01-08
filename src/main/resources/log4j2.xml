@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+  <properties>
+    <!-- 基本的文件的输出信息的配置 将来可以研究使用日志服务器，该位置配置远程日志保存地址及端口，开发阶段，该位置暂时配置为绝对路径，各开发者自行配置-->
+    <property name="LOG_HOME">/home/log</property>
+    <property name="SERVER_NAME">minibuy-engine</property>
+</properties>
+<appenders>
+    <!-- 定义控制台输出 -->
+    <Console name="Console" target="SYSTEM_OUT" follow="true">
+        <PatternLayout
+            pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%file:%line] - %msg%n" />
+    </Console>
+    <!-- 程序员调试日志 -->
+    <RollingRandomAccessFile name="DevLog" fileName="${LOG_HOME}/${SERVER_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${SERVER_NAME}-%d{MM-dd-yyyy}-%i.log.gz">
+        <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+        <Policies>
+	        <SizeBasedTriggeringPolicy size="50MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+</appenders>
+<loggers>
+    <!-- 3rdparty Loggers -->
+    <logger name="org.springframework.core" level="info">
+    </logger>
+    <logger name="org.springframework.beans" level="info">
+    </logger>
+    <logger name="org.springframework.context" level="info">
+    </logger>
+    <logger name="org.springframework.web" level="info">
+    </logger>
+    <logger name="org.jboss.netty" level="warn">
+    </logger>
+    <logger name="org.apache.http" level="warn">
+    </logger>
+    <logger name="com.mchange.v2" level="warn">
+    </logger>
+    <!-- Root Logger -->
+    <root level="FATAL">
+        <appender-ref ref="DevLog" />
+        <appender-ref ref="Console" />
+    </root>
+</loggers>
+</configuration>

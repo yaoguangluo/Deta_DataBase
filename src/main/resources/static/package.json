@@ -1,0 +1,34 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "good",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "angular": "^1.6.8",
+    "angular-animate": "^1.6.8",
+    "angular-mock": "^1.0.0",
+    "angular-mocks": "^1.6.8",
+    "angular-route": "^1.6.8",
+    "angular-ui-router": "^0.4.3",
+    "bootstrap": "^4.0.0",
+    "bower": "^1.8.2",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "jasmine": "^2.9.0",
+    "jasmine-core": "^2.9.1",
+    "jquery": "^3.3.1",
+    "jquery-ui": "^1.12.1",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-requirejs": "^1.1.0",
+    "requirejs": "^2.3.5",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}

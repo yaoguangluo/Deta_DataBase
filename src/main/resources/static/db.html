@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+<link rel="icon" href="images/logo/logo.png" type="image/x-icon">
+<link rel="shortcut icon" href="images/logo/logo.png"
+	type="image/x-icon">
+<title>长沙乐好医院</title>
+<!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-responsive.css" rel="stylesheet">
+<link href="plugins/kalendar/kalendar.css" rel="stylesheet">
+<link href="css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular/angular-cookies.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="light-theme">
+	<div ng-app="db" ng-controller="db">
+		<div class="header navbar navbar-inverse box-shadow navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="header-seperation">
+					<ul class="nav navbar-nav">
+						<li class="sidebar-toggle-box"><a href="#"><i
+								class="fa fa-bars"></i></a></li>
+						<li><a href="index.html"><strong>返回首页</strong></a></li>
+						<li class="hidden-xs"><a href="#"><i
+								class="fa fa-angle-double-left"></i> 刷新页面</a></li>
+						<li class="hidden-xs">
+							<div class="hov">
+								<div class="btn-group">
+									<a data-toggle="dropdown" href="" class="con"><span
+										class="fa fa-user"></span><span class="label label-primary">+5</span></a>
+									<ul role="menu"
+										class="dropdown-menu pull-right dropdown-profile">
+										<li class="title"><span class="icon icon-user"></span>&nbsp;&nbsp;您好,
+											{{email}}</li>
+										<li><a href="#"><span class="fa fa-gears"></span>设置</a></li>
+										<li><a href="#"><span class="fa fa-envelope"></span>消息</a></li>
+										<li><a href="#" ng-click='logout(email)'><span
+												class="fa fa-power-off"></span>登出</a></li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="hidden-xs">
+							<form method="post" action="index.html" class="searchform">
+								<input type="text" placeholder="站内搜索..." name="keyword"
+									class="form-control">
+							</form>
+						</li>
+						<li id="last-one"><a href="loginto.html">登入个人账户 <i
+								class="fa fa-angle-double-right"></i></a></li>
+						<li><a id="show-right-info-bar" href="javascript:;" class=""><i
+								class="fa fa-bars"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="right-info-bar">
+			<div class="block">
+				<div class="heading">站内帮助</div>
+			</div>
+		</div>
+		<div class="page-container">
+			<div class="nav-collapse top-margin fixed box-shadow2 hidden-xs"
+				id="sidebar">
+				<div class="leftside-navigation">
+					<ul id="nav-accordion" class="sidebar-menu">
+						<li><a href="#" class="active"> <i
+								class="fa fa-dashboard"></i> <span>长沙乐好医院</span>
+						</a></li>
+						<li class="sub-menu dcjq-parent-li"><a href="javascript:;"
+							class="dcjq-parent"> <i class="fa fa-leaf"></i> <span>疾病诊治</span>
+								<b class="badge bg-danger pull-right">10</b></a>
+							<ul class="sub">
+								<li><a href="general.html"><i class="fa fa-angle-right"></i>
+										妇科类</a></li>
+								<li><a href="buttons.html"><i class="fa fa-angle-right"></i>
+										产科类</a></li>
+								<li><a href="slider.html"><i class="fa fa-angle-right"></i>
+										新生儿类</a></li>
+								<li><a href="nestable.html"><i
+										class="fa fa-angle-right"></i> 外科类</a></li>
+								<li><a href="grid.html"><i class="fa fa-angle-right"></i>
+										内科类</a></li>
+								<li><a href="icons.html"><i class="fa fa-angle-right"></i>
+										综合类</a></li>
+							</ul></li>
+						<li class="sub-menu dcjq-parent-li"><a href="javascript:;"
+							class="dcjq-parent"> <i class="fa fa-eye"></i> <span>在线咨询</span>
+								<b class="badge bg-danger pull-right">10</b></a>
+							<ul class="sub">
+								<li><a href="general.html"><i class="fa fa-angle-right"></i>
+										疾病咨询</a></li>
+								<li><a href="buttons.html"><i class="fa fa-angle-right"></i>
+										生育咨询</a></li>
+								<li><a href="slider.html"><i class="fa fa-angle-right"></i>
+										用药咨询</a></li>
+								<li><a href="nestable.html"><i
+										class="fa fa-angle-right"></i> 预防咨询</a></li>
+								<li><a href="grid.html"><i class="fa fa-angle-right"></i>
+										常见问题</a></li>
+								<li><a href="icons.html"><i class="fa fa-angle-right"></i>
+										个人建议</a></li>
+							</ul></li>
+						<li class="sub-menu dcjq-parent-li"><a href="javascript:;"
+							class="dcjq-parent"> <i class="fa fa-female"></i> <span>专家介绍</span>
+								<b class="badge bg-danger pull-right">10</b></a>
+							<ul class="sub">
+								<li><a href="general.html"><i class="fa fa-angle-right"></i>
+										妇科专家</a></li>
+								<li><a href="buttons.html"><i class="fa fa-angle-right"></i>
+										产科专家</a></li>
+								<li><a href="grid.html"><i class="fa fa-angle-right"></i>
+										新生儿科专家</a></li>
+								<li><a href="slider.html"><i class="fa fa-angle-right"></i>
+										外科专家</a></li>
+								<li><a href="nestable.html"><i
+										class="fa fa-angle-right"></i> 内科专家</a></li>
+							</ul></li>
+						<li class="sub-menu dcjq-parent-li"><a href="javascript:;"
+							class="dcjq-parent"> <i class="fa fa-thumbs-down"></i> <span>投诉建议</span>
+								<b class="badge bg-danger pull-right">10</b></a>
+							<ul class="sub">
+								<li><a href="general.html"><i class="fa fa-angle-right"></i>
+										品牌投诉</a></li>
+								<li><a href="buttons.html"><i class="fa fa-angle-right"></i>
+										住院投诉</a></li>
+								<li><a href="grid.html"><i class="fa fa-angle-right"></i>
+										环境投诉</a></li>
+								<li><a href="slider.html"><i class="fa fa-angle-right"></i>
+										医疗投诉</a></li>
+								<li><a href="nestable.html"><i
+										class="fa fa-angle-right"></i> 其他投诉</a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+			<div id="main-content">
+				<div class="page-content">
+					<!--/row-->
+					<div class="row">
+						<img style="Max-width: 800px" src="images/logo/logoname.png"
+							alt="长沙乐好医院" />网站正在开发中。。。
+					</div>
+					<br />
+					<div class="row">
+						<div class="tab-container">
+							<ul class="nav nav-tabs">
+								<li class=""><a href="index.html">门户</a></li>
+								<li class=""><a href="db.html">浏阳德塔软件开发有限公司量子数据库</a></li>
+							</ul>
+							<br />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-2 col-md-2">
+							<div class="block-web">
+								<div class="header">
+									<div class="actions">
+										<a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a>
+										<a class="refresh" href="#"><i class="fa fa-repeat"></i></a> <a
+											class="close-down" href="#"><i class="fa fa-times"></i></a>
+									</div>
+									<h3 class="content-header">浏阳德塔数据库</h3>
+								</div>
+								<div class="porlets-content">
+									<ul id="gray" class="treeview-gray">
+										<li ng-repeat="base in info.baseList"><span>数据库：{{base.baseName}}</span>
+											<ul>
+												<li ng-repeat="table in base.tableList"><span
+													id={{table.tableName}}> <a
+														ng-click='click(table.tablePath,0,0,"next")'>数据表：{{table.tableName}}</a>
+												</span></li>
+											</ul></li>
+									</ul>
+								</div>
+								<!--/porlets-content-->
+							</div>
+							<!--/block-web-->
+						</div>
+						<div class="col-sm-8 col-md-10">
+							<div class="block-web">
+								<div class="header">
+									<div class="actions">
+										<a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a>
+										<a class="refresh" href="#"><i class="fa fa-repeat"></i></a> <a
+											class="close-down" href="#"><i class="fa fa-times"></i></a>
+									</div>
+									<h3 class="content-header">编辑表</h3>
+								</div>
+								<div class="porlets-content">
+									<div class="adv-table editable-table">
+										<div class="clearfix">
+											<div class="btn-group">
+												<button id="editable-sample_new" class="btn btn-primary"
+													ng-click='dePage(tablePath,pageBegin,pageEnd)'>
+													上一页</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary"
+													ng-click='inPage(tablePath,pageBegin,pageEnd)'>
+													下一页</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary"
+													onclick="document.getElementById('newRow').style.display='block'">
+													添加新的一行</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary">
+													刷新</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary">
+													回滚上次操作</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary"
+													onclick="document.getElementById('newTable').style.display='block'">
+													Deta Query</i>
+												</button>
+												<button id="editable-sample_new" class="btn btn-primary">
+													删除当前表</i>
+												</button>
+											</div>
+											<div class="btn-group pull-right">
+												<button class="btn dropdown-toggle" data-toggle="dropdown">
+													工具栏 <i class="fa fa-angle-down"></i>
+												</button>
+												<ul class="dropdown-menu pull-right">
+													<li><a href="#">打印</a></li>
+													<li><a href="#">保存为 PDF</a></li>
+													<li><a href="#">导出到Excel</a></li>
+												</ul>
+											</div>
+											<div id="newRow" class="white_content" style='display: none;'>
+												<table
+													class="table table-striped table-hover table-bordered"
+													id="editable-sample">
+													<tr>
+														<th>index</th>
+														<th ng-repeat="culumn in spec">{{culumn}}</th>
+														<th>操作</th>
+													</tr>
+													<tr>
+														<th>{{totalPages}}</th>
+														<th contenteditable="true" ng-repeat="culumn in spec"><input
+															ng-model="$parent.culumnOfNewRow[culumn]"></input></th>
+														<th><button id="insert" class=""
+																ng-click='insertPage(tablePath,culumnOfNewRow,totalPages)'>确定添加</button>
+															<button id="delete"
+																onclick="document.getElementById('newRow').style.display='none'">取消</button></th>
+													</tr>
+												</table>
+											</div>
+											<div id="newTable" class="white_content"
+												style='display: none;'>
+												<table
+													class="table table-striped table-hover table-bordered"
+													id="editable-sample">
+													<tr>
+														<th>Deta Query [属性1]:[定义1];[属性2]:[定义2];...</th>
+														<th>操作</th>
+													</tr>
+													<tr>
+														<th contenteditable="true"><textarea
+																style='width: 600px; height: 300px'
+																ng-model="$parent.LYGQuery"></textarea></th>
+														<th><button id="insert" class=""
+																ng-click='insertTable(LYGQuery,token)'>确定添加</button>
+															<button id="delete"
+																onclick="document.getElementById('newTable').style.display='none'">取消</button></th>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="margin-top-10"></div>
+										<div class="table-responsive">
+											<table cellpadding="0" cellspacing="0" border="0"
+												class="display table table-bordered" id="hidden-table-info">
+												<thead>
+													<tr>
+														<th>index</th>
+														<th ng-repeat="culumn in spec">{{culumn}}</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr class="" ng-repeat="row in rows">
+														<td>{{row.rowIndex}}</td>
+														<td contenteditable="true" ng-repeat="culumn in spec">
+															<input ng-model="$parent.culumnOfUpDateRow[culumn]"
+															ng-init='$parent.culumnOfUpDateRow[culumn] = row.rowValue[culumn].culumnValue'></input>
+														</td>
+														<td><button id="save"
+																ng-click='updatePage(tablePath,culumnOfUpDateRow,row.rowIndex)'>保存修改</button>
+															<button id="delete"
+																ng-click='deletePage(tablePath,row.rowIndex)'>删除</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!--/porlets-content-->
+							</div>
+							<!--/block-web-->
+						</div>
+						<!--/col-md-12-->
+						<!--/row-->
+						<!--/row-->
+					</div>
+					<!--/page-content end-->
+				</div>
+				<!--/main-content end-->
+			</div>
+		</div>
+		<!--/page-container end-->
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="js/jquery-2.0.2.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="test/db.js"></script>
+		<script src="js/accordion.js"></script>
+		<script src="js/common-script.js"></script>
+		<script src="js/jquery.nicescroll.js"></script>
+		<script src="plugins/tree-views/jquery.cookie.js"
+			type="text/javascript"></script>
+		<script src="plugins/tree-views/jquery.treeview.js"
+			type="text/javascript"></script>
+		<script type="text/javascript"
+			src="plugins/tree-views/edit-treeview.js"></script>
+</body>
+</html>
