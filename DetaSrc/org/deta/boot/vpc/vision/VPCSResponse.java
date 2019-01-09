@@ -1,4 +1,6 @@
 package org.deta.boot.vpc.vision;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import org.deta.boot.vpc.sleeper.SleeperHall;
 public class VPCSResponse{
@@ -18,11 +20,11 @@ public class VPCSResponse{
 		this.sleeperHall = sleeperHall;
 	}
 
-	public String getHashCode() {
+	public Integer getHashCode() {
 		return hashCode;
 	}
 
-	public void setHashCode(String hashCode) {
+	public void setHashCode(Integer hashCode) {
 		this.hashCode = hashCode;
 	}
 
@@ -44,7 +46,15 @@ public class VPCSResponse{
 	
 	private Socket socket;
 	private SleeperHall sleeperHall;
-	private String hashCode;
+	private Integer hashCode;
 	private int errorCode;
 	private String ResponseContentType;
+	public void return404() throws IOException {
+		PrintWriter pw = new PrintWriter(this.socket.getOutputStream(), true);
+		pw.println("HTTP/1.1 404 OK\n\n"); 
+		pw.flush();
+		pw.close();
+		socket.close();
+		this.sleeperHall.removeThreadById(this.hashCode);
+	}
 }
