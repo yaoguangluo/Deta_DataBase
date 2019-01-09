@@ -16,6 +16,7 @@ public class ApplicationBoot {
 		properties = new Properties();
 		try {
 			properties.load(new FileInputStream(new File("src/main/resources/property.proterties")));
+			System.out.println("----德塔VPCS数据库服务器资源载入:成功！" );
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,7 +26,9 @@ public class ApplicationBoot {
 		try {
 			port = Integer.parseInt(properties.getProperty("port"));
 			server = new ServerSocket(port);
+			System.out.println("----德塔VPCS数据库服务器端口启动:" + port);
 			DetaUtil.initDB();
+			System.out.println("----德塔VPCS数据库服务器DMA确认:" + port);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

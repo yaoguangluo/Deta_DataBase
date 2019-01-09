@@ -109,12 +109,18 @@ public class RestControllerPortImpl {
 
 	public static Map<String, Object> getDBCategory(String baseName, String token, String auth) throws Exception {
 		Map<String, Object> output = new HashMap<>();
-		String checkStatus = LoginServiceImpl.checkTokenStatus(token, "common");
-		if(checkStatus.contains("invalid")&&(auth.contains("1"))) {
+		if(token != null && !token.equalsIgnoreCase("")){
+			String checkStatus = LoginServiceImpl.checkTokenStatus(token, "common");
+			if(checkStatus.contains("invalid")&&((auth==null?"1":auth).contains("1"))) {
+				output.put("loginInfo", "unsuccess");
+				output.put("returnResult", checkStatus);
+				return output;
+			}
+		}else{
 			output.put("loginInfo", "unsuccess");
-			output.put("returnResult", checkStatus);
+			output.put("returnResult", "invalid request");
 			return output;
-		}
+		}	
 		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + baseName;
 		//Ëø¶¨±í
 		Map<String, Object> table = new HashMap<>();
@@ -133,12 +139,18 @@ public class RestControllerPortImpl {
 
 	public static Map<String, Object> getAllDBCategory(String token, String auth) throws Exception {
 		Map<String, Object> output = new HashMap<>();
-		String checkStatus = LoginServiceImpl.checkTokenStatus(token, "common");
-		if(checkStatus.contains("invalid")&&(auth.contains("1"))) {
+		if(token != null && !token.equalsIgnoreCase("")){
+			String checkStatus = LoginServiceImpl.checkTokenStatus(token, "common");
+			if(checkStatus.contains("invalid")&&((auth==null?"1":auth).contains("1"))) {
+				output.put("loginInfo", "unsuccess");
+				output.put("returnResult", checkStatus);
+				return output;
+			}
+		}else{
 			output.put("loginInfo", "unsuccess");
-			output.put("returnResult", checkStatus);
+			output.put("returnResult", "invalid request");
 			return output;
-		}
+		}	
 		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString();
 		Map<String, Object> db = new HashMap<>();
 		List<Object> baseList = new ArrayList<>();

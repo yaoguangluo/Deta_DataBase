@@ -41,7 +41,7 @@ public class RequestRecordController {
 			vPCSRequest.setRequestIsRest(false);
 		}
 		if(vPCSRequest.getRequestIsRest()){
-			String[] column = type[1].split("&");
+			String[] column = content[1].split("&");
 			Map<String, String> data = new ConcurrentHashMap<>();
 			for(String cell:column){
 				String[] cells = cell.split("=");

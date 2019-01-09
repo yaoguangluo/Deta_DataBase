@@ -17,6 +17,7 @@ public class ServerInitController {
 		properties = new Properties();
 		try {
 			properties.load(new FileInputStream(new File("src/main/resources/property.proterties")));
+			System.out.println("----德塔VPCS数据库服务器资源载入:成功！");
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -26,7 +27,9 @@ public class ServerInitController {
 		try {
 			port = Integer.parseInt(properties.getProperty("port"));
 			server = new ServerSocket(port);
+			System.out.println("----德塔VPCS数据库服务器端口启动:" + port);
 			DetaUtil.initDB();
+			System.out.println("----德塔VPCS数据库服务器DMA确认:成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,23 +40,21 @@ public class ServerInitController {
 
 	public static void initServer() {
 		System.out.println("----DETA VPCS--1.7");
-		System.out.println("----Author: Yaoguang.Luo");
+		System.out.println("----Author: 罗瑶光");
 		System.out.println("----浏阳德塔软件开发有限公司开源项目");
 		TimeProcess timeProcess=new TimeProcess();
 		timeProcess.begin();
 		SleeperHall sleeperHall = new SleeperHall();
 		init();
 		timeProcess.end();
-		System.out.println("----德塔VPCS数据库服务器启动正常-耗时:" + timeProcess.duration()+ "毫秒");
+		System.out.println("----德塔VPCS数据库服务器启动一切正常-总耗时:" + timeProcess.duration()+ "毫秒");
 		while(true){
 			if(sleeperHall.getThreadsCount() < 1500){
 				Sleeper sleeper = new Sleeper();
-				System.out.println(sleeper.hashCode());
 				try {
 					sleeper.hugPillow(sleeperHall, server.accept(), sleeper.hashCode());
 					sleeper.start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

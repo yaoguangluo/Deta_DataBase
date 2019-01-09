@@ -82,7 +82,7 @@ public class RestMapVision {
 				list.add(byteArray.clone());
 			}	
 			fileInputStream.close();
-			list.add(0, (vPCSRequest.getRequestForwardType().getBytes()));
+			list.add(0, (vPCSResponse.getResponseContentType().getBytes()));
 			list.add(0, ("Content-Length: " + tlen + " \n").getBytes());
 			list.add(0, "Accept-Ranges: bytes \n".getBytes());
 			list.add(0, "http/1.1 200 ok \n".getBytes());

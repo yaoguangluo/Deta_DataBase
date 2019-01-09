@@ -66,7 +66,7 @@ public class ForwardVision {
 		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("buffer")){
 			RestMapVision.processBuffer(vPCSRequest, vPCSResponse);
 		}
-		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("bufferBytes")){
+		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("bytesBuffer")){
 			RestMapVision.processBufferBytes(vPCSRequest, vPCSResponse);
 		}
 	}
