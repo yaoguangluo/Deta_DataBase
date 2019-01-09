@@ -2,6 +2,7 @@ package org.deta.boot.rest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
@@ -102,6 +103,40 @@ public class VPC {
 		return buildWriteString(new File(filePath), code, filePath);
 	}
 
+	public static StringBuilder forwardLinkBufferBytes(String filePath, Map<String, String> data, String code) throws IOException {
+		return buildWriteStringWithBufferBytes(new File(filePath), code, filePath);
+	}
+	
+	private static StringBuilder buildWriteStringWithBufferBytes(File file, String code, String filePath) throws IOException {
+		if(filePath.contains(".js") && code.equalsIgnoreCase("UTF-8")){
+			FileInputStream fis = new FileInputStream(file);
+			int len = 0;
+			byte[] byteArray = new byte[1024];
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("http/1.1 200 ok").append("\n\n");
+			while ((len = fis.read(byteArray))!=-1){
+				stringBuilder.append(new String(byteArray, 0, len));
+			}
+			return stringBuilder;
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		if(filePath.contains(".css")){
+			stringBuilder.append("http/1.1 200 ok").append("\n");
+			stringBuilder.append("Content-Type: text/css").append("\r\n\r\n");
+		}
+		if(filePath.contains(".html")){
+			stringBuilder.append("http/1.1 200 ok").append("\n");
+			stringBuilder.append("Content-Type: text/html").append("\r\n\r\n");
+		}
+		FileInputStream fileInputStream = new FileInputStream(file); 
+		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, code); 
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader); 
+		String line = null; 
+		while ((line = bufferedReader.readLine()) != null) { 
+			stringBuilder.append(line); 
+		}
+		return stringBuilder;
+	}
 	public static String getFilePath(String string) {
 		String root = new File("src/main/resources/static").getAbsolutePath().replace("\\", "/");
 		if(string.equalsIgnoreCase("")||string.equalsIgnoreCase("/")){

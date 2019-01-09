@@ -9,7 +9,7 @@ public class ResponseController {
 	}
 
 	@SuppressWarnings("unused")
-	private static void error404(Socket socket, SleeperHall sleeperHall, String sId) throws IOException {
+	private static void error404(Socket socket, SleeperHall sleeperHall, Integer sId) throws IOException {
 		PrintWriter pw=new PrintWriter(socket.getOutputStream(),true);
 		pw.println("HTTP/1.1 404 OK\n\n"); 
 		pw.flush();
@@ -20,7 +20,7 @@ public class ResponseController {
 	}
 
 	@SuppressWarnings("unused")
-	private static void error500(Socket socket, SleeperHall sleeperHall, String sId) throws IOException {
+	private static void error500(Socket socket, SleeperHall sleeperHall, Integer sId) throws IOException {
 		PrintWriter pw=new PrintWriter(socket.getOutputStream(),true);
 		pw.println("HTTP/1.1 500 OK\n\n"); 
 		pw.flush();
