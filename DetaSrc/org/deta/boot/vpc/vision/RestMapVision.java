@@ -133,7 +133,7 @@ public class RestMapVision {
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append("http/1.1 200 ok").append("\n\n");
 			while ((len = fileInputStream.read(byteArray))!=-1){
-				stringBuilder.append(new String(byteArray, 0, len));
+				stringBuilder.append(new String(byteArray, 0, len,"UTF-8"));
 			}
 			fileInputStream.close();
 			builderToString = stringBuilder.toString();

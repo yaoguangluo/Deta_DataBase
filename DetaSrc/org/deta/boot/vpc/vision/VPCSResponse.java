@@ -57,4 +57,13 @@ public class VPCSResponse{
 		socket.close();
 		this.sleeperHall.removeThreadById(this.hashCode);
 	}
+	
+	public void returnErrorCode(Integer errorCode) throws IOException {
+		PrintWriter pw = new PrintWriter(this.socket.getOutputStream(), true);
+		pw.println("HTTP/1.1 " + errorCode + " OK\n\n"); 
+		pw.flush();
+		pw.close();
+		socket.close();
+		this.sleeperHall.removeThreadById(this.hashCode);
+	}
 }

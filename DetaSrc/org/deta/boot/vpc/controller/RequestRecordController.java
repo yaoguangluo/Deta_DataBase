@@ -1,7 +1,6 @@
 package org.deta.boot.vpc.controller;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
 import java.util.Map;
@@ -16,24 +15,28 @@ public class RequestRecordController {
 		vPCSRequest.setRequestName(vPCSResponse.getSocket().getInetAddress().getHostName());
 	}
 
-	public static void requestLinkRecoder(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws IOException {
+	public static void requestLinkRecoder(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(vPCSResponse.getSocket().getInputStream()));
 		String mess = br.readLine();
 		if(null == mess){
-			vPCSResponse.setErrorCode(400);
+			vPCSResponse.returnErrorCode(400);
+			throw new Exception();
 		}
 		if(mess.equalsIgnoreCase("")){
-			vPCSResponse.setErrorCode(400);
+			vPCSResponse.returnErrorCode(400);
+			throw new Exception();
 		}
 		String[] type = mess.split(" ");
 		if(type.length < 2){
-			vPCSResponse.setErrorCode(500);
+			vPCSResponse.returnErrorCode(500);
+			throw new Exception();
 		}
 		String[] content = type[1].split("\\?");
 		if(content.length == 2){
 			vPCSRequest.setRequestIsRest(true);
 			if(content[1] == null){
-				vPCSResponse.setErrorCode(500);
+				vPCSResponse.returnErrorCode(500);
+				throw new Exception();
 			}
 		}
 		if(content[0].contains(".")){

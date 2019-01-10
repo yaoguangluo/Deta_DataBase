@@ -30,7 +30,7 @@ public class Sleeper extends Thread implements Runnable{
 			//response
 			org.deta.boot.vpc.vision.RestMapVision.returnResponse(vPCSRequest, vPCSResponse);
 		}catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
