@@ -9,34 +9,34 @@ import org.json.XML;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 public class VtoV{
-	public JSONObject XmlToJsonObject(String response ){
+	public static JSONObject XmlToJsonObject(String response ){
 		JSONObject responseJson = XML.toJSONObject(response);
 		return responseJson;
 	}
 
-	public Map<String, Object> JsonObjectToMap(JSONObject response ){
+	public static Map<String, Object> JsonObjectToMap(JSONObject response ){
 		Gson gson = new Gson();
 		Type type = new TypeToken<Map<String, Object>>(){}.getType();
 		Map<String, Object> responseMap =gson.fromJson(response.toString(), type);
 		return responseMap;
 	}
 
-	public String MapToJsonString(Map<String, Object> response ){
+	public static String MapToJsonString(Map<String, Object> response ){
 		Gson gson = new Gson();
 		return gson.toJson(response);
 	}
 	
-	public String ListToJsonString(List<Object> response ){
+	public static String ListToJsonString(List<Object> response ){
 		Gson gson = new Gson();
 		return gson.toJson(response);
 	}
 	
-	public String ObjectToJsonString(Object response ){
+	public static String ObjectToJsonString(Object response ){
 		Gson gson = new Gson();
 		return gson.toJson(response);
 	}
 
-	public Map<String, Object> XmlToMap(String response){
+	public static Map<String, Object> XmlToMap(String response){
 		JSONObject responseJson = XML.toJSONObject(response);
 		Gson gson = new Gson();
 		Type type = new TypeToken<Map<String, Object>>(){}.getType();
@@ -44,7 +44,7 @@ public class VtoV{
 		return responseMap;
 	}
 
-	public String MapToXml(Map<String, Object> response){
+	public static String MapToXml(Map<String, Object> response){
 		Gson gson = new Gson();
 		String json = gson.toJson(response);
 		JSONObject jsonObj = new JSONObject(json);
@@ -52,7 +52,7 @@ public class VtoV{
 		return xml;	
 	}
 
-	public List<Object> JsonArrayToList(JSONArray jobj) {
+	public static List<Object> JsonArrayToList(JSONArray jobj) {
 		List<Object> output = new ArrayList<>();
 		for(int i=0; i<jobj.length(); i++){		
 			Object obj = jobj.get(i);

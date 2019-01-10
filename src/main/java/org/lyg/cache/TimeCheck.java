@@ -1,6 +1,6 @@
 package org.lyg.cache;
 import java.util.Date;
-public class timeCheck{
+public class TimeCheck{
 	public long before;
 	public long now;
 	public void begin(){

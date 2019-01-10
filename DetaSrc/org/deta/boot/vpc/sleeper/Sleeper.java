@@ -1,4 +1,5 @@
 package org.deta.boot.vpc.sleeper;
+import java.io.IOException;
 import java.net.Socket;
 
 import org.deta.boot.vpc.vision.VPCSRequest;
@@ -29,8 +30,13 @@ public class Sleeper extends Thread implements Runnable{
 			org.deta.boot.vpc.vision.RestMapVision.getResponse(vPCSRequest, vPCSResponse);
 			//response
 			org.deta.boot.vpc.vision.RestMapVision.returnResponse(vPCSRequest, vPCSResponse);
+			
 		}catch(Exception e){
-			//e.printStackTrace();
+			try {
+				vPCSResponse.returnErrorCode(500);
+			} catch (IOException e1) {
+				System.gc();
+			}
 		}
 	}
 

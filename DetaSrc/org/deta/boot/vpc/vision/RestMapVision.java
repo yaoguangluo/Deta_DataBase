@@ -24,23 +24,19 @@ public class RestMapVision {
 	}
 
 	public static void getResponse(Socket socket) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public static void returnResponse(Socket socket) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public static void getResponse(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public static void returnResponse(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {
-		// TODO Auto-generated method stub
-
+		vPCSResponse.getSleeperHall().removeThreadById(vPCSResponse.getHashCode());
 	}
 
 	public static void processRest(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
@@ -58,7 +54,6 @@ public class RestMapVision {
 	}
 
 	public static void processView(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {
-		// TODO Auto-generated method stub
 
 	}
 

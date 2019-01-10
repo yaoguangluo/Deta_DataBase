@@ -22,7 +22,7 @@ public class ServerInitController {
 		}
 	}
 
-	public static void init() {
+	public static void init() throws IOException {
 		try {
 			port = Integer.parseInt(properties.getProperty("port"));
 			server = new ServerSocket(port);
@@ -33,11 +33,12 @@ public class ServerInitController {
 			e.printStackTrace();
 		}
 	}
-
-	public static void main(String[] args){
+	
+	private static void haoHiYooFaker(SleeperHall sleeperHall) {
+		sleeperHall.callSkivvy(); 
 	}
 
-	public static void initServer() {
+	public static void initServer() throws IOException {
 		System.out.println("----DETA VPCS--1.7");
 		System.out.println("----Author: 罗瑶光");
 		System.out.println("----浏阳德塔软件开发有限公司开源项目");
@@ -56,6 +57,9 @@ public class ServerInitController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				System.out.println(sleeperHall.getThreadsCount());
+			}else {
+				haoHiYooFaker(sleeperHall);
 			}
 		}
 	}

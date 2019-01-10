@@ -17,4 +17,8 @@ public class SleeperHall{
 			sleepersMap.remove(sid);
 		}
 	}
+	public void callSkivvy() {
+		sleepersMap.clear();
+		System.gc();
+	}
 }

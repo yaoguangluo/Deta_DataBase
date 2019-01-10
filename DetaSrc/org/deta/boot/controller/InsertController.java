@@ -5,12 +5,12 @@ import org.lyg.vpc.process.portImpl.RestDBInsertImpl;
 public class InsertController {
 	public static String exec(String string, Map<String, String> data) throws Exception {
 		if(string.equalsIgnoreCase("/insertRowByBaseName")){
-			return new VtoV().ObjectToJsonString(RestDBInsertImpl.insertRowByBaseName(data.get("baseName")
+			return VtoV.ObjectToJsonString(RestDBInsertImpl.insertRowByBaseName(data.get("baseName")
 					, data.get("tableName"), data.get("culumnOfNewRow"), data.get("token"), data.get("email")
 					, data.get("password"), data.get("auth")));
 		}
 		if(string.equalsIgnoreCase("/login")){
-			return new VtoV().ObjectToJsonString(RestDBInsertImpl.insertRowByTablePath(data.get("tablePath")
+			return VtoV.ObjectToJsonString(RestDBInsertImpl.insertRowByTablePath(data.get("tablePath")
 					, data.get("pageIndex"), data.get("culumnOfNewRow"), data.get("token"), data.get("email")
 					, data.get("password"), data.get("auth")));
 		}
