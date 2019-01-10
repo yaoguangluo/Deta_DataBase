@@ -7,17 +7,12 @@ import org.deta.boot.rest.VPC;
 
 public class ForwardVision {
 	public static void main(String[] args){
-
 	}
 
 	public static void getForwardType(Socket socket) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public static void forwardToRestMap(Socket socket) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public static void getForwardType(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws IOException {

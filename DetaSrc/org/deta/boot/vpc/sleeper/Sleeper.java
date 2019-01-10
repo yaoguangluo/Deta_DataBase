@@ -11,6 +11,7 @@ public class Sleeper extends Thread implements Runnable{
 	public Sleeper(){
 		vPCSRequest = new VPCSRequest();
 		vPCSResponse = new VPCSResponse();
+		vPCSResponse.setHashCode(this.hashCode());
 	}
 
 	public void run(){
