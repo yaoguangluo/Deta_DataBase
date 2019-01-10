@@ -57,7 +57,6 @@ public class ServerInitController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println(sleeperHall.getThreadsCount());
 			}else {
 				haoHiYooFaker(sleeperHall);
 			}
