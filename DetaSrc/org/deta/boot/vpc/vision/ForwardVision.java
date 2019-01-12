@@ -17,6 +17,16 @@ public class ForwardVision {
 
 	public static void getForwardType(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws IOException {
 		if(vPCSRequest.getRequestIsRest()){
+			String filePath = VPC.getFilePath(vPCSRequest.getRequestLink());
+			if(filePath.contains(".ttf")||filePath.contains(".eot")||filePath.contains(".svg")
+					||filePath.contains(".woff")||filePath.contains(".woff2")||filePath.contains(".otf")){
+				String code = VPC.getCode(filePath);
+				vPCSRequest.setRequestFilePath(filePath);
+				vPCSRequest.setRequestFileCode(code);
+				vPCSRequest.setRequestForwardType("buffer");
+				vPCSResponse.setResponseContentType("Content-Type: application/font-woff \n\n");
+				return;
+			}	
 			vPCSRequest.setRequestForwardType("rest");
 		}else{
 			String filePath = VPC.getFilePath(vPCSRequest.getRequestLink());
@@ -46,6 +56,10 @@ public class ForwardVision {
 			if(filePath.contains(".html")){
 				vPCSRequest.setRequestForwardType("buffer");
 				vPCSResponse.setResponseContentType("Content-Type: text/html \n\n");
+			}
+			if(filePath.contains(".wav")){
+				vPCSRequest.setRequestForwardType("bytes");
+				vPCSResponse.setResponseContentType("Content-Type: audio/x-wav \n\n");
 			}
 		}
 		

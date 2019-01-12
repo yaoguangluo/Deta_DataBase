@@ -40,7 +40,7 @@ public class RequestRecordController {
 			}
 		}
 		if(content[0].contains(".")){
-			vPCSRequest.setRequestIsRest(false);
+//			vPCSRequest.setRequestIsRest(false);
 		}
 		if(vPCSRequest.getRequestIsRest()){
 			String[] column = content[1].split("&");
