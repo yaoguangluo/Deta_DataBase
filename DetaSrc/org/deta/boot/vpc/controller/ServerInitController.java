@@ -29,6 +29,8 @@ public class ServerInitController {
 			System.out.println("----德塔VPCS数据库服务器端口启动:" + port);
 			DetaUtil.initDB();
 			System.out.println("----德塔VPCS数据库服务器DMA确认:成功！");
+			RequestFilterController.initBlockList();
+			System.out.println("----德塔VPCS数据库服务器IP过滤服务启动:成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
