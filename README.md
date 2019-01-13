@@ -29,12 +29,12 @@ condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 join:[tableName];
 relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
-1 select 例子
+#### 1 select 例子
 tableName:test:select;
 condition:or:testCulumn1<20:testCulumn2==fire;
 condition:and:testCulumn1>100:testCulumn2==fire;
 
-2 select join 例子
+#### 2 select join 例子
 tableName:utest:select;
 condition:or:testCulumn1<20:testCulumn2==fire;
 condition:and:testCulumn1>100:testCulumn2==fire;
@@ -42,7 +42,7 @@ join:stest;
 condition:or:uid==sid:ussd==sssd;
 condition:and:utoken=!stoken:umap==smap;
 
-2.1 select join 复杂例子
+#### 2.1 select join 复杂例子
 tableName:utest:select;
 condition:or:utestCulumn1<20:utestCulumn2==fire;
 condition:and:utestCulumn1>100:utestCulumn2==fire;
@@ -51,7 +51,7 @@ condition:and:stestCulumn1>100:stestCulumn2==fire;
 relation:or:uid==sid:ussd==sssd;
 relation:and:utoken=!stoken:umap==smap;
 
-3 insert 例子
+#### 3 insert 例子
 tableName:test:insert;
 culumnValue:date:19850525;
 culumnValue:date1:19850526;
@@ -59,17 +59,40 @@ culumnValue:date2:19850527;
 culumnValue:date3:19850528;
 culumnValue:date4:19850529;
 
-4 update 例子
+#### 3.1 insert 复杂例子
+tableName:test:insert;
+tableName:test1:insert;
+tableName:test2:insert;
+tableName:test3:insert;
+culumnValue:date:19850525;
+culumnValue:date1:19850526;
+culumnValue:date2:19850527;
+culumnValue:date3:19850528;
+culumnValue:date4:19850529;
+
+
+#### 4 update 例子
 tableName:test:update;
 culumnValue:date:19850525;
 culumnValue:date1:19850526;
 condition:or:testCulumn1<20:testCulumn2==fire;
 condition:and:testCulumn1>100:testCulumn2==fire;
 
+#### 4.1 update 复杂例子
+tableName:test:update;
+culumnValue:date:19850525;
+culumnValue:date1:19850526;
+condition:or:testCulumn1<20:testCulumn2==fire;
+condition:and:testCulumn1>100:testCulumn2==fire;
+tableName:utest:nest;
+relation:and:testCulumn1==uCulumn1:testCulumn2!=uCulumn2;
+condition:and:uCulumn3<20;
 
-5 delete 例子
+
+#### 5 delete 例子
 tableName:test:delete;
 condition:or:testCulumn1<20:testCulumn2==fire;
 condition:and:testCulumn1>100:testCulumn2==fire;
+
 
 
