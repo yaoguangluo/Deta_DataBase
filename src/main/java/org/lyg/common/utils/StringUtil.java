@@ -8,18 +8,12 @@ import java.util.Base64;
 
 public class StringUtil {
 	public static String encode(String input) throws Exception {
-		String result = new String(Base64.getEncoder().encode(input.getBytes("utf-8")));
+		String result = Base64.getEncoder().encode(input.getBytes("utf-8")).toString();
 		return result;
 	}
 
 	public static String decode(String str) {
-		byte[] bt = null;
-		try {
-			bt = Base64.getDecoder().decode(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new String(bt);
+		return Base64.getDecoder().decode(str).toString();
 	}
 
 	public static String EncoderByMd5(String salt, String pwd, int enctimes) throws NoSuchAlgorithmException,
