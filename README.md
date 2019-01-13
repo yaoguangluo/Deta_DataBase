@@ -19,13 +19,12 @@
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
+baseName:[baseName]:[operation];
 tableName:[tableName]:[operation];
 culumnName:[culumnName]:[dataType];
 changeCulumnName:[newCulumnName]:[oldCulumnName];
 culumnValue:[culumnName]:[culumnValue];
-changeCulumnValue:[newCulumnValue]:[oldCulumnValue];
 condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
 join:[tableName];
 relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
@@ -104,6 +103,8 @@ culumnName:nk:culumn1:double;
 #### 7 drop 例子
 tableName:test:drop;
 
-
+#### 8 change 例子
+tableName:test:change;
+changeCulumnName:newCulumnName:oldCulumnName;
 
 
