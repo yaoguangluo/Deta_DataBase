@@ -96,10 +96,10 @@ condition:and:testCulumn1>100:testCulumn2==fire;
 
 #### 6 create 例子
 tableName:test:create;
-culumnName:culumn1:string;
-culumnName:culumn1:long;
-culumnName:culumn1:obj;
-culumnName:culumn1:double;
+culumnName:pk:culumn1:string;
+culumnName:uk:culumn1:long;
+culumnName:uk:culumn1:obj;
+culumnName:nk:culumn1:double;
 
 #### 7 drop 例子
 tableName:test:drop;
