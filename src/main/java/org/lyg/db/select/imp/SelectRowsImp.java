@@ -1,6 +1,6 @@
 package org.lyg.db.select.imp;
-import java.io.BufferedInputStream;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.lyg.cache.CacheManager;
+@SuppressWarnings({ "unused", "unchecked" })
 public class SelectRowsImp {
 	public static List<Map<String, Object>> SelectRowsByAttribute(String currentDB, String tableName, String culmnName, Object value) throws IOException{
 		if(value==null) {
@@ -46,51 +47,51 @@ public class SelectRowsImp {
 						if (fileDBTableRowsPath.isDirectory()) {
 							String[] rowList = fileDBTableRowsPath.list();
 							NextRow:
-							for(String row: rowList) {
-								Map<String, Object> rowMap = new HashMap<>();
-								String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
-								File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
-								if (readDBTableRowIndexFile.isDirectory()) {	
-									String isDelete = DBTableRowIndexPath + "/is_delete_1" ;	
-									File isDeleteFile = new File(isDelete);
-									if(isDeleteFile.exists()) {
-										continue NextRow;
-									}
-									String DBTableRowIndexCulumnPath = DBTableRowIndexPath + "/" + culmnName;	
-									File readDBTableRowIndexCulumnFile = new File(DBTableRowIndexCulumnPath);
-									if (readDBTableRowIndexCulumnFile.isDirectory()) {
-										reader = new BufferedReader(new FileReader(readDBTableRowIndexCulumnFile + "/" + "value.lyg"));  
-										String temp="";
-										while ((tempString = reader.readLine()) != null) {
-											temp += tempString;
+								for(String row: rowList) {
+									Map<String, Object> rowMap = new HashMap<>();
+									String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
+									File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
+									if (readDBTableRowIndexFile.isDirectory()) {	
+										String isDelete = DBTableRowIndexPath + "/is_delete_1" ;	
+										File isDeleteFile = new File(isDelete);
+										if(isDeleteFile.exists()) {
+											continue NextRow;
 										}
-										reader.close();
-										if(temp.equalsIgnoreCase(value.toString())) {
-											String[] culumnList = readDBTableRowIndexFile.list();
-											NextFile:
-											for(String culumn: culumnList) {
-												if(culumn.contains("is_delete")) {
-													continue NextFile;
-												}
-												String DBTableCulumnIndexPath = DBTableRowIndexPath + "/" + culumn;	
-												File readDBTableCulumnIndexPathFile = new File(DBTableCulumnIndexPath);
-												if (readDBTableRowIndexCulumnFile.isDirectory()) {
-													reader = new BufferedReader(new FileReader(readDBTableCulumnIndexPathFile + "/" + "value.lyg"));  
-													temp="";
-													while ((tempString = reader.readLine()) != null) {
-														temp += tempString;
-													}
-													reader.close();
-													rowMap.put(culumn, temp);
-												}else {
-													rowMap.put(culumn, null);
-												}
+										String DBTableRowIndexCulumnPath = DBTableRowIndexPath + "/" + culmnName;	
+										File readDBTableRowIndexCulumnFile = new File(DBTableRowIndexCulumnPath);
+										if (readDBTableRowIndexCulumnFile.isDirectory()) {
+											reader = new BufferedReader(new FileReader(readDBTableRowIndexCulumnFile + "/" + "value.lyg"));  
+											String temp="";
+											while ((tempString = reader.readLine()) != null) {
+												temp += tempString;
 											}
-											output.add(rowMap);
+											reader.close();
+											if(temp.equalsIgnoreCase(value.toString())) {
+												String[] culumnList = readDBTableRowIndexFile.list();
+												NextFile:
+													for(String culumn: culumnList) {
+														if(culumn.contains("is_delete")) {
+															continue NextFile;
+														}
+														String DBTableCulumnIndexPath = DBTableRowIndexPath + "/" + culumn;	
+														File readDBTableCulumnIndexPathFile = new File(DBTableCulumnIndexPath);
+														if (readDBTableRowIndexCulumnFile.isDirectory()) {
+															reader = new BufferedReader(new FileReader(readDBTableCulumnIndexPathFile + "/" + "value.lyg"));  
+															temp="";
+															while ((tempString = reader.readLine()) != null) {
+																temp += tempString;
+															}
+															reader.close();
+															rowMap.put(culumn, temp);
+														}else {
+															rowMap.put(culumn, null);
+														}
+													}
+												output.add(rowMap);
+											}
 										}
 									}
-								}
-							} 
+								} 
 						}
 					}
 				}
@@ -108,7 +109,7 @@ public class SelectRowsImp {
 		}
 		System.out.println("ok");
 	}
-	@SuppressWarnings({ "unused", "unchecked" })
+
 	public static Map<String, Object> selectRowsByTablePath(String tablePath, String pageBegin, String pageEnd, String direction) throws IOException {
 		Map<String, Object> output = new HashMap<>();
 		int totalPages = 0;
@@ -189,7 +190,7 @@ public class SelectRowsImp {
 		List<Object> spec= new ArrayList<>();
 		Map<String, Object> row = (Map<String, Object>) rowMapList.get(0);
 		Map<String, Object> culumns = (Map<String, Object>) row.get("rowValue");
-		
+
 		Iterator<String> it=culumns.keySet().iterator();
 		while(it.hasNext()) {
 			spec.add(((Map<String, Object>)culumns.get(it.next())).get("culumnName").toString());
@@ -197,10 +198,141 @@ public class SelectRowsImp {
 		output.put("spec", spec);
 		return output;
 	}
-	public static Object SelectRowsByAttributes(Map<String, Object> object) {
-//		object.get("baseName").toString(), object.get("tableName").toString()
-//		, object.get("condition"));
-		return null;
+	
+	public static Object SelectRowsByAttributes(Map<String, Object> object) throws IOException {
+		String objectType = "";
+		List<Map<String, Object>> output = new ArrayList<>();
+		//锁定数据库
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+		//锁定表
+		File fileDBPath = new File(DBPath);
+		if (fileDBPath.isDirectory()) {
+			String DBTablePath = DBPath + "/" + object.get("tableName").toString();
+			File fileDBTable = new File(DBTablePath);
+			if (fileDBTable.isDirectory()) {
+				String DBTableCulumnPath = DBTablePath + "/spec/" + object.get("tableName").toString();
+				File fileDBTableCulumn = new File(DBTableCulumnPath);
+				if (fileDBTableCulumn.isDirectory()) {
+					//读取列数据格式
+					String[] fileList = fileDBTableCulumn.list();
+					File readDBTableSpecCulumnFile = new File(DBTableCulumnPath + "/" + fileList[0]);
+					BufferedReader reader = new BufferedReader(new FileReader(readDBTableSpecCulumnFile));  
+					String tempString = null;
+					while ((tempString = reader.readLine()) != null) {  
+						objectType = tempString;			
+					}
+					reader.close();
+					if(objectType.contains("string")) {
+						String DBTableRowsPath = DBTablePath + "/rows";	
+						File fileDBTableRowsPath = new File(DBTableRowsPath);
+						if (fileDBTableRowsPath.isDirectory()) {
+							String[] rowList = fileDBTableRowsPath.list();
+							NextRow:
+								for(String row: rowList) {
+									Map<String, Object> rowMap = new HashMap<>();
+									String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
+									File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
+									if (readDBTableRowIndexFile.isDirectory()) {	
+										String isDelete = DBTableRowIndexPath + "/is_delete_1" ;	
+										File isDeleteFile = new File(isDelete);
+										if(isDeleteFile.exists()) {
+											continue NextRow;
+										}
+										//condition
+										List<String[]> conditionValues = (List<String[]>) object.get("condition");
+										Iterator<String[]> iterator = conditionValues.iterator();
+										while(iterator.hasNext()) {
+											boolean overMap=output.size()==0?false:true;
+											String[] conditionValueArray = iterator.next();
+											for(int i = 2; i < conditionValueArray.length-1; i++) {
+												String[] sets = conditionValueArray[i].split("|");
+												String DBTableRowIndexCulumnPath = DBTableRowIndexPath + "/" + sets[0];	
+												File readDBTableRowIndexCulumnFile = new File(DBTableRowIndexCulumnPath);
+												if (readDBTableRowIndexCulumnFile.isDirectory()) {
+													reader = new BufferedReader(new FileReader(readDBTableRowIndexCulumnFile + "/" + "value.lyg"));  
+													String temp = "";
+													while ((tempString = reader.readLine()) != null) {
+														temp += tempString;
+													}
+													reader.close();
+													if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+														if(Long.valueOf(temp) < Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+													if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
+															||sets[1].equalsIgnoreCase("-lte")) {
+														if(Long.valueOf(temp) <= Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+													if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
+															||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+														if(Long.valueOf(temp) == Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+													if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
+															||sets[1].equalsIgnoreCase("-gte")) {
+														if(Long.valueOf(temp) >= Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+													if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+														if(Long.valueOf(temp) > Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+													if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
+															||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+														if(Long.valueOf(temp) != Long.valueOf(sets[2])) {
+															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+																	, row, output, row, rowMap);
+														}	
+													}
+												}
+											}
+										}
+									}
+								} 
+						}
+					}
+				}
+			}
+		}
+		return output;
+	}
+
+	private static void processKernel(String temp, File readDBTableRowIndexFile, File readDBTableRowIndexCulumnFile
+			, BufferedReader reader, String tempString, List<Map<String, Object>> output, String DBTableRowIndexPath
+			, Map<String, Object> rowMap) throws IOException {
+		String[] culumnList = readDBTableRowIndexFile.list();
+		NextFile:
+			for(String culumn: culumnList) {
+				if(culumn.contains("is_delete")) {
+					continue NextFile;
+				}
+				String DBTableCulumnIndexPath = DBTableRowIndexPath + "/" + culumn;	
+				File readDBTableCulumnIndexPathFile = new File(DBTableCulumnIndexPath);
+				if (readDBTableRowIndexCulumnFile.isDirectory()) {
+					reader = new BufferedReader(new FileReader(readDBTableCulumnIndexPathFile + "/" + "value.lyg"));  
+					temp="";
+					while ((tempString = reader.readLine()) != null) {
+						temp += tempString;
+					}
+					reader.close();
+					rowMap.put(culumn, temp);
+				}else {
+					rowMap.put(culumn, null);
+				}
+			}
+		output.add(rowMap);
+
 	}
 	public static Object SelectRowsByJoinAttributes(Map<String, Object> object) {
 		// TODO Auto-generated method stub

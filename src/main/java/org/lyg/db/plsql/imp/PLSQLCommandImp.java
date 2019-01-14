@@ -1,4 +1,5 @@
 package org.lyg.db.plsql.imp;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -81,7 +82,7 @@ public class PLSQLCommandImp {
 		object.put(acknowledge[0], changeCulumnNames);
 	}
 
-	public static void processExec(String[] acknowledge, Map<String, Object> object) {
+	public static void processExec(String[] acknowledge, Map<String, Object> object) throws IOException {
 		if(object.get("start").toString().equals("1")) {
 			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())) {
 				if(object.get("type").toString().equalsIgnoreCase("select")) {
@@ -100,7 +101,7 @@ public class PLSQLCommandImp {
 		}
 	}
 
-	public static void processCheck(String[] acknowledge, Map<String, Object> object) {
+	public static void processCheck(String[] acknowledge, Map<String, Object> object) throws IOException {
 		processExec(acknowledge, object);
 		object.put("start", "0");
 	}
