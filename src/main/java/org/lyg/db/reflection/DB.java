@@ -11,4 +11,15 @@ public class DB{
 	public void setBases(ConcurrentHashMap<String, Base> bases) {
 		this.bases = bases;
 	}
+	
+	public Base getBase(String baseName) {
+		if(bases.containsKey(baseName)) {
+			return bases.get(baseName);
+		}
+		return null;	
+	}
+	
+	public void putBase(String baseName, Base base) {
+		this.bases.put(baseName, base);
+	}
 }

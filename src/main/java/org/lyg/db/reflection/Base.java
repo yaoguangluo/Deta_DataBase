@@ -10,5 +10,16 @@ public class Base{
 		this.tables = tables;
 	}
 
+	public Table getTable(String tableName) {
+		if(tables.containsKey(tableName)) {
+			return tables.get(tableName);
+		}
+		return null;	
+	}
+
+	public void putTable(String tableName, Table table) {
+		this.tables.put(tableName, table);
+	}
+
 	private ConcurrentHashMap<String, Table> tables;
 }
