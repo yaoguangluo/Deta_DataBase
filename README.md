@@ -96,3 +96,4 @@ tableName:test:change;
 changeCulumnName:newCulumnName:oldCulumnName;
 
 
+
