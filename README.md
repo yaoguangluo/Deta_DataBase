@@ -49,6 +49,8 @@
 ##### condition:and:stestCulumn1>100:stestCulumn2==fire;
 ##### relation:or:uid==sid:ussd==sssd;
 ##### relation:and:utoken=!stoken:umap==smap;
+##### asggregate:limit:2:10;
+
 
 #### 3 insert 例子
 ##### tableName:test:insert;
