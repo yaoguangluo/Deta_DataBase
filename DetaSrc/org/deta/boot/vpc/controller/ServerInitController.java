@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.deta.boot.vpc.process.TimeProcess;
 import org.deta.boot.vpc.sleeper.Sleeper;
 import org.deta.boot.vpc.sleeper.SleeperHall;
+import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.common.utils.DetaUtil;
 public class ServerInitController {
 	private static ServerSocket server;
@@ -31,6 +32,8 @@ public class ServerInitController {
 			System.out.println("----德塔VPCS数据库服务器DMA确认:成功！");
 			RequestFilterController.initBlockList();
 			System.out.println("----德塔VPCS数据库服务器IP过滤服务启动:成功！");
+			DetaDBBufferCacheManager.reflection();
+			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

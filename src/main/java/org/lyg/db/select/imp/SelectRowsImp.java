@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -198,7 +199,7 @@ public class SelectRowsImp {
 		output.put("spec", spec);
 		return output;
 	}
-	
+
 	public static Object SelectRowsByAttributes(Map<String, Object> object) throws IOException {
 		String objectType = "";
 		List<Map<String, Object>> output = new ArrayList<>();
@@ -223,83 +224,21 @@ public class SelectRowsImp {
 					}
 					reader.close();
 					if(objectType.contains("string")) {
-						String DBTableRowsPath = DBTablePath + "/rows";	
-						File fileDBTableRowsPath = new File(DBTableRowsPath);
-						if (fileDBTableRowsPath.isDirectory()) {
-							String[] rowList = fileDBTableRowsPath.list();
-							NextRow:
-								for(String row: rowList) {
-									Map<String, Object> rowMap = new HashMap<>();
-									String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
-									File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
-									if (readDBTableRowIndexFile.isDirectory()) {	
-										String isDelete = DBTableRowIndexPath + "/is_delete_1" ;	
-										File isDeleteFile = new File(isDelete);
-										if(isDeleteFile.exists()) {
-											continue NextRow;
-										}
-										//condition
-										List<String[]> conditionValues = (List<String[]>) object.get("condition");
-										Iterator<String[]> iterator = conditionValues.iterator();
-										while(iterator.hasNext()) {
-											boolean overMap=output.size()==0?false:true;
-											String[] conditionValueArray = iterator.next();
-											for(int i = 2; i < conditionValueArray.length-1; i++) {
-												String[] sets = conditionValueArray[i].split("|");
-												String DBTableRowIndexCulumnPath = DBTableRowIndexPath + "/" + sets[0];	
-												File readDBTableRowIndexCulumnFile = new File(DBTableRowIndexCulumnPath);
-												if (readDBTableRowIndexCulumnFile.isDirectory()) {
-													reader = new BufferedReader(new FileReader(readDBTableRowIndexCulumnFile + "/" + "value.lyg"));  
-													String temp = "";
-													while ((tempString = reader.readLine()) != null) {
-														temp += tempString;
-													}
-													reader.close();
-													if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
-														if(Long.valueOf(temp) < Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-													if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
-															||sets[1].equalsIgnoreCase("-lte")) {
-														if(Long.valueOf(temp) <= Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-													if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
-															||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
-														if(Long.valueOf(temp) == Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-													if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
-															||sets[1].equalsIgnoreCase("-gte")) {
-														if(Long.valueOf(temp) >= Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-													if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
-														if(Long.valueOf(temp) > Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-													if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
-															||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
-														if(Long.valueOf(temp) != Long.valueOf(sets[2])) {
-															processKernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-																	, row, output, row, rowMap);
-														}	
-													}
-												}
-											}
-										}
-									}
-								} 
+						//condition
+						List<String[]> conditionValues = (List<String[]>) object.get("condition");
+						Iterator<String[]> iterator = conditionValues.iterator();
+						while(iterator.hasNext()) {
+							boolean overMap = output.size() == 0? false: true;
+							String[] conditionValueArray = iterator.next();
+							overMap = conditionValueArray[1].equalsIgnoreCase("or")?false:true;
+							for(int i = 2; i < conditionValueArray.length-1; i++) {
+								String[] sets = conditionValueArray[i].split("|");
+								if(overMap) {
+									processMap(sets, reader, tempString, output, DBTablePath);
+								}else{
+									processTable(sets, reader, tempString, output, DBTablePath);
+								}
+							}
 						}
 					}
 				}
@@ -308,8 +247,126 @@ public class SelectRowsImp {
 		return output;
 	}
 
-	private static void processKernel(String temp, File readDBTableRowIndexFile, File readDBTableRowIndexCulumnFile
-			, BufferedReader reader, String tempString, List<Map<String, Object>> output, String DBTableRowIndexPath
+	private static void processMap(String[] sets, BufferedReader reader, String tempString
+			, List<Map<String, Object>> output, String dBTablePath) {
+		List<Map<String, Object>> outputTemp = new ArrayList<>();
+		Iterator<Map<String, Object>> iterator = output.iterator();
+		int rowid = 0;
+		output.clear();
+		while(iterator.hasNext()) {
+			Map<String, Object> row = iterator.next();
+			Map<String, Object> rowMap = new HashMap<>();
+			BigDecimal bigDecimal = new BigDecimal(row.get(sets[0]).toString());
+			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
+					||sets[1].equalsIgnoreCase("-lte")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
+					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
+					||sets[1].equalsIgnoreCase("-gte")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
+					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
+					output.add(row);
+				}	
+			}
+		}
+	}
+	private static void processTable(String[] sets, BufferedReader reader, String tempString
+			, List<Map<String, Object>> output, String DBTablePath) throws IOException {
+		String DBTableRowsPath = DBTablePath + "/rows";	
+		File fileDBTableRowsPath = new File(DBTableRowsPath);
+		if (fileDBTableRowsPath.isDirectory()) {
+			String[] rowList = fileDBTableRowsPath.list();
+			NextRow:
+				for(String row: rowList) {
+					Map<String, Object> rowMap = new HashMap<>();
+					String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
+					File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
+					if (readDBTableRowIndexFile.isDirectory()) {	
+						String isDelete = DBTableRowIndexPath + "/is_delete_1" ;	
+						File isDeleteFile = new File(isDelete);
+						if(isDeleteFile.exists()) {
+							continue NextRow;
+						}
+						String DBTableRowIndexCulumnPath = DBTableRowIndexPath + "/" + sets[0];	
+						File readDBTableRowIndexCulumnFile = new File(DBTableRowIndexCulumnPath);
+						if(readDBTableRowIndexCulumnFile.isDirectory()) {
+							reader = new BufferedReader(new FileReader(readDBTableRowIndexCulumnFile + "/" + "value.lyg"));  
+							String temp = "";
+							while ((tempString = reader.readLine()) != null) {
+								temp += tempString;
+							}
+							reader.close();
+							if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+								if(new BigDecimal(temp.toString()).doubleValue() < new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+							if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
+									||sets[1].equalsIgnoreCase("-lte")) {
+								if(new BigDecimal(temp.toString()).doubleValue() <= new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+							if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
+									||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+								if(new BigDecimal(temp.toString()).doubleValue() == new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+							if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
+									||sets[1].equalsIgnoreCase("-gte")) {
+								if(new BigDecimal(temp.toString()).doubleValue() >= new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+							if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+								if(new BigDecimal(temp.toString()).doubleValue() > new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+							if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
+									||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+								if(new BigDecimal(temp.toString()).doubleValue() != new BigDecimal(sets[2].toString()).doubleValue()) {
+									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+											, row, output, row, rowMap);
+								}	
+							}
+						}
+					} 
+				}
+		}
+	}
+	
+	private static void processkernel(String temp, File readDBTableRowIndexCulumnFile, File readDBTableRowIndexFile
+			, BufferedReader reader, String DBTableRowIndexPath, List<Map<String, Object>> output, String tempString
 			, Map<String, Object> rowMap) throws IOException {
 		String[] culumnList = readDBTableRowIndexFile.list();
 		NextFile:
@@ -332,10 +389,9 @@ public class SelectRowsImp {
 				}
 			}
 		output.add(rowMap);
-
 	}
+
 	public static Object SelectRowsByJoinAttributes(Map<String, Object> object) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
