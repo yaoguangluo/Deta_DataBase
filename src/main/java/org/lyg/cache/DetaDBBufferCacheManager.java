@@ -1,8 +1,15 @@
 package org.lyg.cache;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import org.lyg.db.reflection.Base;
+import org.lyg.db.reflection.Cell;
 import org.lyg.db.reflection.DB;
+import org.lyg.db.reflection.Row;
+import org.lyg.db.reflection.Spec;
 import org.lyg.db.reflection.Table;
 @SuppressWarnings("unused")
 public class DetaDBBufferCacheManager {
@@ -10,32 +17,114 @@ public class DetaDBBufferCacheManager {
 	private DetaDBBufferCacheManager() {
 		super();
 	}
-	public static void reflection() {
+	
+	public static void reflection() throws IOException {
 		ConcurrentHashMap<String, Base> bases = new ConcurrentHashMap<>();
-		//1获取base路径；
-		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString();
-		File fileDBPath = new File(DBPath);
+		db.setBases(bases);
+		//1获取db路径；
+		String dBPath = CacheManager.getCacheInfo("DBPath").getValue().toString();
+		File fileDBPath = new File(dBPath);
 		if (fileDBPath.isDirectory()) {
 			String[] baseNames = fileDBPath.list();
 			for(int i = 0; i < baseNames.length; i++) {
-				Base base = new Base();
-				ConcurrentHashMap<String, Object> tables = new ConcurrentHashMap<>();
-				String DBasePath = DBPath + "/" + baseNames[i];
-				File fileDBasePath = new File(DBasePath);
-				if (fileDBasePath.isDirectory()) {
-					ConcurrentHashMap<String, Object> tableMap = new ConcurrentHashMap<>();
-					
-					tableMap.put(baseNames[i], tableMap);
-				}
-				bases.put(baseNames[i], base);
+				loopBases(db, dBPath, baseNames[i]);
 			}
 		}
-		db.setBases(bases);
-		//2获取table路径
-		//3获取表头
-		//4获取表内容
-		//5获取表行
-		//6获取表列
 	}
 	
+	private static void loopBases(DB db, String dBPath, String baseName) throws IOException {
+		Base base = new Base();
+		ConcurrentHashMap<String, Table> tables = new ConcurrentHashMap<>();
+		base.setTables(tables);
+		String dBasePath = dBPath + "/" + baseName;
+		//get base
+		File fileDBasePath = new File(dBasePath);
+		if (fileDBasePath.isDirectory()) {
+			ConcurrentHashMap<String, Object> tableMap = new ConcurrentHashMap<>();
+			//get tables
+			String[] tableNames = fileDBasePath.list();
+			for(int i = 0; i < tableNames.length; i++) {
+				loopTables(base, dBasePath, tableNames[i]);
+			}
+		}
+		db.putBase(baseName, base);
+	}
+	
+	private static void loopTables(Base base, String dBasePath, String tableName) throws IOException {
+		Table table = new Table();
+		String tablePath = dBasePath + "/" + tableName;
+		File fileTablePath = new File(tablePath);
+		if (fileTablePath.isDirectory()) {
+			String specPath = tablePath + "/spec";
+			String rowsPath = tablePath + "/rows";
+			loopSpec(table,specPath);
+			loopRows(table,rowsPath);
+		}
+		base.putTable(tableName, table);
+	}
+	
+	private static void loopSpec(Table table, String specPath) throws IOException {
+		Spec spec = new Spec();
+		File fileSpecPath = new File(specPath);
+		if (fileSpecPath.isDirectory()) {
+			String[] specs = fileSpecPath.list();
+			for(int i = 0; i < specs.length; i++) {
+				String specCulumnPath = specPath + "/" + specs[i];
+				String specCulumnValuePath = specCulumnPath + "/value.lyg";
+				//if get
+				BufferedReader reader = new BufferedReader(new FileReader(specCulumnPath + "/" + "value.lyg"));  
+				String temp = "";
+				String tempString = "";
+				while ((tempString = reader.readLine()) != null) {
+					temp += tempString;
+				}
+				reader.close();
+				spec.setCulumnType(specs[i], temp);
+			}
+		}
+		table.setSpec(spec);
+	}
+
+	private static void loopRows(Table table, String rowsPath) throws IOException {
+		ConcurrentHashMap<String, Row> rows = new ConcurrentHashMap<>();
+		table.setRows(rows);
+		File fileRowsPath = new File(rowsPath);
+		if (fileRowsPath.isDirectory()) {
+			String[] rowIndex = fileRowsPath.list();
+			for(int i = 0; i < rowIndex.length; i++) {
+				loopRow(table, fileRowsPath, rowIndex[i]);	
+			}
+		}
+	}
+
+	private static void loopRow(Table table, File fileRowsPath, String rowIndex) throws IOException {
+		Row row = new Row();
+		ConcurrentHashMap<String, Cell> cells = new ConcurrentHashMap<>();
+		row.setCells(cells);
+		String rowIndexPath = fileRowsPath + "/" + rowIndex;
+		File fileRowPath = new File(rowIndexPath);
+		if (fileRowPath.isDirectory()) {
+			String[] culumns = fileRowPath.list();
+			for(int i = 0; i < culumns.length; i++) {
+				String rowCulumnPath = rowIndexPath + "/" + culumns[i];
+				String rowCulumnValuePath = rowCulumnPath + "/value.lyg";
+				//if get
+				if(!culumns[i].contains("is_delete")) {
+					BufferedReader reader = new BufferedReader(new FileReader(rowCulumnValuePath));  
+					String temp = "";
+					String tempString = "";
+					while ((tempString = reader.readLine()) != null) {
+						temp += tempString;
+					}
+					reader.close();
+					Cell cell = new Cell();
+					cell.setCellValue(temp);
+					row.putCell(culumns[i], cell);
+				}else {
+					row.putCell(culumns[i], null);
+				}
+			}
+		}
+		table.putRow(rowIndex, row);;
+	}
 } 
