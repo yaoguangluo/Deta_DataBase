@@ -7,7 +7,7 @@ public class ExecPLSQLImp {
 		//working for here
 		Map<String, Object> output=new ConcurrentHashMap<>();
 		//1make container
-		output.put("start", 0);
+		output.put("start", "0");
 		//2make line
 		String[] commands = plsql.split(";");
 		for(String command:commands) {

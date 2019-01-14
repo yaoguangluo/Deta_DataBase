@@ -197,4 +197,13 @@ public class SelectRowsImp {
 		output.put("spec", spec);
 		return output;
 	}
+	public static Object SelectRowsByAttributes(Map<String, Object> object) {
+//		object.get("baseName").toString(), object.get("tableName").toString()
+//		, object.get("condition"));
+		return null;
+	}
+	public static Object SelectRowsByJoinAttributes(Map<String, Object> object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
