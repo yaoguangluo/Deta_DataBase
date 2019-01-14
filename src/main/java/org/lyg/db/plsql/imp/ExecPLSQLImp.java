@@ -7,11 +7,13 @@ public class ExecPLSQLImp {
 		//working for here
 		Map<String, Object> output=new ConcurrentHashMap<>();
 		//1make container
-
+		output.put("start", 0);
 		//2make line
 		String[] commands = plsql.split(";");
 		for(String command:commands) {
 			String[] acknowledge = command.split(":");
+			PLSQLCommandImp.processExec(acknowledge, output);
+			output.put("lastCommand", acknowledge[0]);
 			if(acknowledge[0].equals("baseName")) {
 				PLSQLCommandImp.processBaseName(acknowledge,output);
 			}

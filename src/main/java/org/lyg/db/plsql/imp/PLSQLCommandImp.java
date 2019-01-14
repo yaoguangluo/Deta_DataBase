@@ -61,4 +61,13 @@ public class PLSQLCommandImp {
 		changeCulumnNames.add(acknowledge);
 		object.put(acknowledge[0], changeCulumnNames);
 	}
+
+	public static void processExec(String[] acknowledge, Map<String, Object> object) {
+
+	}
+
+	public static void processCheck(String[] acknowledge, Map<String, Object> object) {
+		processExec(acknowledge, object);
+		object.put("start", 0);
+	}
 }
