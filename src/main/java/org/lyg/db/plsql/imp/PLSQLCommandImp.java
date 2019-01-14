@@ -10,6 +10,7 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processTableName(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", 1);
 		object.put(acknowledge[0], acknowledge[1]);
 		object.put("type", acknowledge[2]);
 	}
