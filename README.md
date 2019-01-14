@@ -19,81 +19,81 @@
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
-baseName:[baseName];
-tableName:[tableName]:[operation];
-culumnName:[culumnName]:[dataType];
-changeCulumnName:[newCulumnName]:[oldCulumnName];
-culumnValue:[culumnName]:[culumnValue];
-condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-join:[tableName];
-relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
+##### baseName:[baseName];
+##### tableName:[tableName]:[operation];
+##### culumnName:[culumnName]:[dataType];
+##### changeCulumnName:[newCulumnName]:[oldCulumnName];
+##### culumnValue:[culumnName]:[culumnValue];
+##### condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
+##### join:[tableName];
+##### relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
 #### 1 select 例子
-tableName:test:select;
-condition:or:testCulumn1<20:testCulumn2==fire;
-condition:and:testCulumn1>100:testCulumn2==fire;
+##### tableName:test:select;
+##### condition:or:testCulumn1<20:testCulumn2==fire;
+##### condition:and:testCulumn1>100:testCulumn2==fire;
 
 #### 2 select join 例子
-tableName:utest:select;
-condition:or:testCulumn1<20:testCulumn2==fire;
-condition:and:testCulumn1>100:testCulumn2==fire;
-join:stest;
-condition:or:uid==sid:ussd==sssd;
-condition:and:utoken=!stoken:umap==smap;
+##### tableName:utest:select;
+##### condition:or:testCulumn1<20:testCulumn2==fire;
+##### condition:and:testCulumn1>100:testCulumn2==fire;
+##### join:stest;
+##### condition:or:uid==sid:ussd==sssd;
+##### condition:and:utoken=!stoken:umap==smap;
 
 #### 2.1 select join 复杂例子
-tableName:utest:select;
-condition:or:utestCulumn1<20:utestCulumn2==fire;
-condition:and:utestCulumn1>100:utestCulumn2==fire;
-join:stest;
-condition:and:stestCulumn1>100:stestCulumn2==fire;
-relation:or:uid==sid:ussd==sssd;
-relation:and:utoken=!stoken:umap==smap;
+##### tableName:utest:select;
+##### condition:or:utestCulumn1<20:utestCulumn2==fire;
+##### condition:and:utestCulumn1>100:utestCulumn2==fire;
+##### join:stest;
+##### condition:and:stestCulumn1>100:stestCulumn2==fire;
+##### relation:or:uid==sid:ussd==sssd;
+##### relation:and:utoken=!stoken:umap==smap;
 
 #### 3 insert 例子
-tableName:test:insert;
-culumnValue:date:19850525;
-culumnValue:date1:19850526;
-culumnValue:date2:19850527;
-culumnValue:date3:19850528;
-culumnValue:date4:19850529;
+##### tableName:test:insert;
+##### culumnValue:date:19850525;
+##### culumnValue:date1:19850526;
+##### culumnValue:date2:19850527;
+##### culumnValue:date3:19850528;
+##### culumnValue:date4:19850529;
 
 #### 4 update 例子
-tableName:test:update;
-culumnValue:date:19850525;
-culumnValue:date1:19850526;
-condition:or:testCulumn1<20:testCulumn2==fire;
-condition:and:testCulumn1>100:testCulumn2==fire;
+##### tableName:test:update;
+##### culumnValue:date:19850525;
+##### culumnValue:date1:19850526;
+##### condition:or:testCulumn1<20:testCulumn2==fire;
+##### condition:and:testCulumn1>100:testCulumn2==fire;
 
 #### 4.1 update 复杂例子
-tableName:test:update;
-culumnValue:date:19850525;
-culumnValue:date1:19850526;
-condition:or:testCulumn1<20:testCulumn2==fire;
-condition:and:testCulumn1>100:testCulumn2==fire;
-tableName:utest:nest;
-relation:and:testCulumn1==uCulumn1:testCulumn2!=uCulumn2;
-condition:and:uCulumn3<20;
+##### tableName:test:update;
+##### culumnValue:date:19850525;
+##### culumnValue:date1:19850526;
+##### condition:or:testCulumn1<20:testCulumn2==fire;
+##### condition:and:testCulumn1>100:testCulumn2==fire;
+##### tableName:utest:nest;
+##### relation:and:testCulumn1==uCulumn1:testCulumn2!=uCulumn2;
+##### condition:and:uCulumn3<20;
 
 
 #### 5 delete 例子
-tableName:test:delete;
-condition:or:testCulumn1<20:testCulumn2==fire;
-condition:and:testCulumn1>100:testCulumn2==fire;
+##### tableName:test:delete;
+##### condition:or:testCulumn1<20:testCulumn2==fire;
+##### condition:and:testCulumn1>100:testCulumn2==fire;
 
 #### 6 create 例子
-tableName:test:create;
-culumnName:pk:culumn1:string;
-culumnName:uk:culumn1:long;
-culumnName:uk:culumn1:obj;
-culumnName:nk:culumn1:double;
+##### tableName:test:create;
+##### culumnName:pk:culumn1:string;
+##### culumnName:uk:culumn1:long;
+##### culumnName:uk:culumn1:obj;
+##### culumnName:nk:culumn1:double;
 
 #### 7 drop 例子
-tableName:test:drop;
+##### tableName:test:drop;
 
 #### 8 change 例子
-tableName:test:change;
-changeCulumnName:newCulumnName:oldCulumnName;
+##### tableName:test:change;
+##### changeCulumnName:newCulumnName:oldCulumnName;
 
 
 
