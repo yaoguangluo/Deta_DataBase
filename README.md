@@ -72,9 +72,8 @@
 ##### condition:or:testCulumn1<20:testCulumn2==fire;
 ##### condition:and:testCulumn1>100:testCulumn2==fire;
 ##### tableName:utest:nest;
-##### relation:and:testCulumn1==uCulumn1:testCulumn2!=uCulumn2;
 ##### condition:and:uCulumn3<20;
-
+##### relation:and:testCulumn1==uCulumn1:testCulumn2!=uCulumn2;
 
 #### 5 delete 例子
 ##### tableName:test:delete;
@@ -94,6 +93,7 @@
 #### 8 change 例子
 ##### tableName:test:change;
 ##### changeCulumnName:newCulumnName:oldCulumnName;
+
 
 
 
