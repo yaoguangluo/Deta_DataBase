@@ -19,7 +19,7 @@
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
-baseName:[baseName]:[operation];
+baseName:[baseName];
 tableName:[tableName]:[operation];
 culumnName:[culumnName]:[dataType];
 changeCulumnName:[newCulumnName]:[oldCulumnName];
@@ -57,18 +57,6 @@ culumnValue:date1:19850526;
 culumnValue:date2:19850527;
 culumnValue:date3:19850528;
 culumnValue:date4:19850529;
-
-#### 3.1 insert 复杂例子
-tableName:test:insert;
-tableName:test1:insert;
-tableName:test2:insert;
-tableName:test3:insert;
-culumnValue:date:19850525;
-culumnValue:date1:19850526;
-culumnValue:date2:19850527;
-culumnValue:date3:19850528;
-culumnValue:date4:19850529;
-
 
 #### 4 update 例子
 tableName:test:update;
