@@ -22,4 +22,11 @@ public class Row{
 	}
 
 	private ConcurrentHashMap<String, Cell> cells;
+
+	public boolean containsCell(String cellName) {
+		if(cells.containsKey(cellName)) {
+			return true;
+		}
+		return false;
+	}
 }

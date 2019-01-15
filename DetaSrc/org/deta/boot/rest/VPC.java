@@ -9,6 +9,7 @@ import org.deta.boot.controller.InsertController;
 import org.deta.boot.controller.SelectController;
 import org.deta.boot.controller.UpdateController;
 import org.lyg.common.maps.VtoV;
+import org.lyg.vpc.process.portImpl.RestDBPLSQLImpl;
 import org.lyg.vpc.process.portImpl.RestLoginPortImpl;
 public class VPC {
 	public static String forward(String string, Map<String, String> data) throws Exception {
@@ -31,6 +32,11 @@ public class VPC {
 		if(string.contains("DBCategory")){
 			return DBCategoryController.exec(string, data);	
 		}
+		if(string.equalsIgnoreCase("/execDetaPLSQL")){
+			return VtoV.ObjectToJsonString(RestDBPLSQLImpl.restDBPLSQLImpl(data.get("token") ,data.get("email")
+					, data.get("password"), data.get("auth"), data.get("LYGQuery")));
+		}
+		
 		//restMap
 		if(string.equalsIgnoreCase("/login")){
 			return VtoV.ObjectToJsonString(RestLoginPortImpl.login(data.get("uEmail"),data.get("uPassword")));	

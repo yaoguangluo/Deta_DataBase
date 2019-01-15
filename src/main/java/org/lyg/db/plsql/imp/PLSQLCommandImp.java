@@ -1,9 +1,12 @@
 package org.lyg.db.plsql.imp;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.lyg.cache.CacheManager;
 import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
@@ -12,12 +15,12 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processTableName(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
 		object.put(acknowledge[0], acknowledge[1]);
 		object.put("type", acknowledge[2]);
 	}
 
 	public static void processRelation(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> relationValues = (List<String[]>) object.get(acknowledge[0]);
 			relationValues.add(acknowledge);
@@ -30,11 +33,11 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processJoin(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
 		object.put(acknowledge[0], acknowledge[1]);
 	}
 
 	public static void processCondition(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> conditionValues = (List<String[]>) object.get(acknowledge[0]);
 			conditionValues.add(acknowledge);
@@ -47,6 +50,7 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processCulumnValue(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> culumnValues = (List<String[]>) object.get(acknowledge[0]);
 			culumnValues.add(acknowledge);
@@ -71,6 +75,7 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processChangeCulumnName(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> changeCulumnNames = (List<String[]>) object.get(acknowledge[0]);
 			changeCulumnNames.add(acknowledge);
@@ -84,7 +89,11 @@ public class PLSQLCommandImp {
 
 	public static void processExec(String[] acknowledge, Map<String, Object> object) throws IOException {
 		if(object.get("start").toString().equals("1")) {
-			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())) {
+			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())
+					&&(object.get("lastCommand").toString().contains("changeCulumnName")
+							||object.get("lastCommand").toString().contains("culumnValue")
+							||object.get("lastCommand").toString().contains("condition")
+							||object.get("lastCommand").toString().contains("relation"))) {
 				if(object.get("type").toString().equalsIgnoreCase("select")) {
 					object.put("obj", SelectRowsImp.SelectRowsByAttributes(object));
 					object.remove("condition");
@@ -101,8 +110,40 @@ public class PLSQLCommandImp {
 		}
 	}
 
-	public static void processCheck(String[] acknowledge, Map<String, Object> object) throws IOException {
-		processExec(acknowledge, object);
-		object.put("start", "0");
+	public static void processCheck(String acknowledge, Map<String, Object> object) throws IOException {
+		if(object.get("start").toString().equals("1")) {
+			if(object.get("type").toString().equalsIgnoreCase("select")) {
+				object.put("obj", SelectRowsImp.SelectRowsByAttributes(object));
+				object.remove("condition");
+				object.remove("aggregate");
+			}
+			if(object.containsKey("join")){
+				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
+				object.remove("condition");
+				object.remove("relation");
+				object.remove("aggregate");
+			}
+			object.put("start", "0");
+		}
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
+		int totalPages = obj.size();
+		int rowBeginIndex = object.containsKey("pageBegin")? Integer.valueOf(object.get("pageBegin").toString()):0 ;
+		int rowEndIndex = object.containsKey("pageEnd")?Integer.valueOf(object.get("pageEnd").toString()):totalPages>15?15:totalPages;
+		object.put("pageBegin", rowBeginIndex);
+		object.put("pageEnd", rowEndIndex);
+		
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+		String DBTablePath = DBPath + "/" + object.get("tableName").toString();
+		object.put("tablePath", DBTablePath);
+		object.put("returnResult", "success");
+		object.put("totalPages",totalPages);
+		object.put("loginInfo", "success");
+		
+		List<Object> spec = new ArrayList<>();
+		Iterator<String> iterator = ((Map<String, Object>)obj.get(0).get("rowValue")).keySet().iterator();
+		while(iterator.hasNext()) {
+			spec.add(iterator.next());
+		}
+		object.put("spec", spec);
 	}
 }

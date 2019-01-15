@@ -47,6 +47,7 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 	});
 	$scope.email = $cookieStore.get('email');
 	$scope.token = $cookieStore.get('token');
+	console.info($scope.token);
 	$http.get('getAllDBCategory' + '?token='
 			+ encodeURIComponent($cookieStore.get('token')), headers).then(function successCallback(response) {
 				$scope.loginInfo = response.data.loginInfo;
@@ -177,14 +178,14 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 	}
 	$scope.execDetaPLSQL = function(LYGQuery){
 		console.info(LYGQuery);
-		console.info(token);
+		console.info($cookieStore.get('token'));
 		$http.get('execDetaPLSQL?LYGQuery=' + encodeURIComponent(LYGQuery) + '&token=' 
 				+ encodeURIComponent($cookieStore.get('token')), headers)
 				.then(function successCallback(response) {
 					$scope.loginInfo = response.data.loginInfo;
 					$scope.returnResult = response.data.returnResult;
 					if($scope.loginInfo == 'unsuccess'){
-						window.location.href="db.html";
+						window.location.href = "db.html";
 						alert("操作失败！" + $scope.loginInfo + ' ' + $scope.returnResult);
 					}else{
 						$scope.rows = response.data.obj;

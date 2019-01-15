@@ -50,6 +50,10 @@ public class VPCSResponse{
 	private int errorCode;
 	private String ResponseContentType;
 	public void return404() throws IOException {
+		if(socket.isClosed()) {
+			this.sleeperHall.removeThreadById(this.hashCode);
+			return;
+		}
 		PrintWriter pw = new PrintWriter(this.socket.getOutputStream(), true);
 		pw.println("HTTP/1.1 404 OK\n\n"); 
 		pw.flush();
@@ -59,6 +63,10 @@ public class VPCSResponse{
 	}
 	
 	public void returnErrorCode(Integer errorCode) throws IOException {
+		if(socket.isClosed()) {
+			this.sleeperHall.removeThreadById(this.hashCode);
+			return;
+		}
 		PrintWriter pw = new PrintWriter(this.socket.getOutputStream(), true);
 		pw.println("HTTP/1.1 " + errorCode + " OK\n\n"); 
 		pw.flush();

@@ -9,11 +9,9 @@ public class ExecPLSQLImp {
 		//1make container
 		output.put("start", "0");
 		//2make line
-		String[] commands = plsql.split(";");
+		String[] commands = plsql.replace(" ", "").replace("\n", "").split(";");
 		for(String command:commands) {
 			String[] acknowledge = command.split(":");
-			PLSQLCommandImp.processExec(acknowledge, output);
-			output.put("lastCommand", acknowledge[0]);
 			if(acknowledge[0].equals("baseName")) {
 				PLSQLCommandImp.processBaseName(acknowledge,output);
 			}
@@ -29,16 +27,20 @@ public class ExecPLSQLImp {
 			if(acknowledge[0].equals("culumnValue")) {
 				PLSQLCommandImp.processCulumnValue(acknowledge,output);
 			}
-			if(acknowledge[0].equals("condition")) {
-				PLSQLCommandImp.processCondition(acknowledge,output);
-			}
 			if(acknowledge[0].equals("join")) {
 				PLSQLCommandImp.processJoin(acknowledge,output);
+			}
+			if(acknowledge[0].equals("condition")) {
+				PLSQLCommandImp.processCondition(acknowledge,output);
 			}
 			if(acknowledge[0].equals("relation")) {
 				PLSQLCommandImp.processRelation(acknowledge,output);
 			}
+			output.put("newCommand", acknowledge[0]);
+			PLSQLCommandImp.processExec(acknowledge, output);
+			output.put("lastCommand", output.get("newCommand"));
 		}
+		PLSQLCommandImp.processCheck(output.get("newCommand").toString(), output);
 		return output;
 	}
 }

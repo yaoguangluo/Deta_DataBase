@@ -4,16 +4,15 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-//import org.jboss.resteasy.util.Base64;
 
 public class StringUtil {
 	public static String encode(String input) throws Exception {
-		String result = Base64.getEncoder().encode(input.getBytes("utf-8")).toString();
+		String result = Base64.getEncoder().encodeToString(input.getBytes("UTF-8")).toString();
 		return result;
 	}
 
-	public static String decode(String str) {
-		return Base64.getDecoder().decode(str).toString();
+	public static String decode(String str) throws UnsupportedEncodingException {
+		return new String(Base64.getDecoder().decode(str),"UTF-8");
 	}
 
 	public static String EncoderByMd5(String salt, String pwd, int enctimes) throws NoSuchAlgorithmException,

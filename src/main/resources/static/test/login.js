@@ -58,7 +58,7 @@ am.controller('login', ['$cookieStore', '$scope', '$http', function ($cookieStor
 					$scope.returnResult = response.data.returnResult;
 					if($scope.loginInfo=='success'){
 						window.location.href="index.html";
-						alert("登陆成功！" + $scope.loginInfo + ' ' + $cookieStore.get('email'));
+						alert("登陆成功！" + $scope.loginInfo + ' ' + $cookieStore.get('email') + '' + $cookieStore.get('token'));
 					}else{
 						$scope.backFeed = "invalid registeration！";
 						window.location.href="loginto.html";

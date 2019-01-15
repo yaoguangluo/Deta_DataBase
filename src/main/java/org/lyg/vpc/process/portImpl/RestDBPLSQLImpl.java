@@ -27,7 +27,7 @@ public class RestDBPLSQLImpl {
 			output.put("loginInfo", "unsuccess");
 			output.put("returnResult", "invalid request");
 			return output;
-		}	
+		}
 		output = ExecPLSQLImp.ExecPLSQL(plsql);
 		return output;
 	}
