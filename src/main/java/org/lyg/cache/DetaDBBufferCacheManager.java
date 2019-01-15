@@ -13,7 +13,8 @@ import org.lyg.db.reflection.Spec;
 import org.lyg.db.reflection.Table;
 @SuppressWarnings("unused")
 public class DetaDBBufferCacheManager {
-	private static DB db = new DB();
+	public static DB db = new DB();
+	public static boolean dbCache = false;
 	private DetaDBBufferCacheManager() {
 		super();
 	}
@@ -30,6 +31,7 @@ public class DetaDBBufferCacheManager {
 				loopBases(db, dBPath, baseNames[i]);
 			}
 		}
+		dbCache = true;
 	}
 	
 	private static void loopBases(DB db, String dBPath, String baseName) throws IOException {
@@ -65,6 +67,8 @@ public class DetaDBBufferCacheManager {
 	
 	private static void loopSpec(Table table, String specPath) throws IOException {
 		Spec spec = new Spec();
+		ConcurrentHashMap<String, String> culumnTypes = new ConcurrentHashMap<>();
+		spec.setCulumnTypes(culumnTypes);
 		File fileSpecPath = new File(specPath);
 		if (fileSpecPath.isDirectory()) {
 			String[] specs = fileSpecPath.list();
@@ -121,7 +125,9 @@ public class DetaDBBufferCacheManager {
 					cell.setCellValue(temp);
 					row.putCell(culumns[i], cell);
 				}else {
-					row.putCell(culumns[i], null);
+					Cell cell = new Cell();
+					cell.setCellValue("");
+					row.putCell(culumns[i], cell);
 				}
 			}
 		}

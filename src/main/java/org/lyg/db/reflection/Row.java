@@ -10,7 +10,7 @@ public class Row{
 		this.cells = cells;
 	}
 
-	public Cell getTable(String cellName) {
+	public Cell getCell(String cellName) {
 		if(cells.containsKey(cellName)) {
 			return cells.get(cellName);
 		}

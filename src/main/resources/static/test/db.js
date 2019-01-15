@@ -175,4 +175,31 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 					$scope.backFeed = "error delete";
 				});
 	}
+	$scope.execDetaPLSQL = function(LYGQuery){
+		console.info(LYGQuery);
+		console.info(token);
+		$http.get('execDetaPLSQL?LYGQuery=' + encodeURIComponent(LYGQuery) + '&token=' 
+				+ encodeURIComponent($cookieStore.get('token')), headers)
+				.then(function successCallback(response) {
+					$scope.loginInfo = response.data.loginInfo;
+					$scope.returnResult = response.data.returnResult;
+					if($scope.loginInfo == 'unsuccess'){
+						window.location.href="db.html";
+						alert("操作失败！" + $scope.loginInfo + ' ' + $scope.returnResult);
+					}else{
+						$scope.rows = response.data.obj;
+						$scope.spec = response.data.spec;
+						$scope.pageBegin = response.data.pageBegin;
+						$scope.pageEnd = response.data.pageEnd;
+						$scope.tablePath = response.data.tablePath;
+						$scope.totalPages = response.data.totalPages;
+						$scope.loginInfo = response.data.loginInfo;
+						$scope.returnResult = response.data.returnResult;
+						alert("执行成功！");
+					}
+				}, function errorCallback(response) {
+					window.location.href="db.html";
+					$scope.backFeed = "error delete";
+				});
+	}
 }]);

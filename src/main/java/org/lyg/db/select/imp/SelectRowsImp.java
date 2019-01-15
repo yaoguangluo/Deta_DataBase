@@ -14,6 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.lyg.cache.CacheManager;
+import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.reflection.Base;
+import org.lyg.db.reflection.Row;
+import org.lyg.db.reflection.Table;
 @SuppressWarnings({ "unused", "unchecked" })
 public class SelectRowsImp {
 	public static List<Map<String, Object>> SelectRowsByAttribute(String currentDB, String tableName, String culmnName, Object value) throws IOException{
@@ -235,7 +239,9 @@ public class SelectRowsImp {
 								String[] sets = conditionValueArray[i].split("|");
 								if(overMap) {
 									processMap(sets, reader, tempString, output, DBTablePath);
-								}else{
+								}else if(DetaDBBufferCacheManager.dbCache){
+									processCache(sets, reader, tempString, output, object.get("tableName").toString(), object.get("baseName").toString());
+								}else {
 									processTable(sets, reader, tempString, output, DBTablePath);
 								}
 							}
@@ -247,6 +253,59 @@ public class SelectRowsImp {
 		return output;
 	}
 
+	private static void processCache(String[] sets, BufferedReader reader, String tempString,
+			List<Map<String, Object>> output, String tableName, String baseName) {
+		Table table = DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName);
+		Iterator<String> iterator = table.getRows().keySet().iterator(); 
+		while(iterator.hasNext()) {
+			Row row = table.getRow(iterator.next());
+			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
+					||sets[1].equalsIgnoreCase("-lte")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
+					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
+					||sets[1].equalsIgnoreCase("-gte")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
+					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+				if(new BigDecimal(row.getCell(sets[0]).toString()).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
+					output.add(rowToRowMap(row));
+				}	
+			}
+		}	
+	}
+	//以后优化成统一对象输出，不需要再转换。2019-1-15 tin
+	private static Map<String, Object> rowToRowMap(Row row) {
+		Map<String, Object> rowMap = new HashMap<>();
+		Iterator<String> iterator = row.getCells().keySet().iterator();
+		while(iterator.hasNext()) {
+			String cellName = iterator.next();
+			rowMap.put(cellName, row.getCell(cellName).getCellValue());
+		}
+		return rowMap;
+	}
+	
 	private static void processMap(String[] sets, BufferedReader reader, String tempString
 			, List<Map<String, Object>> output, String dBTablePath) {
 		List<Map<String, Object>> outputTemp = new ArrayList<>();
@@ -256,7 +315,6 @@ public class SelectRowsImp {
 		while(iterator.hasNext()) {
 			Map<String, Object> row = iterator.next();
 			Map<String, Object> rowMap = new HashMap<>();
-			BigDecimal bigDecimal = new BigDecimal(row.get(sets[0]).toString());
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
 					output.add(row);
@@ -293,6 +351,7 @@ public class SelectRowsImp {
 			}
 		}
 	}
+	
 	private static void processTable(String[] sets, BufferedReader reader, String tempString
 			, List<Map<String, Object>> output, String DBTablePath) throws IOException {
 		String DBTableRowsPath = DBTablePath + "/rows";	
