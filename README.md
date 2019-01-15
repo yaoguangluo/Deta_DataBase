@@ -9,11 +9,16 @@
 # 已完善功能：采用deta HTTP 服务器做 ADMIN
 # 已完善功能：REST JSON 做第三方 request 扩展。
 # 已完善功能：增加过滤，同源，限制机制
+# 已完善功能：数据库查询映射区间
+# 已完善功能：db plsql query设计 select
+# 已完善功能：读写分离， 读操作全部3级缓存。
+# 已完善功能：plsql 量子数据库语言去死锁机制。
+# 已完善功能：德塔 PL/SQL 数据分析语言 定义规范。
 
 ## 未完善功能：表join
-## 未完善功能：db query设计
-## 未完善功能：
-## 未完善功能：
+## 未完善功能：db plsql query设计 update
+## 未完善功能：db plsql query设计 delete
+## 未完善功能：db plsql query设计 insert
 ## 未完善功能：
 ## 未完善功能：
 
