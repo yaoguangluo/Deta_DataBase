@@ -530,37 +530,35 @@ public class ServerSocket implements java.io.Closeable {
      * @spec JSR-51
      */
     protected final void implAccept(Socket s) throws IOException {
-        SocketImpl si = null;
-        try {
-            if (s.impl == null)
-              s.setImpl();
-            else {
-                s.impl.reset();
-            }
-            si = s.impl;
-            s.impl = null;
-            si.address = new InetAddress();
-            si.fd = new FileDescriptor();
-            getImpl().accept(si);
-
-            SecurityManager security = System.getSecurityManager();
-            if (security != null) {
-                security.checkAccept(si.getInetAddress().getHostAddress(),
-                                     si.getPort());
-            }
-        } catch (IOException e) {
-            if (si != null)
-                si.reset();
-            s.impl = si;
-            throw e;
-        } catch (SecurityException e) {
-            if (si != null)
-                si.reset();
-            s.impl = si;
-            throw e;
-        }
-        s.impl = si;
-        s.postAccept();
+    	SocketImpl si = null;
+    	try {
+    		if (s.impl == null)
+    			s.setImpl();
+    		else {
+    			s.impl.reset();
+    		}
+    		si = s.impl;
+    		s.impl = null;
+    		si.address = new InetAddress();
+    		si.fd = new FileDescriptor();
+    		getImpl().accept(si);
+    		SecurityManager security = System.getSecurityManager();
+    		if (security != null) {
+    			security.checkAccept(si.getInetAddress().getHostAddress(), si.getPort());
+    		}
+    	} catch (IOException e) {
+    		if (si != null)
+    			si.reset();
+    		s.impl = si;
+    		throw e;
+    	} catch (SecurityException e) {
+    		if (si != null)
+    			si.reset();
+    		s.impl = si;
+    		throw e;
+    	}
+    	s.impl = si;
+    	s.postAccept();
     }
 
     /**
