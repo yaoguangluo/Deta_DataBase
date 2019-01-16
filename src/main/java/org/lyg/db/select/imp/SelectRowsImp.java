@@ -209,6 +209,10 @@ public class SelectRowsImp {
 	}
 
 	public static Object SelectRowsByAttributes(Map<String, Object> object) throws IOException {
+		if(!object.containsKey("recordRows")) {
+			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
+			object.put("recordRows", recordRows);
+		}
 		Spec spec = new Spec();
 		spec.setCulumnTypes(new ConcurrentHashMap<String, String>());
 		String objectType = "";
@@ -236,75 +240,125 @@ public class SelectRowsImp {
 						reader.close();
 						spec.setCulumnType(fileList[i], objectType);
 					}
-//					if(objectType.contains("string")) {
-						//condition
 						List<String[]> conditionValues = (List<String[]>) object.get("condition");
 						Iterator<String[]> iterator = conditionValues.iterator();
 						while(iterator.hasNext()) {
 							boolean overMap = output.size() == 0? false: true;
 							String[] conditionValueArray = iterator.next();
 							String type = conditionValueArray[1];
-							overMap = type.equalsIgnoreCase("or")?false:true;
+							boolean andMap = type.equalsIgnoreCase("and")?true:false;
 							for(int i = 2; i < conditionValueArray.length; i++) {
 								String[] sets = conditionValueArray[i].split("\\|");
-								if(overMap) {
+								if(overMap && andMap) {
 									processMap(sets, output, DBTablePath);
 								}else if(DetaDBBufferCacheManager.dbCache){
-									processCache(sets, output, object.get("tableName").toString(), object.get("baseName").toString());
+									processCache(sets, output, object.get("tableName").toString()
+											, object.get("baseName").toString(), object);
 								}else {
-									processTable(sets, output, DBTablePath);
+									processTable(sets, output, DBTablePath, object);
 								}
 							}
 						}
-					//}
 				}
 			}
 		}
 		return output;
 	}
 
-	private static void processCache(String[] sets, List<Map<String, Object>> output, String tableName, String baseName) {
+	private static void processCache(String[] sets, List<Map<String, Object>> output, String tableName, String baseName, Map<String, Object> object) {
 		Table table = DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName);
 		Iterator<String> iterator = table.getRows().keySet().iterator(); 
+		int count=0;
 		while(iterator.hasNext()) {
+			count++;
 			Row row = table.getRow(iterator.next());
-			double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal < new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
 					||sets[1].equalsIgnoreCase("-lte")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal<=  new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
 					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal ==  new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
 					||sets[1].equalsIgnoreCase("-gte")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal >= new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal > new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
 					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal != new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
-					output.add(rowToRowMap(row));
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("equal")) {
+				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
+				if(rowCellFromString.equalsIgnoreCase(sets[2]) && row.containsCell("is_delete_0")) {
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("!equal")) {
+				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
+				if(!rowCellFromString.equalsIgnoreCase(sets[2]) && row.containsCell("is_delete_0")) {
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
 				}	
 			}
 		}	
 	}
+	
 	//以后优化成统一对象输出，不需要再转换。2019-1-15 tin
 	private static Map<String, Object> rowToRowMap(Row row) {
 		Map<String, Object> culumnMaps = new HashMap<>();
@@ -328,54 +382,71 @@ public class SelectRowsImp {
 		List<Map<String, Object>> outputTemp = new ArrayList<>();
 		Iterator<Map<String, Object>> iterator = output.iterator();
 		int rowid = 0;
-		output.clear();
 		while(iterator.hasNext()) {
 			Map<String, Object> row = iterator.next();
 			Map<String, Object> rowMap = new HashMap<>();
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
 					||sets[1].equalsIgnoreCase("-lte")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
 					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
 					||sets[1].equalsIgnoreCase("-gte")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
 					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
 				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
-					output.add(row);
+					outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("equal")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(rowCellFromString.equalsIgnoreCase(sets[2])) {
+						outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("!equal")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(!rowCellFromString.equalsIgnoreCase(sets[2])) {
+						outputTemp.add(row);
 				}	
 			}
 		}
+		output.clear();
+		output.addAll(outputTemp);
 	}
 	
-	private static void processTable(String[] sets, List<Map<String, Object>> output, String DBTablePath) throws IOException {
+	private static void processTable(String[] sets, List<Map<String, Object>> output, String DBTablePath, Map<String, Object> object) throws IOException {
 		String DBTableRowsPath = DBTablePath + "/rows";	
 		File fileDBTableRowsPath = new File(DBTableRowsPath);
 		if (fileDBTableRowsPath.isDirectory()) {
 			String[] rowList = fileDBTableRowsPath.list();
+			int count=0;
 			NextRow:
 				for(String row: rowList) {
+					count++;
 					Map<String, Object> rowMap = new HashMap<>();
 					String DBTableRowIndexPath = DBTablePath + "/rows/" + row;	
 					File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
@@ -396,45 +467,90 @@ public class SelectRowsImp {
 							}
 							reader.close();
 							if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
-								if(new BigDecimal(temp.toString()).doubleValue() < new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+								if(new BigDecimal(temp.toString()).doubleValue() < new BigDecimal(sets[2].toString()).doubleValue()) {	
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
 							if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
 									||sets[1].equalsIgnoreCase("-lte")) {
 								if(new BigDecimal(temp.toString()).doubleValue() <= new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
-							if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
-									||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+							if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")||sets[1].equalsIgnoreCase("===")) {
 								if(new BigDecimal(temp.toString()).doubleValue() == new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
 							if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
 									||sets[1].equalsIgnoreCase("-gte")) {
 								if(new BigDecimal(temp.toString()).doubleValue() >= new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
 							if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
 								if(new BigDecimal(temp.toString()).doubleValue() > new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
-							if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
-									||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+							if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")) {
 								if(new BigDecimal(temp.toString()).doubleValue() != new BigDecimal(sets[2].toString()).doubleValue()) {
-									processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
-											, row, output, row, rowMap);
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
 								}	
 							}
+							if(sets[1].equalsIgnoreCase("equal")) {
+								String rowCellFromString = temp.toString();
+								if(rowCellFromString.equalsIgnoreCase(sets[2].toString())) {
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
+								}	
+							}
+							if(sets[1].equalsIgnoreCase("!equal")) {
+								String rowCellFromString = temp.toString();
+								if(!rowCellFromString.equalsIgnoreCase(sets[2].toString())) {
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
+								}	
+							}
+							
 						}
 					} 
 				}

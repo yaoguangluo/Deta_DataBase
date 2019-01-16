@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.lyg.cache.CacheManager;
+import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
@@ -140,7 +141,13 @@ public class PLSQLCommandImp {
 		object.put("loginInfo", "success");
 		
 		List<Object> spec = new ArrayList<>();
-		Iterator<String> iterator = ((Map<String, Object>)obj.get(0).get("rowValue")).keySet().iterator();
+		Iterator<String> iterator;
+		if(obj==null || obj.size()<1) {
+			iterator = DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString()).getTable(object.get("tableName").toString())
+					.getSpec().getCulumnTypes().keySet().iterator();
+		}else {
+			iterator = ((Map<String, Object>)obj.get(0).get("rowValue")).keySet().iterator();
+		}
 		while(iterator.hasNext()) {
 			spec.add(iterator.next());
 		}
