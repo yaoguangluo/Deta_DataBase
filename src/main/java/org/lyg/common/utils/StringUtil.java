@@ -12,7 +12,7 @@ public class StringUtil {
 	}
 
 	public static String decode(String str) throws UnsupportedEncodingException {
-		return new String(Base64.getDecoder().decode(str),"UTF-8");
+		return Base64.getDecoder().decode(str).toString();
 	}
 
 	public static String EncoderByMd5(String salt, String pwd, int enctimes) throws NoSuchAlgorithmException,
