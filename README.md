@@ -48,9 +48,9 @@
 
 
 #### 1 select 真实例子
-###### baseName:backend;
-###### tableName:usr:select;
-###### condition:or:u_id|<|200;
+##### baseName:backend;
+##### tableName:usr:select;
+##### condition:or:u_id|<=|3:u_id|>|7;
 
 #### 1 select 例子
 
