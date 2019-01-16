@@ -293,8 +293,7 @@ public class SelectRowsImp {
 					}
 				}	
 			}
-			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
-					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
+			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")||sets[1].equalsIgnoreCase("===")) {
 				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal ==  new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
 					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
@@ -325,8 +324,7 @@ public class SelectRowsImp {
 					}
 				}	
 			}
-			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
-					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
+			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")) {
 				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal != new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {
 					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
@@ -386,36 +384,40 @@ public class SelectRowsImp {
 			Map<String, Object> row = iterator.next();
 			Map<String, Object> rowMap = new HashMap<>();
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
 					||sets[1].equalsIgnoreCase("-lte")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
-			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")
-					||sets[1].equalsIgnoreCase("===")||sets[1].equalsIgnoreCase("-eq")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
+			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")||sets[1].equalsIgnoreCase("===")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
 					||sets[1].equalsIgnoreCase("-gte")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
-			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")
-					||sets[1].equalsIgnoreCase("-!eq")||sets[1].equalsIgnoreCase("-eq!")) {
-				if(new BigDecimal(row.get(sets[0]).toString()).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
+			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
