@@ -17,6 +17,7 @@ import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.plsql.imp.ProcessAggregationPLSQL;
 import org.lyg.db.plsql.imp.ProcessConditionPLSQL;
+import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({ "unused", "unchecked" })
 public class SelectRowsImp {
@@ -282,6 +283,23 @@ public class SelectRowsImp {
 				}
 				//基于sort key 前序treeMap 之后排序功能设计
 				//基于sort key 后序treeMap
+			}
+		}
+		return obj;
+	}
+	
+	public static Object SelectRowsByAttributesOfGetCulumns(Map<String, Object> object) {
+		if(!object.containsKey("obj")) {
+			return new ArrayList<>();
+		}
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
+		List<String[]> getCulumnsValues = (List<String[]>) object.get("getCulumns");
+		Iterator<String[]> iterator = getCulumnsValues.iterator();
+		while(iterator.hasNext()) {
+			boolean overMap = obj.size() == 0? false: true;
+			String[] getCulumnsValueArray = iterator.next();
+			if(overMap) {
+				ProcessGetCulumnsPLSQL.processGetCulumnsMap(obj, getCulumnsValueArray);
 			}
 		}
 		return obj;

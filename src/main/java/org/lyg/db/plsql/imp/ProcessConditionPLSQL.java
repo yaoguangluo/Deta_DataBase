@@ -134,53 +134,61 @@ public class ProcessConditionPLSQL {
 			Map<String, Object> row = iterator.next();
 			Map<String, Object> rowMap = new HashMap<>();
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
 					||sets[1].equalsIgnoreCase("-lte")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")||sets[1].equalsIgnoreCase("===")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
 					||sets[1].equalsIgnoreCase("-gte")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(new BigDecimal(rowCellFromString).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
 					outputTemp.add(row);
 				}	
 			}
 
 			if(sets[1].equalsIgnoreCase("equal")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(rowCellFromString.equalsIgnoreCase(sets[2])) {
 					outputTemp.add(row);
 				}	
 			}
 
 			if(sets[1].equalsIgnoreCase("!equal")) {
-				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
 				if(!rowCellFromString.equalsIgnoreCase(sets[2])) {
 					outputTemp.add(row);
 				}	
@@ -322,7 +330,7 @@ public class ProcessConditionPLSQL {
 				File readDBTableCulumnIndexPathFile = new File(DBTableCulumnIndexPath);
 				if (readDBTableRowIndexCulumnFile.isDirectory()) {
 					reader = new BufferedReader(new FileReader(readDBTableCulumnIndexPathFile + "/" + "value.lyg"));  
-					temp="";
+					temp = "";
 					while ((tempString = reader.readLine()) != null) {
 						temp += tempString;
 					}

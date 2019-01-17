@@ -52,6 +52,19 @@ public class PLSQLCommandImp {
 		object.put(acknowledge[0], conditionValues);
 	}
 
+	public static void processGetCulumns(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
+		if(object.containsKey(acknowledge[0])) {
+			List<String[]> getCulumns = (List<String[]>) object.get(acknowledge[0]);
+			getCulumns.add(acknowledge);
+			object.put(acknowledge[0], getCulumns);
+			return;
+		}
+		List<String[]> getCulumns = new CopyOnWriteArrayList<>();
+		getCulumns.add(acknowledge);
+		object.put(acknowledge[0], getCulumns);
+	}
+	
 	public static void processCulumnValue(String[] acknowledge, Map<String, Object> object) {
 		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
@@ -117,6 +130,9 @@ public class PLSQLCommandImp {
 					if(object.containsKey("aggregation")) {
 						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
 					}
+					if(object.containsKey("getCulumns")) {
+						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfGetCulumns(object));
+					}
 				}
 				if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBase")){
 					if(object.containsKey("condition")) {
@@ -128,11 +144,15 @@ public class PLSQLCommandImp {
 					if(object.containsKey("aggregation")) {
 						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
 					}
+					if(object.containsKey("getCulumns")) {
+						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
+					}
 //					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				}
 				object.remove("condition");
 				object.remove("relation");
 				object.remove("aggregation");
+				object.remove("getCulumns");
 				object.put("start", "0");
 			}
 		}
@@ -180,4 +200,5 @@ public class PLSQLCommandImp {
 		}
 		object.put("spec", spec);
 	}
+
 }

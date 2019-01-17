@@ -39,6 +39,9 @@ public class ExecPLSQLImp {
 			if(acknowledge[0].equals("aggregation")) {
 				PLSQLCommandImp.processAggregation(acknowledge, output);
 			}
+			if(acknowledge[0].equals("getCulumns")) {
+				PLSQLCommandImp.processGetCulumns(acknowledge, output);
+			}
 			output.put("newCommand", acknowledge[0]);
 			PLSQLCommandImp.processExec(acknowledge, output);
 			output.put("lastCommand", output.get("newCommand"));
