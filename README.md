@@ -15,12 +15,12 @@
 # 已完善功能：plsql 量子数据库语言去死锁机制。
 # 已完善功能：德塔 PL/SQL 数据分析语言 定义规范。
 
-## 未完善功能：select功能的表join 函数（准备开始做）
-## 未完善功能：db plsql query设计 update
-## 未完善功能：db plsql query设计 delete
-## 未完善功能：db plsql query设计 insert
-## 未完善功能：
-## 未完善功能：
+###### 未完善功能：select功能的表join 函数（准备开始做）
+###### 未完善功能：db plsql query设计 update
+###### 未完善功能：db plsql query设计 delete
+###### 未完善功能：db plsql query设计 insert
+###### 未完善功能：
+###### 未完善功能：
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
