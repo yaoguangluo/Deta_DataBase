@@ -30,7 +30,7 @@
 ##### baseName:[baseName];
 
 ##### tableName:[tableName]:[operation];
-##### getCulumns:[culumnName]:[culumnName]:[culumnName]:[culumnName]:[culumnName]:......;
+##### getCulumns:[difinition1]:[difinition2]:[difinition3]:[difinition4]:[difinition5]:......;
 ##### culumnName:[culumnName]:[dataType];
 ##### changeCulumnName:[newCulumnName]:[oldCulumnName];
 ##### culumnValue:[culumnName]:[culumnValue];
