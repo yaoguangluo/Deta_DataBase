@@ -30,20 +30,13 @@
 ##### baseName:[baseName];
 
 ##### tableName:[tableName]:[operation];
-
+##### getCulumns:[culumnName]:[culumnName]:[culumnName]:[culumnName]:[culumnName]:......;
 ##### culumnName:[culumnName]:[dataType];
-
 ##### changeCulumnName:[newCulumnName]:[oldCulumnName];
-
 ##### culumnValue:[culumnName]:[culumnValue];
-
 ##### condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
 ##### join:[tableName];
-
 ##### relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
-
 ##### aggregate[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
 
