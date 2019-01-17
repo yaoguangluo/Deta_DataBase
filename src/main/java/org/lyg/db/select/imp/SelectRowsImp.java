@@ -237,25 +237,25 @@ public class SelectRowsImp {
 						reader.close();
 						spec.setCulumnType(fileList[i], objectType);
 					}
-						List<String[]> conditionValues = (List<String[]>) object.get("condition");
-						Iterator<String[]> iterator = conditionValues.iterator();
-						while(iterator.hasNext()) {
-							boolean overMap = output.size() == 0? false: true;
-							String[] conditionValueArray = iterator.next();
-							String type = conditionValueArray[1];
-							boolean andMap = type.equalsIgnoreCase("and")?true:false;
-							for(int i = 2; i < conditionValueArray.length; i++) {
-								String[] sets = conditionValueArray[i].split("\\|");
-								if(overMap && andMap) {
-									ProcessConditionPLSQL.processMap(sets, output, DBTablePath);
-								}else if(DetaDBBufferCacheManager.dbCache){
-									ProcessConditionPLSQL.processCache(sets, output, object.get("tableName").toString()
-											, object.get("baseName").toString(), object);
-								}else {
-									ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);
-								}
+					List<String[]> conditionValues = (List<String[]>) object.get("condition");
+					Iterator<String[]> iterator = conditionValues.iterator();
+					while(iterator.hasNext()) {
+						boolean overMap = output.size() == 0? false: true;
+						String[] conditionValueArray = iterator.next();
+						String type = conditionValueArray[1];
+						boolean andMap = type.equalsIgnoreCase("and")?true:false;
+						for(int i = 2; i < conditionValueArray.length; i++) {
+							String[] sets = conditionValueArray[i].split("\\|");
+							if(overMap && andMap) {
+								ProcessConditionPLSQL.processMap(sets, output, DBTablePath);
+							}else if(DetaDBBufferCacheManager.dbCache){
+								ProcessConditionPLSQL.processCache(sets, output, object.get("tableName").toString()
+										, object.get("baseName").toString(), object);
+							}else {
+								ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);
 							}
 						}
+					}
 				}
 			}
 		}
@@ -279,7 +279,7 @@ public class SelectRowsImp {
 				String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
 				String dBTablePath = DBPath + "/" + object.get("tableName").toString();
 				if(limitMap) {
-					ProcessAggregationPLSQL.processAggregationLimitMap(sets, obj, dBTablePath);
+					ProcessAggregationPLSQL.processAggregationLimitMap(sets, obj);
 				}
 				//基于sort key 前序treeMap 之后排序功能设计
 				//基于sort key 后序treeMap
@@ -287,7 +287,7 @@ public class SelectRowsImp {
 		}
 		return obj;
 	}
-	
+
 	public static Object SelectRowsByAttributesOfGetCulumns(Map<String, Object> object) {
 		if(!object.containsKey("obj")) {
 			return new ArrayList<>();

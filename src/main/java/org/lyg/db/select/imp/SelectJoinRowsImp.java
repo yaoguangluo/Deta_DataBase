@@ -87,10 +87,8 @@ public class SelectJoinRowsImp {
 			boolean limitMap = type.equalsIgnoreCase("limit")?true:false;
 			for(int i = 2; i < aggregationValueArray.length; i++) {
 				String[] sets = aggregationValueArray[i].split("\\|");
-				String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
-				String dBTablePath = DBPath + "/" + object.get("tableName").toString();
 				if(limitMap) {
-					ProcessAggregationPLSQL.processAggregationLimitMap(sets, obj, dBTablePath);
+					ProcessAggregationPLSQL.processAggregationLimitMap(sets, obj);
 				}
 				//基于sort key 前序treeMap 之后排序功能设计
 				//基于sort key 后序treeMap
