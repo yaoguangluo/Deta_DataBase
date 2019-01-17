@@ -208,7 +208,7 @@ public class SelectRowsImp {
 		return output;
 	}
 
-	public static Object SelectRowsByAttributes(Map<String, Object> object) throws IOException {
+	public static Object SelectRowsByAttributesOfCondition(Map<String, Object> object) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -585,7 +585,89 @@ public class SelectRowsImp {
 		output.add(rowMap);
 	}
 
-	public static Object SelectRowsByJoinAttributes(Map<String, Object> object) {
-		return null;
+	public static List<Map<String, Object>> SelectRowsByAttributesOfAggregation(Map<String, Object> object) {
+		if(!object.containsKey("obj")) {
+			return new ArrayList<>() ;
+		}
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
+		List<String[]> aggregationValues = (List<String[]>) object.get("aggregation");
+		Iterator<String[]> iterator = aggregationValues.iterator();
+		while(iterator.hasNext()) {
+			boolean overMap = obj.size() == 0? false: true;
+			String[] aggregationValueArray = iterator.next();
+			String type = aggregationValueArray[1];
+			boolean andMap = type.equalsIgnoreCase("and")?true:false;
+			for(int i = 2; i < aggregationValueArray.length; i++) {
+				String[] sets = aggregationValueArray[i].split("\\|");
+				String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+				String dBTablePath = DBPath + "/" + object.get("tableName").toString();
+				processAggregationMap(sets, obj, dBTablePath);
+			}
+		}
+		return obj;
+	}
+	
+	private static void processAggregationMap(String[] sets, List<Map<String, Object>> output, String dBTablePath) {
+		List<Map<String, Object>> outputTemp = new ArrayList<>();
+		Iterator<Map<String, Object>> iterator = output.iterator();
+		int rowid = 0;
+		while(iterator.hasNext()) {
+			Map<String, Object> row = iterator.next();
+			Map<String, Object> rowMap = new HashMap<>();
+			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() < new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("<=")||sets[1].equalsIgnoreCase("=<")
+					||sets[1].equalsIgnoreCase("-lte")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() <=  new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("==")||sets[1].equalsIgnoreCase("=")||sets[1].equalsIgnoreCase("===")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() ==  new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">=")||sets[1].equalsIgnoreCase("=>") 
+					||sets[1].equalsIgnoreCase("-gte")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() >= new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase(">")||sets[1].equalsIgnoreCase("-gt")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() > new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("!=")||sets[1].equalsIgnoreCase("=!")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(new BigDecimal(rowCellFromString).doubleValue() != new BigDecimal(sets[2]).doubleValue()) {
+					outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("equal")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(rowCellFromString.equalsIgnoreCase(sets[2])) {
+						outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("!equal")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue"))).get(sets[0]))).get("culumnValue").toString();
+				if(!rowCellFromString.equalsIgnoreCase(sets[2])) {
+						outputTemp.add(row);
+				}	
+			}
+		}
+		output.clear();
+		output.addAll(outputTemp);
 	}
 }

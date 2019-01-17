@@ -108,17 +108,29 @@ public class PLSQLCommandImp {
 							||object.get("lastCommand").toString().contains("culumnValue")
 							||object.get("lastCommand").toString().contains("condition")
 							||object.get("lastCommand").toString().contains("relation"))) {
-				if(object.get("type").toString().equalsIgnoreCase("select")) {
-					object.put("obj", SelectRowsImp.SelectRowsByAttributes(object));
-					object.remove("condition");
-					object.remove("aggregation");
+				if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("join")) {
+					if(object.containsKey("condition")) {
+						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
+					}
+					if(object.containsKey("aggregation")) {
+						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
+					}
 				}
-				if(object.containsKey("join")){
-					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
-					object.remove("condition");
-					object.remove("relation");
-					object.remove("aggregation");
+				if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("join")){
+//					if(object.containsKey("condition")) {
+//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinCondition(object));
+//					}
+//					if(object.containsKey("relation")) {
+//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinRelation(object));
+//					}
+//					if(object.containsKey("aggregation")) {
+//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
+//					}
+//					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				}
+				object.remove("condition");
+				object.remove("relation");
+				object.remove("aggregation");
 				object.put("start", "0");
 			}
 		}
@@ -127,12 +139,12 @@ public class PLSQLCommandImp {
 	public static void processCheck(String acknowledge, Map<String, Object> object) throws IOException {
 		if(object.get("start").toString().equals("1")) {
 			if(object.get("type").toString().equalsIgnoreCase("select")) {
-				object.put("obj", SelectRowsImp.SelectRowsByAttributes(object));
+				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
 				object.remove("condition");
 				object.remove("aggregate");
 			}
 			if(object.containsKey("join")){
-				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
+//				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				object.remove("condition");
 				object.remove("relation");
 				object.remove("aggregate");
