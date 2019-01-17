@@ -23,21 +23,24 @@ public class ProcessGetCulumnsPLSQL {
 				int rowId = count ++;
 				Map<String, Object> row = iterator.next();
 				Map<String, Object> newRow = new HashMap<>();
+				Map<String, Object> rowValue = new HashMap<>();
 				NextCell:
 					for(int i = 1; i < getCulumnsValueArray.length; i++) {
 						String[] sets = getCulumnsValueArray[i].split("\\|");
-						if(null == sets) {
-							continue NextCell;
-						}
-						if(1 == sets.length && row.containsKey(sets[0])) {
-							newRow.put(sets[0], row.get(sets[0]));
-							continue NextCell;
-						}
-						if(3 == sets.length && sets[1].equalsIgnoreCase("as")&& row.containsKey(sets[0]) ) {
-							newRow.put(sets[2], row.get(sets[0]));
-							continue NextCell;
+						if(null != sets && ((Map<String, Object>)row.get("rowValue")).containsKey(sets[0])) {
+							Map<String, Object> cell = (Map<String, Object>)((Map<String, Object>)row.get("rowValue")).get(sets[0]);
+							if(1 == sets.length) {
+								rowValue.put(sets[0], cell);
+								continue NextCell;
+							}
+							if(3 == sets.length && sets[1].equalsIgnoreCase("as")) {
+								cell.put("culumnName", sets[2]);
+								rowValue.put(sets[2], cell);
+								continue NextCell;
+							}
 						}
 					}
+				newRow.put("rowValue", rowValue);
 				newobj.add(newRow);
 			}
 		obj.clear();

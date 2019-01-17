@@ -74,30 +74,38 @@ public class ProcessRelationPLSQL {
 		while(iterator.hasNext()) {
 			int objRowId = count++;
 			Map<String, Object> objRow = iterator.next();
+			Map<String, Object> row = (Map<String, Object>) objRow.get("rowValue");
 			Iterator<Map<String, Object>> iteratorJoin = joinObj.iterator(); 
 			int countJoin = 0;
 			while(iteratorJoin.hasNext()) {
 				int objJoinRowId = countJoin++;
 				Map<String, Object> objJoinRow = iteratorJoin.next();
+				Map<String, Object> joinRow = (Map<String, Object>) objJoinRow.get("rowValue");
+				Map<String, Object> cell = (Map<String, Object>) row.get(sets[0]);
+				Map<String, Object> cellJoin = (Map<String, Object>) joinRow.get(sets[2]);
 				if(sets[1].equalsIgnoreCase("==") || sets[1].equalsIgnoreCase("===")) {
-					if(new BigDecimal(objRow.get(sets[0]).toString()).doubleValue() 
-							== new BigDecimal(objJoinRow.get(sets[2]).toString()).doubleValue()) {
+					if(new BigDecimal(cell.get("culumnValue").toString()).doubleValue() 
+							== new BigDecimal(cellJoin.get("culumnValue").toString()).doubleValue()) {
 						if(!findinNewObj.containsKey(objRowId + ":" + objJoinRowId)) {
 							Map<String, Object> newObjRow = new HashMap<>();
 							newObjRow.putAll(objRow);
 							newObjRow.putAll(objJoinRow);
-							newObj.add(newObjRow);
+							Map<String, Object> newRow = new HashMap<>();
+							newRow.put("rowValue", newObjRow);
+							newObj.add(newRow);
 							findinNewObj.put(objRowId + ":" + objJoinRowId, true);
 						} 
 					}
 				}
 				if(sets[1].equalsIgnoreCase("euqal")) {
-					if(objRow.get(sets[0]).toString().equals(objJoinRow.get(sets[2]).toString())) {
+					if(cell.get("culumnValue").toString().equals(cellJoin.get("culumnValue").toString())) {
 						if(!findinNewObj.containsKey(objRowId + ":" + objJoinRowId)) {
 							Map<String, Object> newObjRow = new HashMap<>();
 							newObjRow.putAll(objRow);
 							newObjRow.putAll(objJoinRow);
-							newObj.add(newObjRow);
+							Map<String, Object> newRow = new HashMap<>();
+							newRow.put("rowValue", newObjRow);
+							newObj.add(newRow);
 							findinNewObj.put(objRowId + ":" + objJoinRowId, true);
 						} 
 					}

@@ -122,55 +122,53 @@ public class PLSQLCommandImp {
 					&&(object.get("lastCommand").toString().contains("changeCulumnName")
 							||object.get("lastCommand").toString().contains("culumnValue")
 							||object.get("lastCommand").toString().contains("condition")
+							||object.get("lastCommand").toString().contains("relation")
+							||object.get("lastCommand").toString().contains("aggregation")
+							||object.get("lastCommand").toString().contains("getCulumns")
 							||object.get("lastCommand").toString().contains("relation"))) {
-				if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBase")) {
-					if(object.containsKey("condition")) {
-						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
-					}
-					if(object.containsKey("aggregation")) {
-						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
-					}
-					if(object.containsKey("getCulumns")) {
-						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfGetCulumns(object));
-					}
-				}
-				if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBase")){
-					if(object.containsKey("condition")) {
-						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinCondition(object));
-					}
-					if(object.containsKey("relation")) {
-						object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinRelation(object));
-					}
-					if(object.containsKey("aggregation")) {
-						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
-					}
-					if(object.containsKey("getCulumns")) {
-						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
-					}
-				}
-				object.remove("condition");
-				object.remove("relation");
-				object.remove("aggregation");
-				object.remove("getCulumns");
-				object.put("start", "0");
+				processExecKernel(object);
 			}
 		}
 	}
 
+	private static void processExecKernel(Map<String, Object> object) throws IOException{
+		if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBaseName")) {
+			if(object.containsKey("condition")) {
+				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
+			}
+			if(object.containsKey("aggregation")) {
+				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
+			}
+			if(object.containsKey("getCulumns")) {
+				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfGetCulumns(object));
+			}
+		}
+		if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBaseName")){
+			if(object.containsKey("condition")) {
+				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinCondition(object));
+			}
+			if(object.containsKey("relation")) {
+				object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinRelation(object));
+			}
+			if(object.containsKey("aggregation")) {
+				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
+			}
+			if(object.containsKey("getCulumns")) {
+				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
+			}
+		}
+		object.remove("condition");
+		object.remove("changeCulumnName");
+		object.remove("getCulumns");
+		object.remove("relation");
+		object.remove("aggregation");
+		object.remove("getCulumns");
+		object.put("start", "0");
+	}
+
 	public static void processCheck(String acknowledge, Map<String, Object> object) throws IOException {
 		if(object.get("start").toString().equals("1")) {
-			if(object.get("type").toString().equalsIgnoreCase("select")) {
-				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
-				object.remove("condition");
-				object.remove("aggregate");
-			}
-			if(object.containsKey("join")){
-				//				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
-				object.remove("condition");
-				object.remove("relation");
-				object.remove("aggregate");
-			}
-			object.put("start", "0");
+			processExecKernel(object);
 		}
 		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
 		int totalPages = obj.size();
