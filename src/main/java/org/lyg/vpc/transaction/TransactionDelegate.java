@@ -8,14 +8,9 @@ import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 import org.lyg.vpc.view.Token;
 import org.lyg.vpc.view.Usr;
 import org.lyg.vpc.view.UsrToken;
-  
 import java.util.HashMap;
 import java.util.Map;
-
- 
 public class TransactionDelegate {
-//	@Autowired
-//	private LoginService loginService;
 	public static Map<String, Object> transactionLogin(String uEmail, String uPassword)throws Exception {
 		Usr usr = LoginServiceImpl.findUsrByUEmail(uEmail);
 		UsrToken usrToken = LoginServiceImpl.findUsrTokenByUId(usr.getuId());

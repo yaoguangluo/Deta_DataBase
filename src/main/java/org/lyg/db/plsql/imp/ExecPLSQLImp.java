@@ -13,28 +13,31 @@ public class ExecPLSQLImp {
 		for(String command:commands) {
 			String[] acknowledge = command.split(":");
 			if(acknowledge[0].equals("baseName")) {
-				PLSQLCommandImp.processBaseName(acknowledge,output);
+				PLSQLCommandImp.processBaseName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("tableName")) {
-				PLSQLCommandImp.processTableName(acknowledge,output);
+				PLSQLCommandImp.processTableName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("culumnName")) {
-				PLSQLCommandImp.processCulumnName(acknowledge,output);
+				PLSQLCommandImp.processCulumnName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("changeCulumnName")) {
-				PLSQLCommandImp.processChangeCulumnName(acknowledge,output);
+				PLSQLCommandImp.processChangeCulumnName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("culumnValue")) {
-				PLSQLCommandImp.processCulumnValue(acknowledge,output);
+				PLSQLCommandImp.processCulumnValue(acknowledge, output);
 			}
 			if(acknowledge[0].equals("join")) {
-				PLSQLCommandImp.processJoin(acknowledge,output);
+				PLSQLCommandImp.processJoin(acknowledge, output);
 			}
 			if(acknowledge[0].equals("condition")) {
-				PLSQLCommandImp.processCondition(acknowledge,output);
+				PLSQLCommandImp.processCondition(acknowledge, output);
 			}
 			if(acknowledge[0].equals("relation")) {
-				PLSQLCommandImp.processRelation(acknowledge,output);
+				PLSQLCommandImp.processRelation(acknowledge, output);
+			}
+			if(acknowledge[0].equals("aggregation")) {
+				PLSQLCommandImp.processAggregation(acknowledge, output);
 			}
 			output.put("newCommand", acknowledge[0]);
 			PLSQLCommandImp.processExec(acknowledge, output);

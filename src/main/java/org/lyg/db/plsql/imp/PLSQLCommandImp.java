@@ -75,6 +75,19 @@ public class PLSQLCommandImp {
 		object.put(acknowledge[0], culumnNames);
 	}
 
+	public static void processAggregation(String[] acknowledge, Map<String, Object> object) {
+		object.put("start", "1");
+		if(object.containsKey(acknowledge[0])) {
+			List<String[]> aggregations = (List<String[]>) object.get(acknowledge[0]);
+			aggregations.add(acknowledge);
+			object.put(acknowledge[0], aggregations);
+			return;
+		}
+		List<String[]> aggregations = new CopyOnWriteArrayList<>();
+		aggregations.add(acknowledge);
+		object.put(acknowledge[0], aggregations);
+	}
+	
 	public static void processChangeCulumnName(String[] acknowledge, Map<String, Object> object) {
 		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
@@ -98,13 +111,13 @@ public class PLSQLCommandImp {
 				if(object.get("type").toString().equalsIgnoreCase("select")) {
 					object.put("obj", SelectRowsImp.SelectRowsByAttributes(object));
 					object.remove("condition");
-					object.remove("aggregate");
+					object.remove("aggregation");
 				}
 				if(object.containsKey("join")){
 					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 					object.remove("condition");
 					object.remove("relation");
-					object.remove("aggregate");
+					object.remove("aggregation");
 				}
 				object.put("start", "0");
 			}
