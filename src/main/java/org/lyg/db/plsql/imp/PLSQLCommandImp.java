@@ -64,7 +64,7 @@ public class PLSQLCommandImp {
 		getCulumns.add(acknowledge);
 		object.put(acknowledge[0], getCulumns);
 	}
-	
+
 	public static void processCulumnValue(String[] acknowledge, Map<String, Object> object) {
 		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
@@ -102,7 +102,7 @@ public class PLSQLCommandImp {
 		aggregations.add(acknowledge);
 		object.put(acknowledge[0], aggregations);
 	}
-	
+
 	public static void processChangeCulumnName(String[] acknowledge, Map<String, Object> object) {
 		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
@@ -138,16 +138,15 @@ public class PLSQLCommandImp {
 					if(object.containsKey("condition")) {
 						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinCondition(object));
 					}
-//					if(object.containsKey("relation")) {
-//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinRelation(object));
-//					}
+					if(object.containsKey("relation")) {
+						object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinRelation(object));
+					}
 					if(object.containsKey("aggregation")) {
 						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
 					}
 					if(object.containsKey("getCulumns")) {
 						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
 					}
-//					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				}
 				object.remove("condition");
 				object.remove("relation");
@@ -166,7 +165,7 @@ public class PLSQLCommandImp {
 				object.remove("aggregate");
 			}
 			if(object.containsKey("join")){
-//				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
+				//				object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				object.remove("condition");
 				object.remove("relation");
 				object.remove("aggregate");
@@ -179,14 +178,14 @@ public class PLSQLCommandImp {
 		int rowEndIndex = object.containsKey("pageEnd")?Integer.valueOf(object.get("pageEnd").toString()):totalPages>15?15:totalPages;
 		object.put("pageBegin", rowBeginIndex);
 		object.put("pageEnd", rowEndIndex);
-		
+
 		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
 		String DBTablePath = DBPath + "/" + object.get("tableName").toString();
 		object.put("tablePath", DBTablePath);
 		object.put("returnResult", "success");
 		object.put("totalPages",totalPages);
 		object.put("loginInfo", "success");
-		
+
 		List<Object> spec = new ArrayList<>();
 		Iterator<String> iterator;
 		if(obj==null || obj.size()<1) {
@@ -200,5 +199,4 @@ public class PLSQLCommandImp {
 		}
 		object.put("spec", spec);
 	}
-
 }

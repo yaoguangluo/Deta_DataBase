@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.plsql.imp.ProcessAggregationPLSQL;
 import org.lyg.db.plsql.imp.ProcessConditionPLSQL;
 import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
+import org.lyg.db.plsql.imp.ProcessRelationPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({"unused", "unchecked"})
 public class SelectJoinRowsImp {
@@ -112,5 +114,33 @@ public class SelectJoinRowsImp {
 			}
 		}
 		return obj;
+	}
+
+	public static Object SelectRowsByAttributesOfJoinRelation(Map<String, Object> object) {
+		if(!object.containsKey("obj")||!object.containsKey("joinObj")) {
+			return new ArrayList<>();
+		}
+		Map<String,Boolean> findinNewObj = new HashMap<>();
+		List<Map<String, Object>> newObj = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
+		List<Map<String, Object>> joinObj= ((List<Map<String, Object>>)(object.get("joinObj")));
+		List<String[]> relationValues= (List<String[]>) object.get("relation");
+		Iterator<String[]> iterator= relationValues.iterator();
+		while(iterator.hasNext()) {
+			boolean overObjMap= obj.size() == 0? false: true;
+			boolean overJoinObjMap= joinObj.size() == 0? false: true;
+			String[] getRelationValueArray = iterator.next();
+			String type = getRelationValueArray[1];
+			boolean andMap = type.equalsIgnoreCase("and")?true:false;
+			for(int i= 2; i< getRelationValueArray.length; i++) {
+				String[] sets = getRelationValueArray[i].split("\\|");
+				if(overObjMap&& overJoinObjMap&&andMap && i>2) {
+					ProcessRelationPLSQL.processAndMap(sets, obj, joinObj,object, newObj);
+				}else {
+					ProcessRelationPLSQL.processOrMap(sets, obj, joinObj, object, newObj, findinNewObj);
+				}
+			}
+		}
+		return newObj;
 	}
 }
