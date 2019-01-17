@@ -87,7 +87,7 @@
 
 ##### condition:and:utestCulumn1|>|100:utestCulumn2|==|fire;
 
-##### join:stest;
+##### join:backend:stest;
 
 ##### condition:and:stestCulumn1|>|100:stestCulumn2|==|fire;
 
