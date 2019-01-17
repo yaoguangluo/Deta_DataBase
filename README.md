@@ -30,20 +30,13 @@
 ##### baseName:[baseName];
 
 ##### tableName:[tableName]:[operation];
-
+##### getCulumns:[difinition1]:[difinition2]:[difinition3]:[difinition4]:[difinition5]:......;
 ##### culumnName:[culumnName]:[dataType];
-
 ##### changeCulumnName:[newCulumnName]:[oldCulumnName];
-
 ##### culumnValue:[culumnName]:[culumnValue];
-
 ##### condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
 ##### join:[tableName];
-
 ##### relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
-
 ##### aggregate[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
 
@@ -82,17 +75,13 @@
 #### 2.1 select join 复杂例子
 
 ##### tableName:utest:select;
-
 ##### condition:or:utestCulumn1|<|20:utestCulumn2|==|fire;
-
 ##### condition:and:utestCulumn1|>|100:utestCulumn2|==|fire;
-
+##### getCulumns:utestCulumn1|as|uid::utestCulumn2|as|ussd:utoken:umap;
 ##### join:backend:stest;
-
 ##### condition:and:stestCulumn1|>|100:stestCulumn2|==|fire;
-
+##### getCulumns:stestCulumn1|as|sid|:stestCulumn2|as|sssd:stoken:smap;
 ##### relation:or:uid|==|sid:ussd|==|sssd;
-
 ##### relation:and:utoken|=!|stoken:umap|==|smap;
 ##### aggregation:limit:2|~|10;
 
