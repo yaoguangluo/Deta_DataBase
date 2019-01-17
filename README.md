@@ -16,12 +16,12 @@
 ##### 已完善功能：德塔 PL/SQL 数据分析语言 定义规范。。功能作者： 罗瑶光
 ##### 已完善功能：前端angular html页面， 感谢webadmin 开源项目组，本人采用了bootstrap原生js组件。
 
-###### 未完善功能：select功能的表join 函数（准备开始做）
+###### 未完善功能：select功能的表join 函数（正在做ing）
 ###### 未完善功能：db plsql query设计 update
 ###### 未完善功能：db plsql query设计 delete
 ###### 未完善功能：db plsql query设计 insert
-###### 未完善功能：
-###### 未完善功能：
+###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
+###### 未完善功能：基于sort key 后序treeMap
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
