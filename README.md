@@ -93,7 +93,7 @@
 ##### relation:or:uid|==|sid:ussd|==|sssd;
 
 ##### relation:and:utoken|=!|stoken:umap|==|smap;
-##### aggregation:limit:2:10;
+##### aggregation:limit:2-10;
 
 
 
