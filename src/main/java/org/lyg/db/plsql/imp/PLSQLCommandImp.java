@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
@@ -34,7 +35,8 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processJoin(String[] acknowledge, Map<String, Object> object) {
-		object.put(acknowledge[0], acknowledge[1]);
+		object.put("joinBaseName", acknowledge[1]);
+		object.put("joinTableName", acknowledge[2]);
 	}
 
 	public static void processCondition(String[] acknowledge, Map<String, Object> object) {
@@ -108,7 +110,7 @@ public class PLSQLCommandImp {
 							||object.get("lastCommand").toString().contains("culumnValue")
 							||object.get("lastCommand").toString().contains("condition")
 							||object.get("lastCommand").toString().contains("relation"))) {
-				if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("join")) {
+				if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBase")) {
 					if(object.containsKey("condition")) {
 						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
 					}
@@ -116,16 +118,16 @@ public class PLSQLCommandImp {
 						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
 					}
 				}
-				if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("join")){
-//					if(object.containsKey("condition")) {
-//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinCondition(object));
-//					}
+				if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBase")){
+					if(object.containsKey("condition")) {
+						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinCondition(object));
+					}
 //					if(object.containsKey("relation")) {
 //						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinRelation(object));
 //					}
-//					if(object.containsKey("aggregation")) {
-//						object.put("obj", SelectRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
-//					}
+					if(object.containsKey("aggregation")) {
+						object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
+					}
 //					object.put("obj", SelectRowsImp.SelectRowsByJoinAttributes(object));
 				}
 				object.remove("condition");
