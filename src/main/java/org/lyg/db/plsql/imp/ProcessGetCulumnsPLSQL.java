@@ -29,11 +29,11 @@ public class ProcessGetCulumnsPLSQL {
 						if(null == sets) {
 							continue NextCell;
 						}
-						if(1 == sets.length) {
+						if(1 == sets.length && row.containsKey(sets[0])) {
 							newRow.put(sets[0], row.get(sets[0]));
 							continue NextCell;
 						}
-						if(3 == sets.length && sets[1].equalsIgnoreCase("as") ) {
+						if(3 == sets.length && sets[1].equalsIgnoreCase("as")&& row.containsKey(sets[0]) ) {
 							newRow.put(sets[2], row.get(sets[0]));
 							continue NextCell;
 						}
