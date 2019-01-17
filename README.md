@@ -1,6 +1,6 @@
 # 已完善功能：单表增删改查
 # 已完善功能：操作权限
-# 已完善功能：超时
+# 已完善功能：超时 (token的早期不可逆加密方式思路来自10年前的中科大的筛子加密论文，后本人修改为2次组合加密，并采用mine decode 方式解码，在这感谢中科大)
 # 已完善功能：hash存储
 # 已完善功能：并发
 # 已完善功能：2级缓存
@@ -15,12 +15,12 @@
 # 已完善功能：plsql 量子数据库语言去死锁机制。
 # 已完善功能：德塔 PL/SQL 数据分析语言 定义规范。
 
-## 未完善功能：select功能的表join 函数（准备开始做）
-## 未完善功能：db plsql query设计 update
-## 未完善功能：db plsql query设计 delete
-## 未完善功能：db plsql query设计 insert
-## 未完善功能：
-## 未完善功能：
+###### 未完善功能：select功能的表join 函数（准备开始做）
+###### 未完善功能：db plsql query设计 update
+###### 未完善功能：db plsql query设计 delete
+###### 未完善功能：db plsql query设计 insert
+###### 未完善功能：
+###### 未完善功能：
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
@@ -93,7 +93,7 @@
 ##### relation:or:uid|==|sid:ussd|==|sssd;
 
 ##### relation:and:utoken|=!|stoken:umap|==|smap;
-##### asggregate:limit:2:10;
+##### aggregation:limit:2|~|10;
 
 
 
