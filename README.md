@@ -15,13 +15,22 @@
 ##### 已完善功能：plsql 量子数据库语言去死锁机制。。功能作者： 罗瑶光
 ##### 已完善功能：德塔 PL/SQL 数据分析语言 定义规范。。功能作者： 罗瑶光
 ##### 已完善功能：前端angular html页面， 感谢webadmin 开源项目组，本人采用了bootstrap原生js组件。
+##### 已完善功能：select功能的表join 函数
+##### 已完善功能：select功能的表aggregation limit 函数
+##### 已完善功能：semi join功能的表 relation 函数
 
-###### 未完善功能：select功能的表join 函数（正在做ing）
+
 ###### 未完善功能：db plsql query设计 update
 ###### 未完善功能：db plsql query设计 delete
 ###### 未完善功能：db plsql query设计 insert
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
 ###### 未完善功能：基于sort key 后序treeMap
+###### 未完善功能：引擎算法优化
+###### 未完善功能：序列化堆2分搜索加速
+###### 未完善功能：jvmsets bit优化
+###### 未完善功能：selet where in 函数
+###### 未完善功能：
+###### 未完善功能：
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
@@ -42,9 +51,16 @@
 
 
 #### 1 select 真实例子
-##### baseName:backend;
-##### tableName:usr:select;
-##### condition:or:u_id|<=|3:u_id|>|7;
+###### baseName:backend;
+###### tableName:usr:select;
+###### condition:or:u_id|<=|3:u_id|>|7;
+###### condition:and:u_email|!equal|321:u_name|!equal|123;
+###### getCulumns:u_id|as|detaId:u_email|as|detaEmail;
+###### join:backend:usrToken;
+###### condition:and:u_level|equal|low;
+###### getCulumns:u_id|as|sId:u_level:u_password|as|SSID;
+###### relation:and:detaId|==|sId;
+###### aggregation:limit:0|~|1;
 
 #### 1 select 例子
 
