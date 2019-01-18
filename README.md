@@ -49,7 +49,7 @@
 ###### getCulumns:u_id|as|detaId:u_email|as|detaEmail;
 ###### join:backend:usrToken;
 ###### condition:and:u_level|equal|low;
-###### getCulumns:u_id|as|sId:u_level:u_token|as|SSID;
+###### getCulumns:u_id|as|sId:u_level:u_password|as|SSID;
 ###### relation:and:detaId|==|sId;
 ###### aggregation:limit:0|~|1;
 
