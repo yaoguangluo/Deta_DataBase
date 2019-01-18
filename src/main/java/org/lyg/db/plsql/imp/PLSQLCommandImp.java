@@ -151,13 +151,15 @@ public class PLSQLCommandImp {
 				object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinRelation(object));
 			}
 			if(object.containsKey("aggregation")) {
-				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
+				object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
 			}
 			if(object.containsKey("getCulumns")) {
 				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
 			}
 		}
+//		object.remove("joinBaseName");
 		object.remove("condition");
+		object.remove("recordRows");
 		object.remove("changeCulumnName");
 		object.remove("getCulumns");
 		object.remove("relation");

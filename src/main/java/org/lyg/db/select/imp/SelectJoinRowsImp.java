@@ -79,7 +79,7 @@ public class SelectJoinRowsImp {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
-		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("joinObj")));
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
 		List<String[]> aggregationValues = (List<String[]>) object.get("aggregation");
 		Iterator<String[]> iterator = aggregationValues.iterator();
 		while(iterator.hasNext()) {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused","unchecked"})
 public class ProcessRelationPLSQL {
 	public static void processAndMap(String[] sets, List<Map<String, Object>> obj, List<Map<String, Object>> joinObj
 			, Map<String, Object> object, List<Map<String, Object>> newObj) {
@@ -88,11 +88,11 @@ public class ProcessRelationPLSQL {
 							== new BigDecimal(cellJoin.get("culumnValue").toString()).doubleValue()) {
 						if(!findinNewObj.containsKey(objRowId + ":" + objJoinRowId)) {
 							Map<String, Object> newObjRow = new HashMap<>();
-							newObjRow.putAll(objRow);
-							newObjRow.putAll(objJoinRow);
 							Map<String, Object> newRow = new HashMap<>();
-							newRow.put("rowValue", newObjRow);
-							newObj.add(newRow);
+							newRow.putAll((Map<? extends String, ? extends Object>) objJoinRow.get("rowValue"));
+							newRow.putAll((Map<? extends String, ? extends Object>) objRow.get("rowValue"));	 
+							newObjRow.put("rowValue", newRow);
+							newObj.add(newObjRow);
 							findinNewObj.put(objRowId + ":" + objJoinRowId, true);
 						} 
 					}
@@ -101,17 +101,16 @@ public class ProcessRelationPLSQL {
 					if(cell.get("culumnValue").toString().equals(cellJoin.get("culumnValue").toString())) {
 						if(!findinNewObj.containsKey(objRowId + ":" + objJoinRowId)) {
 							Map<String, Object> newObjRow = new HashMap<>();
-							newObjRow.putAll(objRow);
-							newObjRow.putAll(objJoinRow);
 							Map<String, Object> newRow = new HashMap<>();
-							newRow.put("rowValue", newObjRow);
-							newObj.add(newRow);
+							newRow.putAll((Map<? extends String, ? extends Object>) objJoinRow.get("rowValue"));
+							newRow.putAll((Map<? extends String, ? extends Object>) objRow.get("rowValue"));	 
+							newObjRow.put("rowValue", newRow);
+							newObj.add(newObjRow);
 							findinNewObj.put(objRowId + ":" + objJoinRowId, true);
 						} 
 					}
 				}
 			}
-
 		}
 	}
 }
