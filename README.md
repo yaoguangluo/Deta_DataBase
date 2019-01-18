@@ -42,9 +42,16 @@
 
 
 #### 1 select 真实例子
-##### baseName:backend;
-##### tableName:usr:select;
-##### condition:or:u_id|<=|3:u_id|>|7;
+###### baseName:backend;
+###### tableName:usr:select;
+###### condition:or:u_id|<=|3:u_id|>|7;
+###### condition:and:u_email|!equal|321:u_name|!equal|123;
+###### getCulumns:u_id|as|detaId:u_email|as|detaEmail;
+###### join:backend:usrToken;
+###### condition:and:u_level|equal|low;
+###### getCulumns:u_id|as|sId:u_level:u_token|as|SSID;
+###### relation:and:detaId|==|sId;
+###### aggregation:limit:0|~|1;
 
 #### 1 select 例子
 
