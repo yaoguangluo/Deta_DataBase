@@ -15,18 +15,22 @@ import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
 	public static void proceseSetRoot(String[] acknowledge, Map<String, Object> output) throws Exception {
+		String dbPath = "";
+		for(String partsPath:acknowledge) {
+			dbPath += ":"+partsPath;
+		}
 		if(null != CacheManager.getCacheInfo("DBPath")) {
-			File file = new File(acknowledge[1]);
+			File file = new File(dbPath);
 			if(!file.exists()) {
 				file.mkdirs();
 				Cache c = new Cache();
-				c.setValue(acknowledge[1]);
+				c.setValue(dbPath);
 				CacheManager.putCache("DBPath", c);
 			}else if(file.isFile()) {
 				throw new Exception();
 			}else if(file.isDirectory()) {
 				Cache c = new Cache();
-				c.setValue(acknowledge[1]);
+				c.setValue(dbPath);
 				CacheManager.putCache("DBPath", c);
 			}
 		}

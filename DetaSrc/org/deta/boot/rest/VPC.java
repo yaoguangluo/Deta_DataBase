@@ -36,7 +36,6 @@ public class VPC {
 			return VtoV.ObjectToJsonString(RestDBPLSQLImpl.restDBPLSQLImpl(data.get("token") ,data.get("email")
 					, data.get("password"), data.get("auth"), data.get("LYGQuery")));
 		}
-		
 		//restMap
 		if(string.equalsIgnoreCase("/login")){
 			return VtoV.ObjectToJsonString(RestLoginPortImpl.login(data.get("uEmail"),data.get("uPassword")));	
