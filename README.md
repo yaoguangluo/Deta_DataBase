@@ -39,7 +39,7 @@
 
 ##### setRoot:[path];
 ##### baseName:[baseName];
-##### tableName:[tableName]:[operation];
+##### tableName:[tableName]'[operation];
 ##### getCulumns:[difinition1]:[difinition2]:[difinition3]:[difinition4]:[difinition5]:......;
 ##### culumnName:[culumnName]:[dataType];
 ##### changeCulumnName:[newCulumnName]:[oldCulumnName];
@@ -52,6 +52,7 @@
 
 
 #### 1 select 真实例子
+###### setRoot:C:/DetaDB;
 ###### baseName:backend;
 ###### tableName:usr:select;
 ###### condition:or:u_id|<=|3:u_id|>|7;
