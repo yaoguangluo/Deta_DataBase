@@ -189,5 +189,5 @@
 
 ##### tableName:test:change;
 
-##### changeCulumnName:newCulumnName:oldCulumnName;
+##### changeCulumnName:oldCulumnName:newCulumnName;
 
