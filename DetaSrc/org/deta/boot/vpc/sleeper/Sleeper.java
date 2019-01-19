@@ -33,8 +33,8 @@ public class Sleeper extends Thread implements Runnable{
 			
 		}catch(Exception e){
 			try {
-				e.printStackTrace();
 				vPCSResponse.returnErrorCode(500);
+				e.printStackTrace();
 			} catch (IOException e1) {
 				System.gc();
 				e1.printStackTrace();
