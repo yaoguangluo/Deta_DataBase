@@ -1,4 +1,5 @@
 package org.lyg.db.plsql.imp;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,12 +7,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
+	public static void proceseSetRoot(String[] acknowledge, Map<String, Object> output) throws Exception {
+		if(null != CacheManager.getCacheInfo("DBPath")) {
+			File file = new File(acknowledge[1]);
+			if(!file.exists()) {
+				file.mkdirs();
+				Cache c = new Cache();
+				c.setValue(acknowledge[1]);
+				CacheManager.putCache("DBPath", c);
+			}else if(file.isFile()) {
+				throw new Exception();
+			}else if(file.isDirectory()) {
+				Cache c = new Cache();
+				c.setValue(acknowledge[1]);
+				CacheManager.putCache("DBPath", c);
+			}
+		}
+	}
+	
 	public static void processBaseName(String[] acknowledge, Map<String, Object> object) {
 		object.put(acknowledge[0], acknowledge[1]);
 	}
@@ -21,7 +41,7 @@ public class PLSQLCommandImp {
 		object.put("type", acknowledge[2]);
 	}
 
-	public static void processRelation(String[] acknowledge, Map<String, Object> object) {
+	public static void processListNeedStart(String[] acknowledge, Map<String, Object> object) {
 		object.put("start", "1");
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> relationValues = (List<String[]>) object.get(acknowledge[0]);
@@ -39,45 +59,6 @@ public class PLSQLCommandImp {
 		object.put("joinTableName", acknowledge[2]);
 	}
 
-	public static void processCondition(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> conditionValues = (List<String[]>) object.get(acknowledge[0]);
-			conditionValues.add(acknowledge);
-			object.put(acknowledge[0], conditionValues);
-			return;
-		}
-		List<String[]> conditionValues = new CopyOnWriteArrayList<>();
-		conditionValues.add(acknowledge);
-		object.put(acknowledge[0], conditionValues);
-	}
-
-	public static void processGetCulumns(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> getCulumns = (List<String[]>) object.get(acknowledge[0]);
-			getCulumns.add(acknowledge);
-			object.put(acknowledge[0], getCulumns);
-			return;
-		}
-		List<String[]> getCulumns = new CopyOnWriteArrayList<>();
-		getCulumns.add(acknowledge);
-		object.put(acknowledge[0], getCulumns);
-	}
-
-	public static void processCulumnValue(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> culumnValues = (List<String[]>) object.get(acknowledge[0]);
-			culumnValues.add(acknowledge);
-			object.put(acknowledge[0], culumnValues);
-			return;
-		}
-		List<String[]> culumnValues = new CopyOnWriteArrayList<>();
-		culumnValues.add(acknowledge);
-		object.put(acknowledge[0], culumnValues);
-	}
-
 	public static void processCulumnName(String[] acknowledge, Map<String, Object> object) {
 		if(object.containsKey(acknowledge[0])) {
 			List<String[]> culumnNames = (List<String[]>) object.get(acknowledge[0]);
@@ -88,32 +69,6 @@ public class PLSQLCommandImp {
 		List<String[]> culumnNames = new CopyOnWriteArrayList<>();
 		culumnNames.add(acknowledge);
 		object.put(acknowledge[0], culumnNames);
-	}
-
-	public static void processAggregation(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> aggregations = (List<String[]>) object.get(acknowledge[0]);
-			aggregations.add(acknowledge);
-			object.put(acknowledge[0], aggregations);
-			return;
-		}
-		List<String[]> aggregations = new CopyOnWriteArrayList<>();
-		aggregations.add(acknowledge);
-		object.put(acknowledge[0], aggregations);
-	}
-
-	public static void processChangeCulumnName(String[] acknowledge, Map<String, Object> object) {
-		object.put("start", "1");
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> changeCulumnNames = (List<String[]>) object.get(acknowledge[0]);
-			changeCulumnNames.add(acknowledge);
-			object.put(acknowledge[0], changeCulumnNames);
-			return;
-		}
-		List<String[]> changeCulumnNames = new CopyOnWriteArrayList<>();
-		changeCulumnNames.add(acknowledge);
-		object.put(acknowledge[0], changeCulumnNames);
 	}
 
 	public static void processExec(String[] acknowledge, Map<String, Object> object) throws IOException {
@@ -157,7 +112,6 @@ public class PLSQLCommandImp {
 				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
 			}
 		}
-//		object.remove("joinBaseName");
 		object.remove("condition");
 		object.remove("recordRows");
 		object.remove("changeCulumnName");
@@ -188,7 +142,7 @@ public class PLSQLCommandImp {
 
 		List<Object> spec = new ArrayList<>();
 		Iterator<String> iterator;
-		if(obj==null || obj.size()<1) {
+		if(obj == null || obj.size() < 1) {
 			iterator = DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString()).getTable(object.get("tableName").toString())
 					.getSpec().getCulumnTypes().keySet().iterator();
 		}else {

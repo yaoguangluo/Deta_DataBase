@@ -1,9 +1,8 @@
 package org.lyg.db.plsql.imp;
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 public class ExecPLSQLImp {
-	public static Map<String, Object> ExecPLSQL(String plsql) throws IOException{
+	public static Map<String, Object> ExecPLSQL(String plsql) throws Exception{
 		//working for here
 		Map<String, Object> output = new ConcurrentHashMap<>();
 		//1make container
@@ -12,6 +11,9 @@ public class ExecPLSQLImp {
 		String[] commands = plsql.replace(" ", "").replace("\n", "").split(";");
 		for(String command:commands) {
 			String[] acknowledge = command.split(":");
+			if(acknowledge[0].equals("setRoot")) {
+				PLSQLCommandImp.proceseSetRoot(acknowledge, output);
+			}
 			if(acknowledge[0].equals("baseName")) {
 				PLSQLCommandImp.processBaseName(acknowledge, output);
 			}
@@ -22,25 +24,25 @@ public class ExecPLSQLImp {
 				PLSQLCommandImp.processCulumnName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("changeCulumnName")) {
-				PLSQLCommandImp.processChangeCulumnName(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("culumnValue")) {
-				PLSQLCommandImp.processCulumnValue(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("join")) {
 				PLSQLCommandImp.processJoin(acknowledge, output);
 			}
 			if(acknowledge[0].equals("condition")) {
-				PLSQLCommandImp.processCondition(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("relation")) {
-				PLSQLCommandImp.processRelation(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("aggregation")) {
-				PLSQLCommandImp.processAggregation(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("getCulumns")) {
-				PLSQLCommandImp.processGetCulumns(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			output.put("newCommand", acknowledge[0]);
 			PLSQLCommandImp.processExec(acknowledge, output);
