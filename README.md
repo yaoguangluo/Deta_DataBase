@@ -19,6 +19,7 @@
 ##### 已完善功能：select功能的表aggregation limit 函数
 ##### 已完善功能：semi join功能的表 relation 函数
 
+##### 正在完善功能：plsql changeDBPath/ setRoot函数；
 
 ###### 未完善功能：db plsql query设计 update
 ###### 未完善功能：db plsql query设计 delete
@@ -36,8 +37,8 @@
 
 
 
+##### setRoot:[path];
 ##### baseName:[baseName];
-
 ##### tableName:[tableName]:[operation];
 ##### getCulumns:[difinition1]:[difinition2]:[difinition3]:[difinition4]:[difinition5]:......;
 ##### culumnName:[culumnName]:[dataType];
