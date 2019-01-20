@@ -15,9 +15,9 @@ import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
 	public static void proceseSetRoot(String[] acknowledge, Map<String, Object> output) throws Exception {
-		String dbPath = "";
-		for(String partsPath:acknowledge) {
-			dbPath += ":"+partsPath;
+		String dbPath = acknowledge[1];
+		for(int i=2; i<acknowledge.length; i++) {
+			dbPath += ":"+acknowledge[i];
 		}
 		if(null != CacheManager.getCacheInfo("DBPath")) {
 			File file = new File(dbPath);

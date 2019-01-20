@@ -32,6 +32,7 @@ public class VPC {
 		if(string.contains("DBCategory")){
 			return DBCategoryController.exec(string, data);	
 		}
+		//plsql
 		if(string.equalsIgnoreCase("/execDetaPLSQL")){
 			return VtoV.ObjectToJsonString(RestDBPLSQLImpl.restDBPLSQLImpl(data.get("token") ,data.get("email")
 					, data.get("password"), data.get("auth"), data.get("LYGQuery")));
