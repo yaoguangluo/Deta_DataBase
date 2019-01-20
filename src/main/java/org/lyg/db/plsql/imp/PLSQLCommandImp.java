@@ -1,15 +1,14 @@
 package org.lyg.db.plsql.imp;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.create.imp.CreateTablesImp;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
 @SuppressWarnings("unchecked")
@@ -17,7 +16,7 @@ public class PLSQLCommandImp {
 	public static void proceseSetRoot(String[] acknowledge, Map<String, Object> output) throws Exception {
 		String dbPath = acknowledge[1];
 		for(int i=2; i<acknowledge.length; i++) {
-			dbPath += ":"+acknowledge[i];
+			dbPath += ":" + acknowledge[i];
 		}
 		if(null != CacheManager.getCacheInfo("DBPath")) {
 			File file = new File(dbPath);
@@ -35,7 +34,7 @@ public class PLSQLCommandImp {
 			}
 		}
 	}
-	
+
 	public static void processBaseName(String[] acknowledge, Map<String, Object> object) {
 		object.put(acknowledge[0], acknowledge[1]);
 	}
@@ -63,19 +62,7 @@ public class PLSQLCommandImp {
 		object.put("joinTableName", acknowledge[2]);
 	}
 
-	public static void processCulumnName(String[] acknowledge, Map<String, Object> object) {
-		if(object.containsKey(acknowledge[0])) {
-			List<String[]> culumnNames = (List<String[]>) object.get(acknowledge[0]);
-			culumnNames.add(acknowledge);
-			object.put(acknowledge[0], culumnNames);
-			return;
-		}
-		List<String[]> culumnNames = new CopyOnWriteArrayList<>();
-		culumnNames.add(acknowledge);
-		object.put(acknowledge[0], culumnNames);
-	}
-
-	public static void processExec(String[] acknowledge, Map<String, Object> object) throws IOException {
+	public static void processExec(String[] acknowledge, Map<String, Object> object) throws Exception {
 		if(object.get("start").toString().equals("1")) {
 			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())
 					&&(object.get("lastCommand").toString().contains("changeCulumnName")
@@ -84,13 +71,14 @@ public class PLSQLCommandImp {
 							||object.get("lastCommand").toString().contains("relation")
 							||object.get("lastCommand").toString().contains("aggregation")
 							||object.get("lastCommand").toString().contains("getCulumns")
+							||object.get("lastCommand").toString().contains("culumnName")
 							||object.get("lastCommand").toString().contains("relation"))) {
 				processExecKernel(object);
 			}
 		}
 	}
 
-	private static void processExecKernel(Map<String, Object> object) throws IOException{
+	private static void processExecKernel(Map<String, Object> object) throws Exception{
 		if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBaseName")) {
 			if(object.containsKey("condition")) {
 				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
@@ -116,7 +104,13 @@ public class PLSQLCommandImp {
 				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
 			}
 		}
+		if(object.get("type").toString().equalsIgnoreCase("create")){
+			if(object.containsKey("culumnName")) {
+				CreateTablesImp.CreateTable(object);
+			}
+		}
 		object.remove("condition");
+		object.remove("culumnName");
 		object.remove("recordRows");
 		object.remove("changeCulumnName");
 		object.remove("getCulumns");
@@ -126,7 +120,7 @@ public class PLSQLCommandImp {
 		object.put("start", "0");
 	}
 
-	public static void processCheck(String acknowledge, Map<String, Object> object) throws IOException {
+	public static void processCheck(String acknowledge, Map<String, Object> object) throws Exception {
 		if(object.get("start").toString().equals("1")) {
 			processExecKernel(object);
 		}
@@ -143,7 +137,6 @@ public class PLSQLCommandImp {
 		object.put("returnResult", "success");
 		object.put("totalPages",totalPages);
 		object.put("loginInfo", "success");
-
 		List<Object> spec = new ArrayList<>();
 		Iterator<String> iterator;
 		if(obj == null || obj.size() < 1) {

@@ -50,5 +50,6 @@ public class DetaUtil {
 				e.printStackTrace();
 			}
 		}
+		DetaDBUtil.initCulumnNameType();
 	}
 }

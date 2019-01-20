@@ -21,7 +21,7 @@ public class ExecPLSQLImp {
 				PLSQLCommandImp.processTableName(acknowledge, output);
 			}
 			if(acknowledge[0].equals("culumnName")) {
-				PLSQLCommandImp.processCulumnName(acknowledge, output);
+				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			if(acknowledge[0].equals("changeCulumnName")) {
 				PLSQLCommandImp.processListNeedStart(acknowledge, output);
