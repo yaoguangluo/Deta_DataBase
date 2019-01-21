@@ -1,5 +1,4 @@
 package org.lyg.common.utils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
-
 public class DetaUtil {
 	public static void initDB(){
 		File config = new File("C:/DBconfig.lyg");
