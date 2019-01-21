@@ -21,9 +21,11 @@
 ##### 已完善功能：plsql changeDBPath/ setRoot函数；功能作者： 罗瑶光
 ##### 已完善功能：plsql create table函数；功能作者： 罗瑶光
 
-##### 正在完善功能：table函数 的primary key， unique key函数管理系统设计。；
+##### 正在完善功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 
-###### 未完善功能：db plsql query设计 update
+##### 正在完善功能：db plsql query设计 update 
+
+
 ###### 未完善功能：db plsql query设计 delete
 ###### 未完善功能：db plsql query设计 insert
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
