@@ -20,10 +20,11 @@
 ##### 已完善功能：semi join功能的表 relation 函数功能作者： 罗瑶光
 ##### 已完善功能：plsql changeDBPath/ setRoot函数；功能作者： 罗瑶光
 ##### 已完善功能：plsql create table函数；功能作者： 罗瑶光
+##### 已完善功能：db plsql query设计 update 功能作者： 罗瑶光2019-01-22
 
-##### 正在完善功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 
-##### 正在完善功能：db plsql query设计 update 
+##### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
+##### 准备完善功能：db plsql query设计 insert
 
 
 ###### 未完善功能：db plsql query设计 delete
