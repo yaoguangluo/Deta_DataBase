@@ -11,6 +11,7 @@ import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.create.imp.CreateTablesImp;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
+import org.lyg.db.update.imp.UpdateRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
 	public static void proceseSetRoot(String[] acknowledge, Map<String, Object> output) throws Exception {
@@ -89,6 +90,7 @@ public class PLSQLCommandImp {
 			if(object.containsKey("getCulumns")) {
 				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfGetCulumns(object));
 			}
+			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBaseName")){
 			if(object.containsKey("condition")) {
@@ -103,15 +105,24 @@ public class PLSQLCommandImp {
 			if(object.containsKey("getCulumns")) {
 				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
 			}
+			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("create")){
 			if(object.containsKey("culumnName")) {
 				CreateTablesImp.CreateTable(object);
 			}
+			object.remove("recordRows");
+		}
+		if(object.get("type").toString().equalsIgnoreCase("update")) {
+			if(object.containsKey("condition")) {
+				object.put("updateObj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
+			}
+			if(object.containsKey("culumnValue")) {
+				UpdateRowsImp.UpdateRowsByRecordConditions(object);
+			}
 		}
 		object.remove("condition");
 		object.remove("culumnName");
-		object.remove("recordRows");
 		object.remove("changeCulumnName");
 		object.remove("getCulumns");
 		object.remove("relation");
@@ -125,7 +136,10 @@ public class PLSQLCommandImp {
 			processExecKernel(object);
 		}
 		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
-		int totalPages = obj.size();
+		int totalPages = 0;
+		if(obj != null) {
+			totalPages = obj.size();
+		}
 		int rowBeginIndex = object.containsKey("pageBegin")? Integer.valueOf(object.get("pageBegin").toString()):0 ;
 		int rowEndIndex = object.containsKey("pageEnd")?Integer.valueOf(object.get("pageEnd").toString()):totalPages>15?15:totalPages;
 		object.put("pageBegin", rowBeginIndex);

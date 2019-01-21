@@ -7,8 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.json.JSONObject;
+import org.lyg.cache.CacheManager;
+import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.reflection.Cell;
+@SuppressWarnings("unchecked")
 public class UpdateRowsImp {
 	public static Map<String, Object> updateRowByTablePathAndIndex(String tablePath, String pageIndex,
 			JSONObject jaculumnOfUpdateRow) throws FileNotFoundException, IOException {
@@ -56,8 +61,8 @@ public class UpdateRowsImp {
 			File fileDBTableRowsPath = new File(DBTableRowsPath);
 			if (fileDBTableRowsPath.isDirectory()) {
 				Here:
-					for(int i=0; i<fileDBTableRowsPath.list().length;i++) {
-						String DBTableRowIndexPath = DBTableRowsPath + "/row" + i ;	
+					for(int i = 0; i<fileDBTableRowsPath.list().length; i++) {
+						String DBTableRowIndexPath = DBTableRowsPath + "/row" + i;	
 						File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
 						if (readDBTableRowIndexFile.exists()) {
 							readDBTableRowIndexFile.mkdir();
@@ -88,7 +93,7 @@ public class UpdateRowsImp {
 								FileWriter fw = null;
 								try {
 									fw = new FileWriter(needCreatCulumnPath + "/value.lyg", true);
-									fw.write(null==culumnValueOfjs?"":culumnValueOfjs);
+									fw.write(null == culumnValueOfjs? "" : culumnValueOfjs);
 									fw.close();
 								} catch (IOException e) {
 								}
@@ -99,5 +104,44 @@ public class UpdateRowsImp {
 		}
 		Map<String, Object> output = new HashMap<>();
 		return output;
+	}
+
+	public static Object UpdateRowsByRecordConditions(Map<String, Object> object) throws IOException {
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+		String DBtablePath = DBPath + "/" + object.get("tableName").toString();
+		String DBTableRowsPath = DBtablePath + "/rows";		
+		List<Map<String, Object>> updateObj =  (List<Map<String, Object>>) object.get("updateObj");
+		Iterator<Map<String, Object>> updateObjIterator = updateObj.iterator();	
+		List<String[]> culumnValues = (List<String[]>) object.get("culumnValue");
+		Iterator<String[]> culumnValuesIterator = culumnValues.iterator();	
+		while(updateObjIterator.hasNext()) {
+			Map<String, Object> objRow = updateObjIterator.next();
+			Map<String, Object> objCells = (Map<String, Object>) objRow.get("rowValue");
+			Map<String, Object>	onjCell = (Map<String, Object>) objCells.get("Index");
+			String rowIndex = "row";
+			rowIndex += onjCell.get("culumnValue").toString();
+			while(culumnValuesIterator.hasNext()) {
+				String[] culumns = culumnValuesIterator.next();
+				String filePath = DBTableRowsPath + "/" + rowIndex + "/" +culumns[1] + "/value.lyg";
+				File currentCellChange = new File(filePath);
+				if(currentCellChange.exists()) {
+					currentCellChange.delete();
+					FileWriter fw = null;
+					try {
+						fw = new FileWriter(filePath, true);
+						fw.write(culumns[2]);
+						fw.close();
+						Cell cell = new Cell();
+						cell.setCellValue(culumns[2]);
+						DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString())
+						.getTable(object.get("tableName").toString()).getRow(rowIndex).putCell(culumns[1], cell);
+					} catch (IOException e) {
+						fw.close();
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return object;
 	}
 }

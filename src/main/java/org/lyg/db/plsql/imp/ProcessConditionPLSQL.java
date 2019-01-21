@@ -18,10 +18,14 @@ public class ProcessConditionPLSQL {
 	public static void processCache(String[] sets, List<Map<String, Object>> output, String tableName, String baseName, Map<String, Object> object) {
 		Table table = DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName);
 		Iterator<String> iterator = table.getRows().keySet().iterator(); 
-		int count=0;
+		int rowindex=0;
 		while(iterator.hasNext()) {
-			count++;
-			Row row = table.getRow(iterator.next());
+			int count = rowindex++;
+			String rowIndex = iterator.next();
+			Row row = table.getRow(rowIndex);
+			Cell cell=new Cell();
+			cell.setCellValue(rowIndex.replace("row", ""));
+			row.putCell("Index", cell);
 			if(sets[1].equalsIgnoreCase("<")||sets[1].equalsIgnoreCase("-lt")) {
 				double rowCellFromBigDecimal = new BigDecimal(row.getCell(sets[0]).getCellValue().toString()).doubleValue();
 				if(rowCellFromBigDecimal < new BigDecimal(sets[2]).doubleValue() && row.containsCell("is_delete_0")) {

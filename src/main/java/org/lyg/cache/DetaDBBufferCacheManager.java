@@ -114,7 +114,12 @@ public class DetaDBBufferCacheManager {
 				String rowCulumnValuePath = rowCulumnPath + "/value.lyg";
 				//if get
 				if(!culumns[i].contains("is_delete")) {
-					BufferedReader reader = new BufferedReader(new FileReader(rowCulumnValuePath));  
+					BufferedReader reader = null;
+					try {
+						reader = new BufferedReader(new FileReader(rowCulumnValuePath)); 
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 					String temp = "";
 					String tempString = "";
 					while ((tempString = reader.readLine()) != null) {
