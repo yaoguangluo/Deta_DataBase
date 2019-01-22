@@ -17,7 +17,7 @@ public class VtoV{
 	public static Map<String, Object> JsonObjectToMap(JSONObject response ){
 		Gson gson = new Gson();
 		Type type = new TypeToken<Map<String, Object>>(){}.getType();
-		Map<String, Object> responseMap =gson.fromJson(response.toString(), type);
+		Map<String, Object> responseMap = gson.fromJson(response.toString(), type);
 		return responseMap;
 	}
 

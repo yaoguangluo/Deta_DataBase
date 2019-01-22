@@ -9,6 +9,7 @@ import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.create.imp.CreateTablesImp;
+import org.lyg.db.insert.imp.InsertRowsImp;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
 import org.lyg.db.update.imp.UpdateRowsImp;
@@ -119,6 +120,11 @@ public class PLSQLCommandImp {
 			}
 			if(object.containsKey("culumnValue")) {
 				UpdateRowsImp.UpdateRowsByRecordConditions(object);
+			}
+		}
+		if(object.get("type").toString().equalsIgnoreCase("insert")) {
+			if(object.containsKey("culumnValue")) {
+				InsertRowsImp.InsertRowByAttributes(object);
 			}
 		}
 		object.remove("condition");
