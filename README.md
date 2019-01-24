@@ -26,6 +26,10 @@
 
 ##### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 ###### 准备完善功能：之前因为没有内存映射区间，所以操作都是硬盘方式，现在有了3， 4级缓存，所有读走2,3,4级buffer，所以之前导致的硬盘修改写操作都要进行缓存更新，我需要完成这个功能，同时我还做了网页cache，这些相关的地方也要及时更新。
+####### update rest接口涉及的缓存更新
+####### delete rest接口涉及的缓存更新
+####### insert rest接口涉及的缓存更新
+####### rest get file cache refresh
 
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
 ###### 未完善功能：基于sort key 后序treeMap
