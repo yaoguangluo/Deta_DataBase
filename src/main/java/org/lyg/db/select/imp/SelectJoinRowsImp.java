@@ -18,7 +18,7 @@ import org.lyg.db.plsql.imp.ProcessRelationPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({"unused", "unchecked"})
 public class SelectJoinRowsImp {
-	public static Object SelectRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
+	public static Object selectRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -75,7 +75,7 @@ public class SelectJoinRowsImp {
 		return output;
 	}
 
-	public static Object SelectRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
@@ -99,7 +99,7 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object SelectRowsByAttributesOfJoinGetCulumns(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfJoinGetCulumns(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
@@ -116,7 +116,7 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object SelectRowsByAttributesOfJoinRelation(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfJoinRelation(Map<String, Object> object) {
 		if(!object.containsKey("obj")||!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}

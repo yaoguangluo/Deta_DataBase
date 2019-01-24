@@ -4,7 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import org.lyg.cache.CacheManager;
+import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.select.imp.SelectRowsImp;
 
 public class DeleteRowsImp {
 	public static Map<String, Object> deleteRowByTablePathAndIndex(String tablePath, String pageIndex)
@@ -30,7 +36,39 @@ public class DeleteRowsImp {
 		}
 		Map<String, Object> output = new HashMap<>();
 		output.put("totalPages", rowInsertIndex);
+		String[] sets = tablePath.split("/");
+		String baseName = sets[sets.length-2];
+		String tableName =  sets[sets.length-1];
+		String indexName = "row"+pageIndex;
+		DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName).removeRow(indexName);
 		return output;
+	}
+
+	@SuppressWarnings({ "unchecked"})
+	public static void deleteRowByAttributesOfCondition(Map<String, Object> object) throws IOException {
+		if(!object.containsKey("baseName")||!object.containsKey("tableName")){
+			return;
+		}
+		//get base
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+		File DBPathFile = new File(DBPath);
+		if(!DBPathFile.isDirectory()) {
+			return;
+		}
+		//make table dir
+		String tablePath = DBPath + "/" + object.get("tableName").toString();
+		List<Map<String, Object>> obj = (List<Map<String, Object>>) SelectRowsImp.selectRowsByAttributesOfCondition(object);
+		Iterator<Map<String, Object>> iterator = obj.iterator();
+		while(iterator.hasNext()) {
+			Map<String, Object> row = iterator.next();
+			Map<String, Object> rowValue = (Map<String, Object>) row.get("rowValue");
+			Map<String, Object> indexCell = (Map<String, Object>) rowValue.get("Index");
+			String indexValue = indexCell.get("culumnValue").toString();
+			deleteRowByTablePathAndIndex(tablePath, indexValue);
+			//delete buffer also
+//			DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString()).getTable(object.get("tableName")
+//					.toString()).removeRow(indexValue);
+		}
 	}
 }
 	

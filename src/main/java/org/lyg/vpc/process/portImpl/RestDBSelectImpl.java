@@ -31,7 +31,7 @@ public class RestDBSelectImpl {
 			output.put("returnResult", "invalid request");
 			return output;
 		}	
-		output.put("obj", SelectRowsImp.SelectRowsByAttribute(baseName, tableName, culumnName, value));
+		output.put("obj", SelectRowsImp.selectRowsByAttribute(baseName, tableName, culumnName, value));
 		return output;
 	}
 

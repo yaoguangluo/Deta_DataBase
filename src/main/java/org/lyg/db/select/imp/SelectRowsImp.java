@@ -21,7 +21,7 @@ import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({ "unused", "unchecked" })
 public class SelectRowsImp {
-	public static List<Map<String, Object>> SelectRowsByAttribute(String currentDB, String tableName, String culmnName, Object value) throws IOException{
+	public static List<Map<String, Object>> selectRowsByAttribute(String currentDB, String tableName, String culmnName, Object value) throws IOException{
 		if(value==null) {
 			value="";
 		}
@@ -108,7 +108,7 @@ public class SelectRowsImp {
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		try {
-			new SelectRowsImp().SelectRowsByAttribute("backend", "login", "usr_name", "yaoguangluo");
+			new SelectRowsImp().selectRowsByAttribute("backend", "login", "usr_name", "yaoguangluo");
 			// deletefile("D:/file");
 		} catch (FileNotFoundException ex) {
 		} catch (IOException ex) {
@@ -205,7 +205,7 @@ public class SelectRowsImp {
 		return output;
 	}
 
-	public static Object SelectRowsByAttributesOfCondition(Map<String, Object> object) throws IOException {
+	public static Object selectRowsByAttributesOfCondition(Map<String, Object> object) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -262,7 +262,7 @@ public class SelectRowsImp {
 		return output;
 	}
 
-	public static List<Map<String, Object>> SelectRowsByAttributesOfAggregation(Map<String, Object> object) {
+	public static List<Map<String, Object>> selectRowsByAttributesOfAggregation(Map<String, Object> object) {
 		if(!object.containsKey("obj")) {
 			return new ArrayList<>();
 		}
@@ -288,7 +288,7 @@ public class SelectRowsImp {
 		return obj;
 	}
 
-	public static Object SelectRowsByAttributesOfGetCulumns(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfGetCulumns(Map<String, Object> object) {
 		if(!object.containsKey("obj")) {
 			return new ArrayList<>();
 		}

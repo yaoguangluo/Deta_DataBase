@@ -29,4 +29,10 @@ public class Row{
 		}
 		return false;
 	}
+
+	public void removeCell(String cellName) {
+		if(cells.containsKey(cellName)) {
+			cells.remove(cellName);
+		}
+	}
 }

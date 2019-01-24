@@ -106,7 +106,7 @@ public class UpdateRowsImp {
 		return output;
 	}
 
-	public static Object UpdateRowsByRecordConditions(Map<String, Object> object) throws IOException {
+	public static Object updateRowsByRecordConditions(Map<String, Object> object) throws IOException {
 		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
 		String DBtablePath = DBPath + "/" + object.get("tableName").toString();
 		String DBTableRowsPath = DBtablePath + "/rows";		

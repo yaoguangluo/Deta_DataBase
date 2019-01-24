@@ -91,7 +91,7 @@ public class InsertRowsImp {
 		return output;
 	}
 
-	public static void InsertRowByAttributes(Map<String, Object> object) {
+	public static void insertRowByAttributes(Map<String, Object> object) {
 		JSONObject jsobj = new JSONObject();
 		//for late will make an exception record queue system, to control all of the db write;
 		List<String[]> culumnValues = (List<String[]>)object.get("culumnValue");

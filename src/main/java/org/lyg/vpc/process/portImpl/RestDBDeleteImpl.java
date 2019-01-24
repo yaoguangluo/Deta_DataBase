@@ -3,6 +3,7 @@ package org.lyg.vpc.process.portImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.lyg.db.delete.imp.DeleteRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
  
@@ -28,7 +29,7 @@ public class RestDBDeleteImpl {
 			output.put("loginInfo", "unsuccess");
 			output.put("returnResult", "invalid request");
 			return output;
-		}	
+		}
 		return DeleteRowsImp.deleteRowByTablePathAndIndex(tablePath, pageIndex);
 	}
 }

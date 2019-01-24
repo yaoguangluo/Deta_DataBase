@@ -8,7 +8,7 @@ import org.lyg.cache.CacheManager;
 import org.lyg.common.utils.DetaDBUtil;
 @SuppressWarnings("unchecked")
 public class CreateTablesImp {
-	public static void CreateTable(Map<String, Object> object) throws Exception {
+	public static void createTable(Map<String, Object> object) throws Exception {
 		if(!object.containsKey("baseName")||!object.containsKey("tableName")){
 			return;
 		}

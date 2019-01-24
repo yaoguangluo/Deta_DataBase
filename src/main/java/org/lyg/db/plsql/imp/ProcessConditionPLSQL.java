@@ -88,9 +88,9 @@ public class ProcessConditionPLSQL {
 					}
 				}	
 			}
-			if(sets[1].equalsIgnoreCase("equal")) {
+			if(sets[1].equalsIgnoreCase("equal") && row.containsCell("is_delete_0")) {
 				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
-				if(rowCellFromString.equalsIgnoreCase(sets[2]) && row.containsCell("is_delete_0")) {
+				if(rowCellFromString.equalsIgnoreCase(sets[2])) {
 					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
 						output.add(rowToRowMap(row));
 						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");

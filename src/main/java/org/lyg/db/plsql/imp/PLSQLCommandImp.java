@@ -9,6 +9,7 @@ import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.create.imp.CreateTablesImp;
+import org.lyg.db.delete.imp.DeleteRowsImp;
 import org.lyg.db.insert.imp.InsertRowsImp;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
@@ -83,50 +84,56 @@ public class PLSQLCommandImp {
 	private static void processExecKernel(Map<String, Object> object) throws Exception{
 		if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBaseName")) {
 			if(object.containsKey("condition")) {
-				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
+				object.put("obj", SelectRowsImp.selectRowsByAttributesOfCondition(object));
 			}
 			if(object.containsKey("aggregation")) {
-				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfAggregation(object));
+				object.put("obj", SelectRowsImp.selectRowsByAttributesOfAggregation(object));
 			}
 			if(object.containsKey("getCulumns")) {
-				object.put("obj", SelectRowsImp.SelectRowsByAttributesOfGetCulumns(object));
+				object.put("obj", SelectRowsImp.selectRowsByAttributesOfGetCulumns(object));
 			}
 			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBaseName")){
 			if(object.containsKey("condition")) {
-				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinCondition(object));
+				object.put("joinObj", SelectJoinRowsImp.selectRowsByAttributesOfJoinCondition(object));
 			}
 			if(object.containsKey("relation")) {
-				object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinRelation(object));
+				object.put("obj", SelectJoinRowsImp.selectRowsByAttributesOfJoinRelation(object));
 			}
 			if(object.containsKey("aggregation")) {
-				object.put("obj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinAggregation(object));
+				object.put("obj", SelectJoinRowsImp.selectRowsByAttributesOfJoinAggregation(object));
 			}
 			if(object.containsKey("getCulumns")) {
-				object.put("joinObj", SelectJoinRowsImp.SelectRowsByAttributesOfJoinGetCulumns(object));
+				object.put("joinObj", SelectJoinRowsImp.selectRowsByAttributesOfJoinGetCulumns(object));
 			}
 			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("create")){
 			if(object.containsKey("culumnName")) {
-				CreateTablesImp.CreateTable(object);
+				CreateTablesImp.createTable(object);
 			}
 			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("update")) {
 			if(object.containsKey("condition")) {
-				object.put("updateObj", SelectRowsImp.SelectRowsByAttributesOfCondition(object));
+				object.put("updateObj", SelectRowsImp.selectRowsByAttributesOfCondition(object));
 			}
 			if(object.containsKey("culumnValue")) {
-				UpdateRowsImp.UpdateRowsByRecordConditions(object);
+				UpdateRowsImp.updateRowsByRecordConditions(object);
 			}
 		}
 		if(object.get("type").toString().equalsIgnoreCase("insert")) {
 			if(object.containsKey("culumnValue")) {
-				InsertRowsImp.InsertRowByAttributes(object);
+				InsertRowsImp.insertRowByAttributes(object);
 			}
 		}
+		if(object.get("type").toString().equalsIgnoreCase("delete")) {
+			if(object.containsKey("condition")) {
+				DeleteRowsImp.deleteRowByAttributesOfCondition(object);
+			}
+		}
+		
 		object.remove("condition");
 		object.remove("culumnName");
 		object.remove("changeCulumnName");
