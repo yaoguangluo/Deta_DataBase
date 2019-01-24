@@ -21,14 +21,11 @@
 ##### 已完善功能：plsql changeDBPath/ setRoot函数；功能作者： 罗瑶光
 ##### 已完善功能：plsql create table函数；功能作者： 罗瑶光
 ##### 已完善功能：db plsql query设计 update 功能作者： 罗瑶光2019-01-22
-
+##### 已完善功能：db plsql query设计 insert  功能作者： 罗瑶光2019-01-23 备注：没有检查，
 
 ##### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
-##### 准备完善功能：db plsql query设计 insert
+###### 准备完善功能：db plsql query设计 delete
 
-
-###### 未完善功能：db plsql query设计 delete
-###### 未完善功能：db plsql query设计 insert
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
 ###### 未完善功能：基于sort key 后序treeMap
 ###### 未完善功能：引擎算法优化
@@ -39,6 +36,7 @@
 ###### 未完善功能：binlog 函数 数据恢复
 ###### 未完善功能：变量名称编程规范整体整理。
 ###### 未完善功能：消息队列进行区域链接热备恢复。
+###### 未完善功能：研发更多实用的函数计划。
 
 ### 德塔 PL/SQL 数据分析语言 说明文档。
 
