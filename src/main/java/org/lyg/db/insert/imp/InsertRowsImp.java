@@ -9,16 +9,21 @@ import java.util.List;
 import java.util.Map;
 import org.json.JSONObject;
 import org.lyg.cache.CacheManager;
+import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.reflection.Cell;
+import org.lyg.db.reflection.Row;
 
 @SuppressWarnings("unchecked")
 public class InsertRowsImp {
 	public static Map<String, Object> insertRowByTablePathAndIndex(String tablePath, String pageIndex, JSONObject culumnOfNewRow) throws FileNotFoundException, IOException {
+		String[] sets = tablePath.split("/");
 		int rowInsertIndex = Integer.valueOf(pageIndex);
 		File fileDBTable = new File(tablePath);
 		if (fileDBTable.isDirectory()) {
 			String DBTableRowsPath = tablePath + "/rows";	
 			File fileDBTableRowsPath = new File(DBTableRowsPath);
 			if (fileDBTableRowsPath.isDirectory()) {
+				Row row = new Row();
 				String DBTableRowIndexPath = DBTableRowsPath + "/row" + rowInsertIndex ;	
 				File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
 				if (!readDBTableRowIndexFile.exists()) {
@@ -35,13 +40,19 @@ public class InsertRowsImp {
 							fw = new FileWriter(needCreatCulumnPath + "/value.lyg", true);
 							fw.write(null==culumnValue?"":culumnValue);
 							fw.close();
+							//buffer reflection update
+							Cell cell = new Cell();
+							cell.setCellValue(null == culumnValue ? "" : culumnValue);
+							row.putCell(culumnName, cell);
 						} catch (IOException e) {
+							e.printStackTrace();
 						}
 					}
 					String needCreatCulumnPath = DBTableRowIndexPath + "/is_delete_0";
 					File needCreatCulumn = new File(needCreatCulumnPath);
 					needCreatCulumn.mkdir();
 				}
+				DetaDBBufferCacheManager.db.getBase(sets[sets.length-2]).getTable(sets[sets.length-1]).putRow("row" + rowInsertIndex, row);
 			}
 		}
 		Map<String, Object> output = new HashMap<>();
@@ -56,6 +67,7 @@ public class InsertRowsImp {
 		File fileDBTable = new File(tablePath);
 		if (fileDBTable.isDirectory()) {
 			String DBTableRowsPath = tablePath + "/rows";	
+			Row row = new Row();
 			File fileDBTableRowsPath = new File(DBTableRowsPath);
 			if (fileDBTableRowsPath.isDirectory()) {
 				int rowInsertIndex = fileDBTableRowsPath.list().length;
@@ -77,15 +89,21 @@ public class InsertRowsImp {
 						FileWriter fw = null;
 						try {
 							fw = new FileWriter(needCreatCulumnPath + "/value.lyg", true);
-							fw.write(null == culumnValue?"":culumnValue);
+							fw.write(null == culumnValue ? "" : culumnValue);
 							fw.close();
+							//add buffer
+							Cell cell = new Cell();
+							cell.setCellValue(null == culumnValue ? "" : culumnValue);
+							row.putCell(culumnName, cell);
 						} catch (IOException e) {
+							e.printStackTrace();
 						}
 					}
 					String needCreatCulumnPath = DBTableRowIndexPath + "/is_delete_0";
 					File needCreatCulumn = new File(needCreatCulumnPath);
 					needCreatCulumn.mkdir();
 				}
+				DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName).putRow("row" + rowInsertIndex, row);
 			}
 		}
 		return output;
