@@ -26,7 +26,6 @@
 ##### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 ###### 准备完善功能：db plsql query设计 delete
 
-###### 未完善功能：db plsql query设计 insert
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
 ###### 未完善功能：基于sort key 后序treeMap
 ###### 未完善功能：引擎算法优化
