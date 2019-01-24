@@ -52,7 +52,7 @@
 ## 德塔 PL/SQL 数据分析语言 说明文档。
 
 
-
+### Deta plsql 语法:
 ##### setRoot:[path];
 ##### baseName:[baseName];
 ##### tableName:[tableName]'[operation];
