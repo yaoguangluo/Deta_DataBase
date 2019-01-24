@@ -77,27 +77,18 @@
 ###### aggregation:limit:0|~|1;
 
 #### 1 select 例子
-
 ##### tableName:test:select;
-
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
 
 
 
 #### 2 select join 例子
-
 ##### tableName:utest:select;
-
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-
 ##### join:stest;
-
 ##### relation:or:uid|==|sid:ussd|==|sssd;
-
 ##### relation:and:utoken|=!|stoken:umap|==|smap;
 
 
@@ -118,17 +109,11 @@
 
 
 #### 3 insert 例子
-
 ##### tableName:test:insert;
-
 ##### culumnValue:date:19850525;
-
 ##### culumnValue:date1:19850526;
-
 ##### culumnValue:date2:19850527;
-
 ##### culumnValue:date3:19850528;
-
 ##### culumnValue:date4:19850529;
 
 
@@ -136,70 +121,48 @@
 #### 4 update 例子
 
 ##### tableName:test:update;
-
-##### culumnValue:date:19850525;
-
-##### culumnValue:date1:19850526;
-
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
+##### culumnValue:date:19850525;
+##### culumnValue:date1:19850526;
 
 
 
 #### 4.1 update 复杂例子
-
 ##### tableName:test:update;
-
 ##### culumnValue:date:19850525;
-
 ##### culumnValue:date1:19850526;
-
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-
 ##### tableName:utest:nest;
 ##### condition:and:uCulumn3|<|20;
-
 ##### relation:and:testCulumn1|==|uCulumn1:testCulumn2|!=|uCulumn2;
 
 
 
 
 #### 5 delete 例子
-
 ##### tableName:test:delete;
-
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
 
 
 
 #### 6 create 例子
-
 ##### tableName:test:create;
-
 ##### culumnName:pk:culumn1:string;
-
 ##### culumnName:uk:culumn1:long;
-
 ##### culumnName:uk:culumn1:obj;
-
 ##### culumnName:nk:culumn1:double;
 
 
 
 #### 7 drop 例子
-
 ##### tableName:test:drop;
 
 
 
 #### 8 change 例子
-
 ##### tableName:test:change;
-
 ##### changeCulumnName:oldCulumnName:newCulumnName;
 
