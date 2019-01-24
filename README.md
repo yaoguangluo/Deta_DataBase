@@ -66,7 +66,7 @@
 
 
 
-#### 1 select 真实例子
+#### 1 select with semi join 的一个Deta PLSQL 真实例子 
 ###### setRoot:C:/DetaDB;
 ###### baseName:backend;
 ###### tableName:usr:select;
