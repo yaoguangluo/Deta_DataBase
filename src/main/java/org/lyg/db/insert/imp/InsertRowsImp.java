@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.json.JSONObject;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
@@ -24,6 +26,8 @@ public class InsertRowsImp {
 			File fileDBTableRowsPath = new File(DBTableRowsPath);
 			if (fileDBTableRowsPath.isDirectory()) {
 				Row row = new Row();
+				ConcurrentHashMap<String, Cell> cells = new ConcurrentHashMap<>();
+				row.setCells(cells);
 				String DBTableRowIndexPath = DBTableRowsPath + "/row" + rowInsertIndex ;	
 				File readDBTableRowIndexFile = new File(DBTableRowIndexPath);
 				if (!readDBTableRowIndexFile.exists()) {
@@ -68,6 +72,8 @@ public class InsertRowsImp {
 		if (fileDBTable.isDirectory()) {
 			String DBTableRowsPath = tablePath + "/rows";	
 			Row row = new Row();
+			ConcurrentHashMap<String, Cell> cells = new ConcurrentHashMap<>();
+			row.setCells(cells);
 			File fileDBTableRowsPath = new File(DBTableRowsPath);
 			if (fileDBTableRowsPath.isDirectory()) {
 				int rowInsertIndex = fileDBTableRowsPath.list().length;

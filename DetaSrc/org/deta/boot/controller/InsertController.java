@@ -9,7 +9,7 @@ public class InsertController {
 					, data.get("tableName"), data.get("culumnOfNewRow"), data.get("token"), data.get("email")
 					, data.get("password"), data.get("auth")));
 		}
-		if(string.equalsIgnoreCase("/login")){
+		if(string.equalsIgnoreCase("/insertRowByTablePath")){
 			return VtoV.ObjectToJsonString(RestDBInsertImpl.insertRowByTablePath(data.get("tablePath")
 					, data.get("pageIndex"), data.get("culumnOfNewRow"), data.get("token"), data.get("email")
 					, data.get("password"), data.get("auth")));

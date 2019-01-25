@@ -125,7 +125,7 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 						$scope.totalPages = response.data.totalPages;
 						alert("添加成功！");
 						$scope.click(tablePath,$scope.pageBegin,$scope.pageBegin,'next');
-						document.getElementById('light').style.display='none';
+						//document.getElementById('light').style.display='none';
 					}
 				}, function errorCallback(response) {
 					$scope.backFeed = "error insertion";

@@ -1,7 +1,4 @@
 package org.lyg.vpc.process.portImpl;
- 
-import org.lyg.cache.Cache;
-import org.lyg.cache.CacheManager;
 import org.lyg.db.select.imp.SelectRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 import java.util.HashMap;
@@ -35,7 +32,6 @@ public class RestDBSelectImpl {
 		return output;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Map<String, Object> selectRowsByTablePath(String tablePath, String pageBegin, String pageEnd, String direction
 			, String token, String email, String password, String auth) throws Exception {
 		Map<String, Object> output = new HashMap<String, Object>();
@@ -59,16 +55,16 @@ public class RestDBSelectImpl {
 			return output;
 		}	
 		
-		if(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction) != null) {
-			output = (Map<String, Object>)(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction).getValue());
-			return output;
-		} 
+//		if(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction) != null) {
+//			output = (Map<String, Object>)(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction).getValue());
+//			return output;
+//		} 
 		output = SelectRowsImp.selectRowsByTablePath(tablePath, pageBegin, pageEnd, direction);
-		if(tablePath.equalsIgnoreCase("c:/DetaDB/frontend/login")) {
-			Cache c = new Cache();
-			c.setValue(output);
-			CacheManager.putCache(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction, c);
-		}
+//		if(tablePath.equalsIgnoreCase("c:/DetaDB/frontend/login")) {
+//			Cache c = new Cache();
+//			c.setValue(output);
+//			CacheManager.putCache(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction, c);
+//		}
 		return output;
 	}
 }

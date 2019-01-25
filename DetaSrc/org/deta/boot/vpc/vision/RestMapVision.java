@@ -42,11 +42,13 @@ public class RestMapVision {
 	public static void processRest(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
 		String output = VPC.forward(vPCSRequest.getRequestLink(), vPCSRequest.getRequestValue());
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(vPCSResponse.getSocket()
-				.getOutputStream(),"UTF-8")),true);
+				.getOutputStream(), "UTF-8")), true);
 		pw.println("HTTP/1.1 200 OK\n\n"); 
-		output=output.charAt(0)=='"'?output.substring(1,output.length()):output;
-		output=output.charAt(output.length()-1)=='"'?output.substring(0
-				, output.length()-1):output;
+		if(output.length()>1) {
+			output=output.charAt(0)=='"'?output.substring(1,output.length()):output;
+			output=output.charAt(output.length()-1)=='"'?output.substring(0
+					, output.length()-1):output;	
+		}
 		pw.println(output.replace("\\\"","\""));
 		pw.flush();
 		pw.close();	
