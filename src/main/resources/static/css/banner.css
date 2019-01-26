@@ -1,0 +1,10 @@
+header{
+    font-size: larger;
+}
+.scroll-container{
+    width: 100%;
+    overflow: hidden;
+}
+li{
+    list-style-type: none;
+}

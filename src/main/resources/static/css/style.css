@@ -10,6 +10,7 @@ flashlight{
 html {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
+	background: #ffffff;
 }
 html, body {
 	height: 100%;
@@ -230,6 +231,7 @@ ul.sidebar-menu li a.active i {
 	width: 950px;
 }
 .page-content {
+	background-color: white;
 	display: inline-block;
 	padding: 20px;
 	width: 100%;
@@ -2970,10 +2972,11 @@ div[data-role="editor-toolbar"] {
     height: 100%;
     padding: 0;
     position: fixed;
-    right: -250px;
+    
+    right: -450px;
     top: 40px;
     transition: right 0.5s ease 0s;
-    width: 240px;
+    width: 440px;
     z-index: 9999;
 }
 .right-info-bar .block {

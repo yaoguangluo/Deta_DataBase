@@ -1,0 +1,63 @@
+.ask input{
+	float:left;
+	transition:all 0.30s ease-in-out; <!-- -->
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	border:#35a5e5 1px solid;
+	border-radius:7px;
+	outline:none;
+}
+.ask input:focus{
+	box-shadow:0 0 5px rgba(81, 203, 238, 1);
+	-webkit-box-shadow:0 0 5px rgba(81, 203, 238, 1);
+	-moz-box-shadow:0 0 5px rgba(81, 203, 238, 1);
+}
+.ask-sent{
+	float:left;
+	margin-left:5px;
+	margin-top:1px;
+	height:35px;
+	width:70px;
+	text-decoration:none;
+	text-align:center;
+	background:rgba(81, 203, 238, 1);
+	color:white;
+	font:15px '微软雅黑';
+	line-height: 30px; 
+	border-radius:7px;
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+}
+.ask-sent:hover{
+	background:rgba(39, 154, 187, 1);
+	}
+.communication{
+	height: 480px; 
+	width:440px;
+	overflow: auto;"
+}
+textarea{
+	margin-left:5px;
+	height: 620px; 
+	width:430px;
+	overflow: auto;"
+}
+.askinfo{
+	background: #ffffff;
+	margin: 10px auto 0 auto;
+	height: 380px; 
+	width:440px;
+	overflow: auto;"
+}
+.askinfo-select{
+	margin-left:5px;
+	height: 420px; 
+	width:430px;
+	overflow: auto;"
+}
+/*
+--------------------- 
+webkit开源代码来自https://blog.csdn.net/qq_24452475/article/details/51267043 
+其余皆为罗瑶光修正 添加修改。版权为罗瑶光所有。
+*/

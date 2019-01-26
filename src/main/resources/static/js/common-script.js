@@ -41,11 +41,8 @@
                 cursorborderradius: "0px",
                 cursorwidth: "3px"
             });
-			if($(window).width() < 750)
-			{
 				$('#sidebar').addClass('hide-left-bar');
 				$('#main-content').addClass('merge-left');
-			}
             $(".leftside-navigation").getNiceScroll().resize();
             if ($('#sidebar').hasClass('hide-left-bar')) {
                 $(".leftside-navigation").getNiceScroll().hide();
@@ -249,7 +246,7 @@
         
 
 
-$(document).ready(function(){$("#show-header-bar").on("click",function(){$("#show-header-bar").hasClass("open")?($(".header-bar").attr("style","top: -200px"),$("#show-header-bar").removeClass("open")):($(".header-bar").attr("style","top: 42px"),$("#show-header-bar").addClass("open"))}),$("#show-right-info-bar").on("click",function(){$("#show-right-info-bar").hasClass("move")?($(".right-info-bar").attr("style","right: -250px"),$("#show-right-info-bar").removeClass("move")):($(".right-info-bar").attr("style","right: 0px"),$("#show-right-info-bar").addClass("move"))})});
+$(document).ready(function(){$("#show-header-bar").on("click",function(){$("#show-header-bar").hasClass("open")?($(".header-bar").attr("style","top: -200px"),$("#show-header-bar").removeClass("open")):($(".header-bar").attr("style","top: 42px"),$("#show-header-bar").addClass("open"))}),$("#show-right-info-bar").on("click",function(){$("#show-right-info-bar").hasClass("move")?($(".right-info-bar").attr("style","right: -450px"),$("#show-right-info-bar").removeClass("move")):($(".right-info-bar").attr("style","right: 0px"),$("#show-right-info-bar").addClass("move"))})});
 
 
 

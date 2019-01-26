@@ -1011,7 +1011,7 @@ var GraphPie = GraphPie || (function($) {
 		if ($.isArray(self.points[0])) {
 			types = ['linear', 'area', 'bar', 'combo', 'table'];
 		} else {
-			types = ['linear', 'area', 'bar', 'pie', 'donut', 'table'];
+			types = ['area', 'bar', 'pie', 'donut', 'table'];
 		}
 		var wrapper = this.attr('id') + '-wrapper';
 		this.append('<div id="' + wrapper + '"><div id="' + wrapper + '-g-area"></div></div>');
