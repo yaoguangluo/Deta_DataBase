@@ -41,6 +41,10 @@ public class ForwardVision {
 				vPCSRequest.setRequestForwardType("bytes");
 				vPCSResponse.setResponseContentType("Content-Type: image/jpeg \n\n");
 			}
+			if(filePath.contains(".jpg")){ 
+				vPCSRequest.setRequestForwardType("bytes");
+				vPCSResponse.setResponseContentType("Content-Type: image/jpg \n\n");
+			}
 			if(filePath.contains(".gif")){ 
 				vPCSRequest.setRequestForwardType("bytes");
 				vPCSResponse.setResponseContentType("Content-Type: image/gif \n\n");
@@ -48,7 +52,6 @@ public class ForwardVision {
 			if(filePath.contains(".js") && code.equalsIgnoreCase("UTF-8")){	
 				vPCSRequest.setRequestForwardType("bytesBuffer");
 			}
-		
 			if(filePath.contains(".css")){
 				vPCSRequest.setRequestForwardType("buffer");
 				vPCSResponse.setResponseContentType("Content-Type: text/css \n\n");
@@ -61,8 +64,7 @@ public class ForwardVision {
 				vPCSRequest.setRequestForwardType("bytes");
 				vPCSResponse.setResponseContentType("Content-Type: audio/x-wav \n\n");
 			}
-		}
-		
+		}	
 	}
 
 	public static void forwardToRestMap(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {

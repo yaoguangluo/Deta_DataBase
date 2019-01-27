@@ -97,7 +97,7 @@ public class ProcessRelationPLSQL {
 						} 
 					}
 				}
-				if(sets[1].equalsIgnoreCase("euqal")) {
+				if(sets[1].equalsIgnoreCase("equal")) {
 					if(cell.get("culumnValue").toString().equals(cellJoin.get("culumnValue").toString())) {
 						if(!findinNewObj.containsKey(objRowId + ":" + objJoinRowId)) {
 							Map<String, Object> newObjRow = new HashMap<>();

@@ -1,4 +1,4 @@
-package org.lyg.db.select.imp;
+package org.lyg.db.update.imp;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,8 +17,8 @@ import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.plsql.imp.ProcessRelationPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({"unused", "unchecked"})
-public class SelectJoinRowsImp {
-	public static Object selectRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
+public class UpdateJoinRowsImp {
+	public static Object updateRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -75,11 +75,11 @@ public class SelectJoinRowsImp {
 		return output;
 	}
 
-	public static Object selectRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
+	public static Object updateRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
-		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("updateObj")));
 		List<String[]> aggregationValues = (List<String[]>) object.get("aggregation");
 		Iterator<String[]> iterator = aggregationValues.iterator();
 		while(iterator.hasNext()) {
@@ -99,11 +99,11 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object selectRowsByAttributesOfJoinGetCulumns(Map<String, Object> object) {
+	public static Object updateRowsByAttributesOfJoinGetCulumns(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
-		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("joinObj")));
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("updateJoinObj")));
 		List<String[]> getCulumnsValues = (List<String[]>) object.get("getCulumns");
 		Iterator<String[]> iterator = getCulumnsValues.iterator();
 		while(iterator.hasNext()) {
@@ -116,14 +116,14 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object selectRowsByAttributesOfJoinRelation(Map<String, Object> object) {
-		if(!object.containsKey("obj")||!object.containsKey("joinObj")) {
+	public static Object updateRowsByAttributesOfJoinRelation(Map<String, Object> object) {
+		if(!object.containsKey("updateObj")||!object.containsKey("updateJoinObj")) {
 			return new ArrayList<>();
 		}
 		Map<String,Boolean> findinNewObj = new HashMap<>();
 		List<Map<String, Object>> newObj = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
-		List<Map<String, Object>> joinObj= ((List<Map<String, Object>>)(object.get("joinObj")));
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("updateObj")));
+		List<Map<String, Object>> joinObj= ((List<Map<String, Object>>)(object.get("updateJoinObj")));
 		List<String[]> relationValues = (List<String[]>) object.get("relation");
 		Iterator<String[]> iterator = relationValues.iterator();
 		while(iterator.hasNext()) {

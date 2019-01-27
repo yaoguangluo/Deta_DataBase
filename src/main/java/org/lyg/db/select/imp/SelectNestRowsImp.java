@@ -17,8 +17,8 @@ import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.plsql.imp.ProcessRelationPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({"unused", "unchecked"})
-public class SelectJoinRowsImp {
-	public static Object selectRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
+public class SelectNestRowsImp {
+	public static Object selectRowsByAttributesOfNestCondition(Map<String, Object> object) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -28,11 +28,11 @@ public class SelectJoinRowsImp {
 		String objectType = "";
 		List<Map<String, Object>> output = new ArrayList<>();
 		//锁定数据库
-		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("joinBaseName").toString();
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("nestBaseName").toString();
 		//锁定表
 		File fileDBPath = new File(DBPath);
 		if (fileDBPath.isDirectory()) {
-			String DBTablePath = DBPath + "/" + object.get("joinTableName").toString();
+			String DBTablePath = DBPath + "/" + object.get("nestTableName").toString();
 			File fileDBTable = new File(DBTablePath);
 			if (fileDBTable.isDirectory()) {
 				String DBTableCulumnPath = DBTablePath + "/spec";
@@ -62,8 +62,8 @@ public class SelectJoinRowsImp {
 							if(overMap && andMap) {
 								ProcessConditionPLSQL.processMap(sets, output, DBTablePath);
 							}else if(DetaDBBufferCacheManager.dbCache){
-								ProcessConditionPLSQL.processCache(sets, output, object.get("joinTableName").toString()
-										, object.get("joinBaseName").toString(), object);
+								ProcessConditionPLSQL.processCache(sets, output, object.get("nestTableName").toString()
+										, object.get("nestBaseName").toString(), object);
 							}else {
 								ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);
 							}
@@ -75,7 +75,7 @@ public class SelectJoinRowsImp {
 		return output;
 	}
 
-	public static Object selectRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfNestAggregation(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
@@ -99,7 +99,7 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object selectRowsByAttributesOfJoinGetCulumns(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfNestGetCulumns(Map<String, Object> object) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
@@ -116,7 +116,7 @@ public class SelectJoinRowsImp {
 		return obj;
 	}
 
-	public static Object selectRowsByAttributesOfJoinRelation(Map<String, Object> object) {
+	public static Object selectRowsByAttributesOfNestRelation(Map<String, Object> object) {
 		if(!object.containsKey("obj")||!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}

@@ -1,5 +1,6 @@
 package org.lyg.db.plsql.imp;
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,9 @@ import org.lyg.db.create.imp.CreateTablesImp;
 import org.lyg.db.delete.imp.DeleteRowsImp;
 import org.lyg.db.insert.imp.InsertRowsImp;
 import org.lyg.db.select.imp.SelectJoinRowsImp;
+//import org.lyg.db.select.imp.SelectNestRowsImp;
 import org.lyg.db.select.imp.SelectRowsImp;
+import org.lyg.db.update.imp.UpdateJoinRowsImp;
 import org.lyg.db.update.imp.UpdateRowsImp;
 @SuppressWarnings("unchecked")
 public class PLSQLCommandImp {
@@ -61,10 +64,16 @@ public class PLSQLCommandImp {
 	}
 
 	public static void processJoin(String[] acknowledge, Map<String, Object> object) {
+		if(object.get("countJoins").toString().equals("1")) {
+				object.put("countJoins", "n");
+		}
+		if(object.get("countJoins").toString().equals("0")) {
+				object.put("countJoins", "1");
+		}
 		object.put("joinBaseName", acknowledge[1]);
 		object.put("joinTableName", acknowledge[2]);
 	}
-
+	
 	public static void processExec(String[] acknowledge, Map<String, Object> object) throws Exception {
 		if(object.get("start").toString().equals("1")) {
 			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())
@@ -115,13 +124,37 @@ public class PLSQLCommandImp {
 			}
 			object.remove("recordRows");
 		}
-		if(object.get("type").toString().equalsIgnoreCase("update")) {
+		//离散数学的conjuction变换  a^&&b^&&c * kernel[] = (a^&&b^)^^&&c * kernel[] = (a||b)^&&c * kernel[]
+		if(object.get("type").toString().equalsIgnoreCase("update") && 
+				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
+				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
-				object.put("updateObj", SelectRowsImp.selectRowsByAttributesOfCondition(object));
+				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfCondition(object));
+			}
+			if(object.containsKey("aggregation")) {
+				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfAggregation(object));
 			}
 			if(object.containsKey("culumnValue")) {
 				UpdateRowsImp.updateRowsByRecordConditions(object);
 			}
+			object.remove("recordRows");
+		}
+		if(object.get("type").toString().equalsIgnoreCase("update") && 
+				(object.get("countJoins").toString().equalsIgnoreCase("n") ||
+				(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
+			if(object.containsKey("condition")) {
+				object.put("updateJoinObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinCondition(object));
+			}
+			if(object.containsKey("relation")) {
+				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinRelation(object));
+			}
+			if(object.containsKey("aggregation")) {
+				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinAggregation(object));
+			}
+			if(object.containsKey("culumnValue")) {
+				UpdateRowsImp.updateRowsByRecordConditions(object);
+			}
+			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("insert")) {
 			if(object.containsKey("culumnValue")) {

@@ -5,14 +5,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.json.JSONObject;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.plsql.imp.ProcessAggregationPLSQL;
+import org.lyg.db.plsql.imp.ProcessConditionPLSQL;
+import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.reflection.Cell;
+import org.lyg.db.reflection.Spec;
 @SuppressWarnings("unchecked")
 public class UpdateRowsImp {
 	public static Map<String, Object> updateRowByTablePathAndIndex(String tablePath, String pageIndex,
@@ -157,5 +164,105 @@ public class UpdateRowsImp {
 			}
 		}
 		return object;
+	}
+	
+	public static Object updateRowsByAttributesOfCondition(Map<String, Object> object) throws IOException {
+		if(!object.containsKey("recordRows")) {
+			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
+			object.put("recordRows", recordRows);
+		}
+		Spec spec = new Spec();
+		spec.setCulumnTypes(new ConcurrentHashMap<String, String>());
+		String objectType = "";
+		List<Map<String, Object>> output = new ArrayList<>();
+		//锁定数据库
+		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+		//锁定表
+		File fileDBPath = new File(DBPath);
+		if (fileDBPath.isDirectory()) {
+			String DBTablePath = DBPath + "/" + object.get("tableName").toString();
+			File fileDBTable = new File(DBTablePath);
+			if (fileDBTable.isDirectory()) {
+				String DBTableCulumnPath = DBTablePath + "/spec";
+				File fileDBTableCulumn = new File(DBTableCulumnPath);
+				if (fileDBTableCulumn.isDirectory()) {
+					//读取列数据格式
+					String[] fileList = fileDBTableCulumn.list();
+					for(int i=0; i<fileList.length; i++) {
+						File readDBTableSpecCulumnFile = new File(DBTableCulumnPath + "/" + fileList[0]+"/value.lyg");
+						BufferedReader reader = new BufferedReader(new FileReader(readDBTableSpecCulumnFile));  
+						String tempString = null;
+						while ((tempString = reader.readLine()) != null) {  
+							objectType = tempString;			
+						}
+						reader.close();
+						spec.setCulumnType(fileList[i], objectType);
+					}
+					List<String[]> conditionValues = (List<String[]>) object.get("condition");
+					Iterator<String[]> iterator = conditionValues.iterator();
+					while(iterator.hasNext()) {
+						boolean overMap = output.size() == 0? false: true;
+						String[] conditionValueArray = iterator.next();
+						String type = conditionValueArray[1];
+						boolean andMap = type.equalsIgnoreCase("and")?true:false;
+						for(int i = 2; i < conditionValueArray.length; i++) {
+							String[] sets = conditionValueArray[i].split("\\|");
+							if(overMap && andMap) {
+								ProcessConditionPLSQL.processMap(sets, output, DBTablePath);
+							}else if(DetaDBBufferCacheManager.dbCache){
+								ProcessConditionPLSQL.processCache(sets, output, object.get("tableName").toString()
+										, object.get("baseName").toString(), object);
+							}else {
+								ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);
+							}
+						}
+					}
+				}
+			}
+		}
+		return output;
+	}
+
+	public static List<Map<String, Object>> updateRowsByAttributesOfAggregation(Map<String, Object> object) {
+		if(!object.containsKey("obj")) {
+			return new ArrayList<>();
+		}
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("updateObj")));
+		List<String[]> aggregationValues = (List<String[]>) object.get("aggregation");
+		Iterator<String[]> iterator = aggregationValues.iterator();
+		while(iterator.hasNext()) {
+		//	boolean overMap = obj.size() == 0? false: true;
+			String[] aggregationValueArray = iterator.next();
+			String type = aggregationValueArray[1];
+			boolean limitMap = type.equalsIgnoreCase("limit")?true:false;
+			for(int i = 2; i < aggregationValueArray.length; i++) {
+				String[] sets = aggregationValueArray[i].split("\\|");
+				//String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
+				//String dBTablePath = DBPath + "/" + object.get("tableName").toString();
+				if(limitMap) {
+					ProcessAggregationPLSQL.processAggregationLimitMap(sets, obj);
+				}
+				//基于sort key 前序treeMap 之后排序功能设计
+				//基于sort key 后序treeMap
+			}
+		}
+		return obj;
+	}
+
+	public static Object updateRowsByAttributesOfGetCulumns(Map<String, Object> object) {
+		if(!object.containsKey("obj")) {
+			return new ArrayList<>();
+		}
+		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("updateObj")));
+		List<String[]> getCulumnsValues = (List<String[]>) object.get("getCulumns");
+		Iterator<String[]> iterator = getCulumnsValues.iterator();
+		while(iterator.hasNext()) {
+			boolean overMap = obj.size() == 0? false: true;
+			String[] getCulumnsValueArray = iterator.next();
+			if(overMap) {
+				ProcessGetCulumnsPLSQL.processGetCulumnsMap(obj, getCulumnsValueArray);
+			}
+		}
+		return obj;
 	}
 }
