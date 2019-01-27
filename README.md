@@ -31,7 +31,7 @@
 ##### 已完善功能：3 insert rest接口涉及的缓存更新 功能作者：罗瑶光2019-01-24
 ##### 已完善功能：之前因为没有内存映射区间，所以操作都是硬盘方式，现在有了3， 4级缓存，所有读走2,3,4级buffer，所以之前导致的硬盘修改写操作都要进行缓存更新，我需要完成这个功能，同时我还做了网页cache，这些相关的地方也要及时更新。2019-01-25
 ##### 已完善功能：所有数据格式通过restcall的准备全部走gzip，功能已经实现在在另外一个项目中 https://github.com/yaoguangluo/Deta_VPCS_Frontend/blob/master/DetaSrc/org/deta/boot/vpc/vision/RestMapVision.java 到时候我会整合。2019-01-26~27
-###### 已完善功能：update 的 nest join 函数 功能作者：罗瑶光2019-01-28
+###### 已完善功能：update 的 nest join 函数 功能作者：罗瑶光2019-01-28 采用离散数学的conjuction 地摩根迭代化简进行多join表的选择条件区分。
 
 
 ##### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
