@@ -91,7 +91,9 @@ public class PLSQLCommandImp {
 	}
 
 	private static void processExecKernel(Map<String, Object> object) throws Exception{
-		if(object.get("type").toString().equalsIgnoreCase("select") && !object.containsKey("joinBaseName")) {
+		if(object.get("type").toString().equalsIgnoreCase("select") && 
+				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
+				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("obj", SelectRowsImp.selectRowsByAttributesOfCondition(object));
 			}
@@ -103,7 +105,9 @@ public class PLSQLCommandImp {
 			}
 			object.remove("recordRows");
 		}
-		if(object.get("type").toString().equalsIgnoreCase("select") && object.containsKey("joinBaseName")){
+		if(object.get("type").toString().equalsIgnoreCase("select") && 
+				(object.get("countJoins").toString().equalsIgnoreCase("n") ||
+				(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("joinObj", SelectJoinRowsImp.selectRowsByAttributesOfJoinCondition(object));
 			}
