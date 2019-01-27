@@ -10,6 +10,7 @@ import org.deta.boot.vpc.sleeper.Sleeper;
 import org.deta.boot.vpc.sleeper.SleeperHall;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.common.utils.DetaUtil;
+import org.lyg.stable.StableData;
 public class ServerInitController {
 	private static ServerSocket server;
 	private static Properties properties;
@@ -26,7 +27,7 @@ public class ServerInitController {
 
 	public static void init() throws IOException {
 		try {
-			port = Integer.parseInt(properties.getProperty("port"));
+			port = Integer.parseInt(properties.getProperty(StableData.TCP_PORT));
 			server = new ServerSocket(port);
 			System.out.println("----德塔VPCS数据库服务器端口启动:" + port);
 			DetaUtil.initDB();
@@ -55,7 +56,7 @@ public class ServerInitController {
 		timeProcess.end();
 		System.out.println("----德塔VPCS数据库服务器启动一切正常-总耗时:" + timeProcess.duration()+ "毫秒");
 		while(true){
-			if(sleeperHall.getThreadsCount() < 1500){
+			if(sleeperHall.getThreadsCount() < StableData.SLEEPERS_RANGE){
 				Sleeper sleeper = new Sleeper();
 				try {
 					sleeper.hugPillow(sleeperHall, server.accept(), sleeper.hashCode());

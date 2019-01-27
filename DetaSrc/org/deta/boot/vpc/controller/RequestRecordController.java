@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.deta.boot.vpc.vision.VPCSRequest;
 import org.deta.boot.vpc.vision.VPCSResponse;
+import org.lyg.stable.StableData;
 
 public class RequestRecordController {
 	
@@ -19,38 +20,38 @@ public class RequestRecordController {
 		BufferedReader br = new BufferedReader(new InputStreamReader(vPCSResponse.getSocket().getInputStream()));
 		String mess = br.readLine();
 		if(null == mess){
-			vPCSResponse.returnErrorCode(400);
+			vPCSResponse.returnErrorCode(StableData.HTTP_400);
 			throw new Exception();
 		}
-		if(mess.equalsIgnoreCase("")){
-			vPCSResponse.returnErrorCode(400);
+		if(mess.equalsIgnoreCase(StableData.STRING_EMPTY)){
+			vPCSResponse.returnErrorCode(StableData.HTTP_400);
 			throw new Exception();
 		}
-		String[] type = mess.split(" ");
-		if(type.length < 2){
-			vPCSResponse.returnErrorCode(500);
+		String[] type = mess.split(StableData.STRING_SPACE);
+		if(type.length < StableData.INT_TWO){
+			vPCSResponse.returnErrorCode(StableData.HTTP_500);
 			throw new Exception();
 		}
-		String[] content = type[1].split("\\?");
-		if(content.length == 2){
+		String[] content = type[StableData.INT_ONE].split(StableData.STRING_SLASH_QUESTION);
+		if(content.length == StableData.INT_TWO){
 			vPCSRequest.setRequestIsRest(true);
-			if(content[1] == null){
-				vPCSResponse.returnErrorCode(500);
+			if(content[StableData.INT_ONE] == null){
+				vPCSResponse.returnErrorCode(StableData.HTTP_500);
 				throw new Exception();
 			}
 		}
-		if(content[0].contains(".")){
+		if(content[StableData.INT_ZERO].contains(StableData.STRING_QUATE)){
 //			vPCSRequest.setRequestIsRest(false);
 		}
 		if(vPCSRequest.getRequestIsRest()){
-			String[] column = content[1].split("&");
+			String[] column = content[StableData.INT_ONE].split(StableData.STRING_JUNCTION);
 			Map<String, String> data = new ConcurrentHashMap<>();
 			for(String cell:column){
-				String[] cells = cell.split("=");
-				data.put(cells[0], URLDecoder.decode(cells[1], "UTF-8"));
+				String[] cells = cell.split(StableData.MATH_EQUAL);
+				data.put(cells[StableData.INT_ZERO], URLDecoder.decode(cells[StableData.INT_ONE], StableData.CHARSET_UTF8));
 			}
 			vPCSRequest.setRequestValue(data);	
 		}
-		vPCSRequest.setRequestLink(content[0]);	
+		vPCSRequest.setRequestLink(content[StableData.INT_ZERO]);	
 	}
 }
