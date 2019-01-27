@@ -65,7 +65,6 @@
 ##### culumnValue:[culumnName]:[culumnValue];
 ##### condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 ##### join:[baseName]:[tableName];
-##### nest:[baseName]:[tableName];
 ##### relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 ##### aggregate[operation]:[difinition1]:[difinition2]:[difinition3]:...;
 
@@ -140,7 +139,7 @@
 ##### tableName:test:update;
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-##### nest:backend:utest;
+##### join:backend:utest;
 ##### condition:and:uCulumn3|<|20;
 ##### relation:and:testCulumn1|==|uCulumn1:testCulumn2|!=|uCulumn2;
 ##### culumnValue:date:19850525;
