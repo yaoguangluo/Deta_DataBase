@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.Socket;
 import org.deta.boot.rest.VPC;
 import org.lyg.stable.StableData;
+
 public class ForwardVision {
 	public static void main(String[] args){
 	}
