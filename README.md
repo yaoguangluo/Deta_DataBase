@@ -137,14 +137,13 @@
 
 #### 4.1 update 复杂例子
 ##### tableName:test:update;
-##### culumnValue:date:19850525;
-##### culumnValue:date1:19850526;
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
 ##### tableName:utest:nest;
 ##### condition:and:uCulumn3|<|20;
 ##### relation:and:testCulumn1|==|uCulumn1:testCulumn2|!=|uCulumn2;
-
+##### culumnValue:date:19850525;
+##### culumnValue:date1:19850526;
 
 
 
