@@ -1,10 +1,8 @@
 package org.deta.boot.vpc.vision;
-
 import java.io.IOException;
 import java.net.Socket;
-
 import org.deta.boot.rest.VPC;
-
+import org.lyg.stable.StableData;
 public class ForwardVision {
 	public static void main(String[] args){
 	}
@@ -18,69 +16,70 @@ public class ForwardVision {
 	public static void getForwardType(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws IOException {
 		if(vPCSRequest.getRequestIsRest()){
 			String filePath = VPC.getFilePath(vPCSRequest.getRequestLink());
-			if(filePath.contains(".ttf")||filePath.contains(".eot")||filePath.contains(".svg")
-					||filePath.contains(".woff")||filePath.contains(".woff2")||filePath.contains(".otf")){
+			if(filePath.contains(StableData.FILE_TTF)||filePath.contains(StableData.FILE_EOT)
+					||filePath.contains(StableData.FILE_SVG)||filePath.contains(StableData.FILE_WOFF)
+					||filePath.contains(StableData.FILE_WOFF2)||filePath.contains(StableData.FILE_OTF)){
 				String code = VPC.getCode(filePath);
 				vPCSRequest.setRequestFilePath(filePath);
 				vPCSRequest.setRequestFileCode(code);
-				vPCSRequest.setRequestForwardType("buffer");
-				vPCSResponse.setResponseContentType("Content-Type: application/font-woff \n\n");
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BUFFER);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_FONT_WOFF);
 				return;
 			}	
-			vPCSRequest.setRequestForwardType("rest");
+			vPCSRequest.setRequestForwardType(StableData.STREAM_REST);
 		}else{
 			String filePath = VPC.getFilePath(vPCSRequest.getRequestLink());
 			String code = VPC.getCode(filePath);
 			vPCSRequest.setRequestFilePath(filePath);
 			vPCSRequest.setRequestFileCode(code);
-			if(filePath.contains(".png")){ 
-				vPCSRequest.setRequestForwardType("bytes");
-				vPCSResponse.setResponseContentType("Content-Type: image/png \n\n");
+			if(filePath.contains(StableData.FILE_PNG)){ 
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_PNG);
 			}
-			if(filePath.contains(".jpeg")){ 
-				vPCSRequest.setRequestForwardType("bytes");
-				vPCSResponse.setResponseContentType("Content-Type: image/jpeg \n\n");
+			if(filePath.contains(StableData.FILE_JPEG)){ 
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_JPEG);
 			}
-			if(filePath.contains(".jpg")){ 
-				vPCSRequest.setRequestForwardType("bytes");
-				vPCSResponse.setResponseContentType("Content-Type: image/jpg \n\n");
+			if(filePath.contains(StableData.FILE_JPG)){ 
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_JPG);
 			}
-			if(filePath.contains(".gif")){ 
-				vPCSRequest.setRequestForwardType("bytes");
-				vPCSResponse.setResponseContentType("Content-Type: image/gif \n\n");
+			if(filePath.contains(StableData.FILE_GIF)){ 
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_GIF);
 			}
-			if(filePath.contains(".js") && code.equalsIgnoreCase("UTF-8")){	
-				vPCSRequest.setRequestForwardType("bytesBuffer");
+			if(filePath.contains(StableData.FILE_JS) && code.equalsIgnoreCase(StableData.CHARSET_UTF8)){	
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES_BUFFER);
 			}
-			if(filePath.contains(".css")){
-				vPCSRequest.setRequestForwardType("buffer");
-				vPCSResponse.setResponseContentType("Content-Type: text/css \n\n");
+			if(filePath.contains(StableData.FILE_CSS)){
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BUFFER);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_CSS);
 			}
-			if(filePath.contains(".html")){
-				vPCSRequest.setRequestForwardType("buffer");
-				vPCSResponse.setResponseContentType("Content-Type: text/html \n\n");
+			if(filePath.contains(StableData.FILE_HTML)){
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BUFFER);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_HTML);
 			}
-			if(filePath.contains(".wav")){
-				vPCSRequest.setRequestForwardType("bytes");
-				vPCSResponse.setResponseContentType("Content-Type: audio/x-wav \n\n");
+			if(filePath.contains(StableData.FILE_WAV)){
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_WAV);
 			}
 		}	
 	}
 
 	public static void forwardToRestMap(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
-		if(vPCSRequest.getRequestForwardType() == null){
+		if(null == vPCSRequest.getRequestForwardType()){
 			vPCSResponse.return404();
 		}
-		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("rest")){
+		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase(StableData.STREAM_REST)){
 			RestMapVision.processRest(vPCSRequest, vPCSResponse);
 		}
-		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("bytes")){
+		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase(StableData.STREAM_BYTES)){
 			RestMapVision.processBytes(vPCSRequest, vPCSResponse);
 		}
-		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("buffer")){
+		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase(StableData.STREAM_BUFFER)){
 			RestMapVision.processBuffer(vPCSRequest, vPCSResponse);
 		}
-		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase("bytesBuffer")){
+		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase(StableData.STREAM_BYTES_BUFFER)){
 			RestMapVision.processBufferBytes(vPCSRequest, vPCSResponse);
 		}
 	}

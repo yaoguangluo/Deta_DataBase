@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.deta.boot.vpc.vision.VPCSRequest;
 import org.deta.boot.vpc.vision.VPCSResponse;
 import org.lyg.stable.StableData;
-
 public class RequestRecordController {
 	
 	public static void requestIpRecoder(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {

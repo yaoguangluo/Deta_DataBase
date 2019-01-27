@@ -37,4 +37,34 @@ public interface StableData {
 	public static final int HTTP_300 = 300;
 	//CHARSET
 	public static final String CHARSET_UTF8 = "UTF-8";
+	//FILE FORMAT
+	public static final String FILE_EOT = ".eot";
+	public static final String FILE_SVG = ".svg";
+	public static final String FILE_OTF = ".otf";
+	public static final String FILE_WOFF = ".woff";
+	public static final String FILE_WOFF2 = ".woff2";
+	public static final String FILE_TTF = ".ttf";
+	public static final String FILE_PNG = ".png";
+	public static final String FILE_JPG = ".jpg";
+	public static final String FILE_JPEG = ".jpeg";
+	public static final String FILE_WAV = ".wav";
+	public static final String FILE_GIF = ".gif";
+	public static final String FILE_JS = ".js";
+	public static final String FILE_CSS = ".css";
+	public static final String FILE_HTML = ".html";	
+	//FILE Stream
+	public static final String STREAM_BUFFER = "buffer";	
+	public static final String STREAM_BYTES = "bytes";	
+	public static final String STREAM_BYTES_BUFFER = "bytesBuffer";	
+	public static final String STREAM_REST = "rest";	
+	//HTTP HEADER
+	public static final String HEADER_CONTENT_TYPE_PNG = "Content-Type: image/png \n\n";	
+	public static final String HEADER_CONTENT_TYPE_JPEG = "Content-Type: image/jpeg \n\n";	
+	public static final String HEADER_CONTENT_TYPE_JPG = "Content-Type: image/jpg \n\n";	
+	public static final String HEADER_CONTENT_TYPE_GIF = "Content-Type: image/gif \n\n";	
+	public static final String HEADER_CONTENT_TYPE_CSS = "Content-Type: text/css \n\n";	
+	public static final String HEADER_CONTENT_TYPE_HTML = "Content-Type: text/html \n\n";	
+	public static final String HEADER_CONTENT_TYPE_WAV = "Content-Type: audio/wav \n\n";	
+	public static final String HEADER_CONTENT_TYPE_FONT_WOFF = "Content-Type: image/font-woff \n\n";	
+	public static final String HEADER_CONTENT_TYPE_JS = "content-type: text/javascript; charset:UTF-8 \n\n";
 }
