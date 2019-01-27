@@ -1,10 +1,10 @@
 package org.lyg.stable;
-
 public interface StableData {
 	//DB
 	public static final String DB_BASE_NAME = "baseName";
 	//LOGIN
 	public static final String LOGIN_TOKEN = "token";
+	public static final String LOGIN_EMAIL = "email";
 	public static final String LOGIN_AUTH = "auth";
 	//STRING
 	public static final String STRING_EMPTY = "";
@@ -67,4 +67,18 @@ public interface StableData {
 	public static final String HEADER_CONTENT_TYPE_WAV = "Content-Type: audio/wav \n\n";	
 	public static final String HEADER_CONTENT_TYPE_FONT_WOFF = "Content-Type: image/font-woff \n\n";	
 	public static final String HEADER_CONTENT_TYPE_JS = "content-type: text/javascript; charset:UTF-8 \n\n";
+	//REST PATH
+	public static final String REST_PATH_SELECT = "/select";	
+	public static final String REST_PATH_SETDB = "/setDB";	
+	public static final String REST_PATH_INSERT = "/insert";	
+	public static final String REST_PATH_DELETE = "/delete";	
+	public static final String REST_PATH_UPDATE = "/update";	
+	public static final String REST_PATH_DB_CATEGORY = "DBCategory";	
+	public static final String REST_PATH_EXEC_DETA_PLSQL = "/execDetaPLSQL";	
+	public static final String REST_PATH_LOGIN = "/login";	
+	public static final String REST_PATH_FIND = "/find";	
+	public static final String REST_PATH_LOGOUT = "/logout";	
+	public static final String REST_PATH_REGISTER = "/register";	
+	public static final String REST_PATH_CHANGE = "/change";	
+	public static final String REST_PATH_CHECK_STATUS = "/checkStatus";	
 }
