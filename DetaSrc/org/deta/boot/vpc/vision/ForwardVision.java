@@ -51,6 +51,7 @@ public class ForwardVision {
 			}
 			if(filePath.contains(StableData.FILE_JS) && code.equalsIgnoreCase(StableData.CHARSET_UTF8)){	
 				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES_BUFFER);
+				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_JS);
 			}
 			if(filePath.contains(StableData.FILE_CSS)){
 				vPCSRequest.setRequestForwardType(StableData.STREAM_BUFFER);

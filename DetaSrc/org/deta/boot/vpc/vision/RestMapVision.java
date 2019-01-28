@@ -84,7 +84,9 @@ public class RestMapVision {
 			list.add(0, "Accept-Ranges: bytes \n".getBytes("UTF8"));
 			list.add(0, "Host:deta software  \n".getBytes("UTF8"));
 			list.add(0, "http/1.1 200 ok \n".getBytes("UTF8"));
-			list.add(sniper);
+			if(null != sniper && sniper.length>0) {
+				list.add(sniper);
+			}
 			DetaCacheManager.putCacheOfBytesList(vPCSRequest.getRequestFilePath(), list);
 		}	
 		Iterator<byte[]> iterator = list.iterator();
