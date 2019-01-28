@@ -2,10 +2,12 @@ package org.deta.vpcs.hall;
 
 import java.io.File;
 
+import org.lyg.cache.CacheManager;
+
 public class DatabaseLogHall {
 	static String logCategoryPath;
 	static String logCurrentFilePath;
-	public static void createBinLogHall() {
+	public static void createBinLogHall() throws Exception {
 		//db write operation
 		initLogCategoryPath();
 		initCurrentFilePath();
@@ -13,12 +15,19 @@ public class DatabaseLogHall {
 		//binlog
 	}
 
+	//deta plsql format: time + executeName + plsql string; 
 	private static void initCurrentFilePath() {
-		
+		 long yearMonthDay = System.currentTimeMillis();
+		 long day = yearMonthDay/(1000*60*60*24);
+		 logCurrentFilePath = logCategoryPath + "/log/logger" + day + ".det";
 	}
 
-	private static void initLogCategoryPath() {
-		
+	private static void initLogCategoryPath() throws Exception {
+		if(null != CacheManager.getCacheInfo("DBPath")) {
+			logCategoryPath = CacheManager.getCacheInfo("DBPath").getValue().toString();	
+		}else {
+			throw new Exception();
+		}
 	}
 	
 	public static void writeLogFile(String plsql) {
