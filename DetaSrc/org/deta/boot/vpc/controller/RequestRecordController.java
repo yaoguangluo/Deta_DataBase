@@ -20,23 +20,23 @@ public class RequestRecordController {
 		String mess = br.readLine();
 		if(null == mess){
 			vPCSResponse.returnErrorCode(StableData.HTTP_400);
-			throw new Exception();
+			return;
 		}
 		if(mess.equalsIgnoreCase(StableData.STRING_EMPTY)){
 			vPCSResponse.returnErrorCode(StableData.HTTP_400);
-			throw new Exception();
+			return;
 		}
 		String[] type = mess.split(StableData.STRING_SPACE);
 		if(type.length < StableData.INT_TWO){
 			vPCSResponse.returnErrorCode(StableData.HTTP_500);
-			throw new Exception();
+			return;
 		}
 		String[] content = type[StableData.INT_ONE].split(StableData.STRING_SLASH_QUESTION);
 		if(content.length == StableData.INT_TWO){
 			vPCSRequest.setRequestIsRest(true);
 			if(content[StableData.INT_ONE] == null){
 				vPCSResponse.returnErrorCode(StableData.HTTP_500);
-				throw new Exception();
+				return;
 			}
 		}
 		if(content[StableData.INT_ZERO].contains(StableData.STRING_QUATE)){
