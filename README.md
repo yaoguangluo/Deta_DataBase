@@ -36,11 +36,11 @@
 ##### 已完善功能：语音媒体文件的发送。 罗瑶光2019-01-29
 ##### 已完善功能：套接字阅读格式规范。 罗瑶光2019-01-29
 ##### 已完善功能：tcp 协议 header格式规范。 罗瑶光2019-01-29
-
+##### 已完善功能：selet where in 函数。罗瑶光2019-01-29
+##### 已完善功能：selet where !in 函数。罗瑶光2019-01-29
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
-##### 正在或者准备完善功能：selet where in 函数。
-
+##### 准备开始完善功能：写错误的rollback 函数 
 
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
 ###### 未完善功能：基于sort key 后序treeMap
@@ -49,7 +49,6 @@
 ###### 未完善功能：jvmsets bit优化
 ###### 未完善功能：写错误的rollback 函数
 ###### 未完善功能：binlog 函数 数据恢复
-###### 未完善功能：变量名称编程规范整体整理。
 ###### 未完善功能：消息队列进行区域链接热备恢复。
 ###### 未完善功能：研发更多实用的函数计划。
 ###### 未完善功能：所有错误日志属性分级格式化记录。
@@ -91,7 +90,11 @@
 ##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
 ##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
 
-
+#### 1.1 select where in 例子
+##### setRoot:C:/DetaDB;
+##### baseName:backend;
+##### tableName:usr:select;
+##### condition:or:u_id|in|3,4,5;
 
 #### 2 select join 例子
 ##### tableName:utest:select;
