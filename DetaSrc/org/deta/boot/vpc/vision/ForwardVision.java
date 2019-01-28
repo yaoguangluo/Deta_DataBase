@@ -62,7 +62,7 @@ public class ForwardVision {
 				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_HTML);
 			}
 			if(filePath.contains(StableData.FILE_WAV)){
-				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
+				vPCSRequest.setRequestForwardType(StableData.STREAM_BUFFER);
 				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_WAV);
 			}
 		}	

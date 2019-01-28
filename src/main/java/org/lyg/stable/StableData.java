@@ -43,6 +43,7 @@ public interface StableData {
 	//CHARSET
 	public static final String CHARSET_UTF_8 = "UTF-8";
 	public static final String CHARSET_UTF8 = "UTF8";
+	public static final String CHARSET_GBK = "GBK";	
 	//FILE FORMAT
 	public static final String FILE_EOT = ".eot";
 	public static final String FILE_SVG = ".svg";
@@ -100,5 +101,5 @@ public interface StableData {
 	public static final String REST_PATH_INSERT_ROW_BY_TABLE_PATH = "/insertRowByTablePath";	
 	public static final String REST_PATH_SELECT_ROWS_BY_ATTRIBUTE = "/selectRowsByAttribute";	
 	public static final String REST_PATH_SELECT_ROWS_BY_TABLE_PATH = "/selectRowsByTablePath";	
-	public static final String REST_PATH_UPDATE_ROW_BY_TABLE_PATH_AND_INDEX = "/updateRowByTablePathAndIndex";	
+	public static final String REST_PATH_UPDATE_ROW_BY_TABLE_PATH_AND_INDEX = "/updateRowByTablePathAndIndex";
 }

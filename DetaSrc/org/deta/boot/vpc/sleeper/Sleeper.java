@@ -16,12 +16,10 @@ public class Sleeper extends Thread implements Runnable{
 	public void run(){
 		try{
 			org.deta.boot.vpc.controller.RequestRecordController.requestIpRecoder(vPCSRequest, vPCSResponse);
-			System.out.println(1);
 			if(vPCSResponse.getSocket().isClosed()) {
 				return;
 			}
 			org.deta.boot.vpc.controller.RequestRecordController.requestLinkRecoder(vPCSRequest, vPCSResponse);
-			System.out.println(2);
 			if(vPCSResponse.getSocket().isClosed()) {
 				return;
 			}

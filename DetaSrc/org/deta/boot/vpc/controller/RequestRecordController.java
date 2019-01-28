@@ -16,7 +16,8 @@ public class RequestRecordController {
 	}
 
 	public static void requestLinkRecoder(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(vPCSResponse.getSocket().getInputStream(),"UTF8"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(vPCSResponse.getSocket().getInputStream()
+				, StableData.CHARSET_GBK));
 		String mess = br.readLine();
 		if(null == mess){
 			vPCSResponse.returnErrorCode(StableData.HTTP_400);
