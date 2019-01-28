@@ -68,7 +68,7 @@ public class ForwardVision {
 	}
 
 	public static void forwardToRestMap(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) throws Exception {
-		if(null == vPCSRequest.getRequestForwardType()){
+		if(null == vPCSRequest || null == vPCSRequest.getRequestForwardType()){
 			vPCSResponse.return404();
 		}
 		if(vPCSRequest.getRequestForwardType().equalsIgnoreCase(StableData.STREAM_REST)){
