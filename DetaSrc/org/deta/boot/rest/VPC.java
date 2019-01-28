@@ -64,7 +64,7 @@ public class VPC {
 	}
 
 	public static String getCode(String filePath) throws IOException{
-		if(filePath.contains(".html")||filePath.contains(".js")){
+		if(filePath.contains(StableData.FILE_HTML)||filePath.contains(StableData.FILE_JS)){
 			return "UTF-8";
 		}
 		return "GBK";

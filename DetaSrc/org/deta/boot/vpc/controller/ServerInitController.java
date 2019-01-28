@@ -46,7 +46,7 @@ public class ServerInitController {
 	}
 
 	public static void initServer() throws IOException {
-		System.out.println("----DETA VPCS--1.7");
+		System.out.println("----DETA VPCS--1.8");
 		System.out.println("----Author: 罗瑶光");
 		System.out.println("----浏阳德塔软件开发有限公司开源项目");
 		TimeProcess timeProcess=new TimeProcess();

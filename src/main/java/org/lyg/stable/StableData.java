@@ -8,16 +8,21 @@ public interface StableData {
 	public static final String LOGIN_AUTH = "auth";
 	//STRING
 	public static final String STRING_EMPTY = "";
+	public static final String STRING_SPACE_ENTER = " \n";
+	public static final String STRING_ENTER = "\n";
 	public static final String STRING_QUATE = ".";
 	public static final String STRING_JUNCTION = "&";
 	//NUMBER
 	public static final int INT_ZERO = 0;
+	public static final int INT_MINES_ONE = -1;
 	public static final int INT_ONE = 1;
 	public static final int INT_TWO = 2;
 	public static final int INT_THREE = 3;
 	public static final int INT_FOUR = 4;
 	public static final int INT_FIVE = 5;
 	public static final int INT_SIX = 6;
+	//BUFFER RANGE
+	public static final int BUFFER_RANGE_MAX = 1024;
 	//REST
 	public static final String REST_GET_DB_CATEGORY = "/getDBCategory";
 	public static final String REST_GET_ALL_DB_CATEGORY = "/getAllDBCategory";
@@ -36,7 +41,8 @@ public interface StableData {
 	public static final int HTTP_404 = 404;
 	public static final int HTTP_300 = 300;
 	//CHARSET
-	public static final String CHARSET_UTF8 = "UTF-8";
+	public static final String CHARSET_UTF_8 = "UTF-8";
+	public static final String CHARSET_UTF8 = "UTF8";
 	//FILE FORMAT
 	public static final String FILE_EOT = ".eot";
 	public static final String FILE_SVG = ".svg";
@@ -67,6 +73,12 @@ public interface StableData {
 	public static final String HEADER_CONTENT_TYPE_WAV = "Content-Type: audio/wav \n\n";	
 	public static final String HEADER_CONTENT_TYPE_FONT_WOFF = "Content-Type: image/font-woff \n\n";	
 	public static final String HEADER_CONTENT_TYPE_JS = "content-type: text/javascript; charset:UTF-8 \n\n";
+	public static final String HEADER_CACHE_CONTROL = "Cache-control: max-age=315360000 \n";
+	public static final String HEADER_HTTP_200_OK = "http/1.1 200 ok \n";
+	public static final String HEADER_HOST = "Host:deta software \n";
+	public static final String HEADER_CONTENT_ENCODING_GZIP = "Content-Encoding:gzip \n";
+	public static final String HEADER_ACCEPT_RANGES_BYTES = "Accept-Ranges: bytes \n";
+	public static final String HEADER_CONTENT_LENGTH = "Content-Length: ";
 	//REST PATH
 	public static final String REST_PATH_SELECT = "/select";	
 	public static final String REST_PATH_SETDB = "/setDB";	
@@ -81,4 +93,12 @@ public interface StableData {
 	public static final String REST_PATH_REGISTER = "/register";	
 	public static final String REST_PATH_CHANGE = "/change";	
 	public static final String REST_PATH_CHECK_STATUS = "/checkStatus";	
+	public static final String REST_PATH_SET_DB_PATH = "/setDBPath";
+	public static final String REST_PATH_SET_DB_TABLE = "/setDBTable";	
+	public static final String REST_PATH_DELETE_ROWS_BY_TABLE_PATH_AND_INDEX = "/deleteRowByTablePathAndIndex";
+	public static final String REST_PATH_INSERT_ROW_BY_BASE_NAME = "/insertRowByBaseName";	
+	public static final String REST_PATH_INSERT_ROW_BY_TABLE_PATH = "/insertRowByTablePath";	
+	public static final String REST_PATH_SELECT_ROWS_BY_ATTRIBUTE = "/selectRowsByAttribute";	
+	public static final String REST_PATH_SELECT_ROWS_BY_TABLE_PATH = "/selectRowsByTablePath";	
+	public static final String REST_PATH_UPDATE_ROW_BY_TABLE_PATH_AND_INDEX = "/updateRowByTablePathAndIndex";	
 }

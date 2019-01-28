@@ -49,7 +49,7 @@ public class ForwardVision {
 				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES);
 				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_GIF);
 			}
-			if(filePath.contains(StableData.FILE_JS) && code.equalsIgnoreCase(StableData.CHARSET_UTF8)){	
+			if(filePath.contains(StableData.FILE_JS) && code.equalsIgnoreCase(StableData.CHARSET_UTF_8)){	
 				vPCSRequest.setRequestForwardType(StableData.STREAM_BYTES_BUFFER);
 				vPCSResponse.setResponseContentType(StableData.HEADER_CONTENT_TYPE_JS);
 			}
