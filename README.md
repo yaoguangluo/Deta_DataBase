@@ -39,7 +39,7 @@
 
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
-###### 正在或者准备完善功能：selet where in 函数。
+##### 正在或者准备完善功能：selet where in 函数。
 
 
 ###### 未完善功能：基于sort key 前序treeMap 之后排序功能设计
