@@ -64,7 +64,7 @@ public interface StableData {
 	public static final String HEADER_CONTENT_TYPE_GIF = "Content-Type: image/gif \n\n";	
 	public static final String HEADER_CONTENT_TYPE_CSS = "Content-Type: text/css \n\n";	
 	public static final String HEADER_CONTENT_TYPE_HTML = "Content-Type: text/html \n\n";	
-	public static final String HEADER_CONTENT_TYPE_WAV = "Content-Type: audio/x-wav \n\n";	
+	public static final String HEADER_CONTENT_TYPE_WAV = "Content-Type: audio/wav \n\n";	
 	public static final String HEADER_CONTENT_TYPE_FONT_WOFF = "Content-Type: image/font-woff \n\n";	
 	public static final String HEADER_CONTENT_TYPE_JS = "content-type: text/javascript; charset:UTF-8 \n\n";
 	//REST PATH
