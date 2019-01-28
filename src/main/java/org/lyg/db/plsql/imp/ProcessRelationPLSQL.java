@@ -63,6 +63,18 @@ public class ProcessRelationPLSQL {
 						newObjTemp.add(objRow);
 					}
 				}
+				if(sets[1].equalsIgnoreCase("in")) {
+					String set = "," + objRow.get(sets[2]).toString() + ",";
+					if(set.contains(objRow.get(sets[0]).toString())){
+						newObjTemp.add(objRow);
+					}
+				}
+				if(sets[1].equalsIgnoreCase("!in")) {
+					String set = "," + objRow.get(sets[2]).toString() + ",";
+					if(!set.contains(objRow.get(sets[0]).toString())){
+						newObjTemp.add(objRow);
+					}
+				}
 			}
 		}
 	}

@@ -247,12 +247,12 @@ public class SelectRowsImp {
 						for(int i = 2; i < conditionValueArray.length; i++) {
 							String[] sets = conditionValueArray[i].split("\\|");
 							if(overMap && andMap) {
-								ProcessConditionPLSQL.processMap(sets, output, DBTablePath);
+								ProcessConditionPLSQL.processMap(sets, output, DBTablePath);//1
 							}else if(DetaDBBufferCacheManager.dbCache){
 								ProcessConditionPLSQL.processCache(sets, output, object.get("tableName").toString()
-										, object.get("baseName").toString(), object);
+										, object.get("baseName").toString(), object);//1
 							}else {
-								ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);
+								ProcessConditionPLSQL.processTable(sets, output, DBTablePath, object);//1
 							}
 						}
 					}

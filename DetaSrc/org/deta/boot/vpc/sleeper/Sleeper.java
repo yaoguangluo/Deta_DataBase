@@ -23,7 +23,6 @@ public class Sleeper extends Thread implements Runnable{
 			if(vPCSResponse.getSocket().isClosed()) {
 				return;
 			}
-			System.out.println(vPCSRequest.getRequestLink());
 			org.deta.boot.vpc.controller.RequestFilterController.requestIpFilter(vPCSRequest, vPCSResponse);
 			if(vPCSResponse.getSocket().isClosed()) {
 				return;

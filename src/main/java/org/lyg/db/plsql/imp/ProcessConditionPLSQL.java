@@ -108,6 +108,29 @@ public class ProcessConditionPLSQL {
 					}
 				}	
 			}
+			
+			if(sets[1].equalsIgnoreCase("in")) {
+				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
+				String set = "," + sets[2] + ",";
+				if(set.contains("," + rowCellFromString + ",") && row.containsCell("is_delete_0")){
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
+				}	
+			}
+			if(sets[1].equalsIgnoreCase("!in")) {
+				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
+				String set = "," + sets[2] + ",";
+				if(!set.contains("," + rowCellFromString + ",") && row.containsCell("is_delete_0")){
+					if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+						output.add(rowToRowMap(row));
+						Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+						recordRows.put(count, true);
+					}
+				}	
+			}		
 		}	
 	}
 
@@ -194,6 +217,24 @@ public class ProcessConditionPLSQL {
 				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
 						.get(sets[0]))).get("culumnValue").toString();
 				if(!rowCellFromString.equalsIgnoreCase(sets[2])) {
+					outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("in")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
+				String set = "," + sets[2] + ",";
+				if(set.contains("," + rowCellFromString + ",")){
+					outputTemp.add(row);
+				}	
+			}
+			
+			if(sets[1].equalsIgnoreCase("!in")) {
+				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
+						.get(sets[0]))).get("culumnValue").toString();
+				String set = "," + sets[2] + ",";
+				if(!set.contains("," + rowCellFromString + ",")){
 					outputTemp.add(row);
 				}	
 			}
@@ -314,7 +355,30 @@ public class ProcessConditionPLSQL {
 									}
 								}	
 							}
-
+							if(sets[1].equalsIgnoreCase("in")) {
+								String rowCellFromString = temp.toString();
+								String set = "," + sets[2] + ",";
+								if(set.contains("," + rowCellFromString + ",")) {
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
+								}	
+							}
+							if(sets[1].equalsIgnoreCase("!in")) {
+								String rowCellFromString = temp.toString();
+								String set = "," + sets[2] + ",";
+								if(!set.contains("," + rowCellFromString + ",")) {
+									if(!((Map<Integer, Boolean>)(object.get("recordRows"))).containsKey(count)) {
+										processkernel(row, readDBTableRowIndexCulumnFile, readDBTableRowIndexCulumnFile, reader
+												, row, output, row, rowMap);
+										Map<Integer, Boolean> recordRows = (Map<Integer, Boolean>) object.get("recordRows");
+										recordRows.put(count, true);
+									}
+								}	
+							}
 						}
 					} 
 				}

@@ -135,7 +135,7 @@ public class UpdateJoinRowsImp {
 			for(int i= 2; i< getRelationValueArray.length; i++) {
 				String[] sets = getRelationValueArray[i].split("\\|");
 				if(overObjMap&& overJoinObjMap&&andMap && i>2) {
-					ProcessRelationPLSQL.processAndMap(sets, obj, joinObj,object, newObj);
+					ProcessRelationPLSQL.processAndMap(sets, obj, joinObj,object, newObj);//1
 				}else {
 					ProcessRelationPLSQL.processOrMap(sets, obj, joinObj, object, newObj, findinNewObj);
 				}
