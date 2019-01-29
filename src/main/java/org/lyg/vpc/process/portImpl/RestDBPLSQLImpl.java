@@ -2,6 +2,8 @@ package org.lyg.vpc.process.portImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.deta.vpcs.hall.DatabaseLogHall;
 import org.lyg.db.plsql.imp.ExecPLSQLImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
  
@@ -28,6 +30,7 @@ public class RestDBPLSQLImpl {
 			output.put("returnResult", "invalid request");
 			return output;
 		}
+		DatabaseLogHall.writeLogFile(plsql);
 		output = ExecPLSQLImp.ExecPLSQL(plsql);
 		return output;
 	}
