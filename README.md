@@ -45,13 +45,12 @@
 ##### 已完善功能：plsql日志binlog 记录压缩简单实现。罗瑶光2019-01-30
 ##### 已完善功能：plsql日志binlog 逐行写记录为优化版实现。罗瑶光2019-01-30
 ##### 已完善功能：plsql编程规范文档1.0版发布。罗瑶光2019-01-30 https://github.com/yaoguangluo/VPCS_Theroy/blob/master/Deta_Database_PLSQL%20_V1.0.pdf
+##### 已完善功能：plsql读过滤和写安全机制。。罗瑶光2019-01-30 
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 #####  正在完善功能：基于 VPCS 思想的写操作日志管理系统。
-#####  正在完善功能：binlog 日志加入追踪系统和5W系统。
-#####  正在完善功能：plsql binlog 日志加入读操作过滤机制。
+##### 正在完善功能：写错误的rollback 函数 
 
-###### 未完善功能：写错误的rollback 函数 
 ###### 未完善功能：binlog 日志 大数据文件分页。
 ###### 未完善功能：binlog 日志加入追踪系统和5W系统。
 ###### 未完善功能：binlog 函数 数据恢复
