@@ -53,7 +53,7 @@ public class RestDBInsertImpl {
 		}
 
 		JSONObject jaculumnOfNewRow=new JSONObject(culumnOfNewRow);
-		output = InsertRowsImp.insertRowByBaseName(baseName, tableName, jaculumnOfNewRow);
+		output = InsertRowsImp.insertRowByBaseName(baseName, tableName, jaculumnOfNewRow, true);
 		return output;
 	}
 }

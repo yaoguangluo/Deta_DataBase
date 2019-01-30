@@ -10,10 +10,11 @@ import java.util.Map;
 
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
+import org.lyg.db.reflection.Table;
 import org.lyg.db.select.imp.SelectRowsImp;
 
 public class DeleteRowsImp {
-	public static Map<String, Object> deleteRowByTablePathAndIndex(String tablePath, String pageIndex)
+	public static Map<String, Object> deleteRowByTablePathAndIndex(String tablePath, String pageIndex, boolean mod)
 			throws FileNotFoundException, IOException {
 		int rowInsertIndex = Integer.valueOf(pageIndex);
 		File fileDBTable = new File(tablePath);
@@ -27,10 +28,14 @@ public class DeleteRowsImp {
 					readDBTableRowIndexFile.mkdir();				
 					String needCreatCulumnPath0 = DBTableRowIndexPath + "/is_delete_0";
 					File needCreatCulumn0 = new File(needCreatCulumnPath0);
-					needCreatCulumn0.delete();			
+					if(mod) {
+						needCreatCulumn0.delete();		
+					}		
 					String needCreatCulumnPath = DBTableRowIndexPath + "/is_delete_1";
 					File needCreatCulumn = new File(needCreatCulumnPath);
-					needCreatCulumn.mkdir();
+					if(mod) {
+						needCreatCulumn.mkdir();
+					}
 				}
 			}
 		}
@@ -40,12 +45,15 @@ public class DeleteRowsImp {
 		String baseName = sets[sets.length-2];
 		String tableName =  sets[sets.length-1];
 		String indexName = "row"+pageIndex;
-		DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName).removeRow(indexName);
+		Table table = DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName);
+		if(mod) {
+			table.removeRow(indexName);
+		}
 		return output;
 	}
 
-	@SuppressWarnings({ "unchecked"})
-	public static void deleteRowByAttributesOfCondition(Map<String, Object> object) throws IOException {
+	@SuppressWarnings({"unchecked"})
+	public static void deleteRowByAttributesOfCondition(Map<String, Object> object, boolean mod) throws IOException {
 		if(!object.containsKey("baseName")||!object.containsKey("tableName")){
 			return;
 		}
@@ -64,10 +72,10 @@ public class DeleteRowsImp {
 			Map<String, Object> rowValue = (Map<String, Object>) row.get("rowValue");
 			Map<String, Object> indexCell = (Map<String, Object>) rowValue.get("Index");
 			String indexValue = indexCell.get("culumnValue").toString();
-			deleteRowByTablePathAndIndex(tablePath, indexValue);
+			deleteRowByTablePathAndIndex(tablePath, indexValue, mod);
 			//delete buffer also
-//			DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString()).getTable(object.get("tableName")
-//					.toString()).removeRow(indexValue);
+			//			DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString()).getTable(object.get("tableName")
+			//					.toString()).removeRow(indexValue);
 		}
 	}
 }

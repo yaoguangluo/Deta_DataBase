@@ -1,6 +1,4 @@
 package org.lyg.vpc.process.factoryImpl;
-import java.io.FileNotFoundException;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -118,8 +116,8 @@ public class LoginDAOImpl {
 		
 	}
 
-	public static void insertRowByTablePath(String baseName, String tableName, JSONObject jsobj) throws FileNotFoundException, IOException {
-		InsertRowsImp.insertRowByBaseName(baseName, tableName, jsobj);
+	public static void insertRowByTablePath(String baseName, String tableName, JSONObject jsobj) throws Exception {
+		InsertRowsImp.insertRowByBaseName(baseName, tableName, jsobj, true);
 	}
 	
 }

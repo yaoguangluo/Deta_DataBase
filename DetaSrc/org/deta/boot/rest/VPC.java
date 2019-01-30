@@ -36,7 +36,7 @@ public class VPC {
 		//plsql
 		if(string.equalsIgnoreCase(StableData.REST_PATH_EXEC_DETA_PLSQL)){
 			return VtoV.ObjectToJsonString(RestDBPLSQLImpl.restDBPLSQLImpl(data.get("token") ,data.get("email")
-					, data.get("password"), data.get("auth"), data.get("LYGQuery")));
+					, data.get("password"), data.get("auth"), data.get("LYGQuery"), data.get("mod")));
 		}
 		//restMap
 		if(string.equalsIgnoreCase(StableData.REST_PATH_LOGIN)){

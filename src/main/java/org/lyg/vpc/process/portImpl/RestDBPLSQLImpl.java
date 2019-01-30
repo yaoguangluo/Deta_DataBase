@@ -2,16 +2,15 @@ package org.lyg.vpc.process.portImpl;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.deta.vpcs.hall.DatabaseLogHall;
 import org.json.JSONObject;
 import org.lyg.common.utils.StringUtil;
 import org.lyg.db.plsql.imp.ExecPLSQLImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
- 
+
 public class RestDBPLSQLImpl {
 	public static Map<String, Object> restDBPLSQLImpl(String token,
-			String email, String password, String auth, String plsql) throws Exception{
+			String email, String password, String auth, String plsql, String mod) throws Exception{
 		Map<String, Object> output = new HashMap<String, Object>();
 		String who = "";
 		//security monitor
@@ -42,8 +41,19 @@ public class RestDBPLSQLImpl {
 		if(plsql.contains("update")||plsql.contains("insert")||plsql.contains("delete")
 				||plsql.contains("drop")||plsql.contains("change")||plsql.contains("create")) {
 			DatabaseLogHall.writeLogFile(System.currentTimeMillis(), who, plsql);
+			try {
+				ExecPLSQLImp.ExecPLSQL(plsql, false);
+			}catch(Exception e) {
+				output.put("loginInfo", "unsuccess");
+				output.put("returnResult", "invalid plsql");
+				return output;
+			}
+			if(null != mod && mod.equalsIgnoreCase("true")) {
+				output = ExecPLSQLImp.ExecPLSQL(plsql, true);
+			}
+		}else {
+			output = ExecPLSQLImp.ExecPLSQL(plsql, true);	
 		}
-		output = ExecPLSQLImp.ExecPLSQL(plsql);
 		return output;
 	}
 }

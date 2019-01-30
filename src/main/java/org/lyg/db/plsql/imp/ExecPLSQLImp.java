@@ -2,7 +2,7 @@ package org.lyg.db.plsql.imp;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 public class ExecPLSQLImp {
-	public static Map<String, Object> ExecPLSQL(String plsql) throws Exception{
+	public static Map<String, Object> ExecPLSQL(String plsql, boolean mod) throws Exception{
 		//working for here
 		Map<String, Object> output = new ConcurrentHashMap<>();
 		//1make container
@@ -46,10 +46,10 @@ public class ExecPLSQLImp {
 				PLSQLCommandImp.processListNeedStart(acknowledge, output);
 			}
 			output.put("newCommand", acknowledge[0]);
-			PLSQLCommandImp.processExec(acknowledge, output);
+			PLSQLCommandImp.processExec(acknowledge, output, mod);
 			output.put("lastCommand", output.get("newCommand"));
 		}
-		PLSQLCommandImp.processCheck(output.get("newCommand").toString(), output);
+		PLSQLCommandImp.processCheck(output.get("newCommand").toString(), output, mod);
 		return output;
 	}
 }

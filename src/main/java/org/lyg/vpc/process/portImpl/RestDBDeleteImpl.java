@@ -30,6 +30,6 @@ public class RestDBDeleteImpl {
 			output.put("returnResult", "invalid request");
 			return output;
 		}
-		return DeleteRowsImp.deleteRowByTablePathAndIndex(tablePath, pageIndex);
+		return DeleteRowsImp.deleteRowByTablePathAndIndex(tablePath, pageIndex, true);
 	}
 }

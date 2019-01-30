@@ -8,7 +8,7 @@ import org.lyg.cache.CacheManager;
 import org.lyg.common.utils.DetaDBUtil;
 @SuppressWarnings("unchecked")
 public class CreateTablesImp {
-	public static void createTable(Map<String, Object> object) throws Exception {
+	public static void createTable(Map<String, Object> object, boolean mod) throws Exception {
 		if(!object.containsKey("baseName")||!object.containsKey("tableName")){
 			return;
 		}
@@ -45,10 +45,16 @@ public class CreateTablesImp {
 			}
 			culumnNameFile.mkdir();
 			//create file
-			FileWriter fw = null;
-			fw = new FileWriter(culumnNamePath+"/value.lyg", true);
-			fw.write(culumnDefinition[3]);
-			fw.close();
+			File file = new File(culumnNamePath + "/value.lyg");
+			if(file.exists()) {
+				throw new Exception();
+			}
+			if(mod) {
+				FileWriter fw = null;
+				fw = new FileWriter(file, true);
+				fw.write(culumnDefinition[3]);
+				fw.close();
+			}
 		}	
 	}
 }

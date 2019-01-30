@@ -1,6 +1,5 @@
 package org.lyg.db.plsql.imp;
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -74,7 +73,7 @@ public class PLSQLCommandImp {
 		object.put("joinTableName", acknowledge[2]);
 	}
 	
-	public static void processExec(String[] acknowledge, Map<String, Object> object) throws Exception {
+	public static void processExec(String[] acknowledge, Map<String, Object> object, boolean mod) throws Exception {
 		if(object.get("start").toString().equals("1")) {
 			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())
 					&&(object.get("lastCommand").toString().contains("changeCulumnName")
@@ -85,12 +84,12 @@ public class PLSQLCommandImp {
 							||object.get("lastCommand").toString().contains("getCulumns")
 							||object.get("lastCommand").toString().contains("culumnName")
 							||object.get("lastCommand").toString().contains("relation"))) {
-				processExecKernel(object);
+				processExecKernel(object, mod);
 			}
 		}
 	}
 
-	private static void processExecKernel(Map<String, Object> object) throws Exception{
+	private static void processExecKernel(Map<String, Object> object, boolean mod) throws Exception{
 		if(object.get("type").toString().equalsIgnoreCase("select") && 
 				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
 				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
@@ -124,7 +123,7 @@ public class PLSQLCommandImp {
 		}
 		if(object.get("type").toString().equalsIgnoreCase("create")){
 			if(object.containsKey("culumnName")) {
-				CreateTablesImp.createTable(object);
+				CreateTablesImp.createTable(object, mod);
 			}
 			object.remove("recordRows");
 		}
@@ -133,13 +132,13 @@ public class PLSQLCommandImp {
 				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
 				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
-				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfCondition(object));
+				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfCondition(object, mod));
 			}
 			if(object.containsKey("aggregation")) {
-				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfAggregation(object));
+				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfAggregation(object, mod));
 			}
 			if(object.containsKey("culumnValue")) {
-				UpdateRowsImp.updateRowsByRecordConditions(object);
+				UpdateRowsImp.updateRowsByRecordConditions(object, mod);
 			}
 			object.remove("recordRows");
 		}
@@ -147,27 +146,27 @@ public class PLSQLCommandImp {
 				(object.get("countJoins").toString().equalsIgnoreCase("n") ||
 				(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
-				object.put("updateJoinObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinCondition(object));
+				object.put("updateJoinObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinCondition(object, mod));
 			}
 			if(object.containsKey("relation")) {
-				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinRelation(object));
+				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinRelation(object, mod));
 			}
 			if(object.containsKey("aggregation")) {
-				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinAggregation(object));
+				object.put("updateObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinAggregation(object, mod));
 			}
 			if(object.containsKey("culumnValue")) {
-				UpdateRowsImp.updateRowsByRecordConditions(object);
+				UpdateRowsImp.updateRowsByRecordConditions(object, mod);
 			}
 			object.remove("recordRows");
 		}
 		if(object.get("type").toString().equalsIgnoreCase("insert")) {
 			if(object.containsKey("culumnValue")) {
-				InsertRowsImp.insertRowByAttributes(object);
+				InsertRowsImp.insertRowByAttributes(object, mod);
 			}
 		}
 		if(object.get("type").toString().equalsIgnoreCase("delete")) {
 			if(object.containsKey("condition")) {
-				DeleteRowsImp.deleteRowByAttributesOfCondition(object);
+				DeleteRowsImp.deleteRowByAttributesOfCondition(object, mod);
 			}
 		}
 		object.remove("condition");
@@ -180,16 +179,16 @@ public class PLSQLCommandImp {
 		object.put("start", "0");
 	}
 
-	public static void processCheck(String acknowledge, Map<String, Object> object) throws Exception {
+	public static void processCheck(String acknowledge, Map<String, Object> object, boolean mod) throws Exception {
 		if(object.get("start").toString().equals("1")) {
-			processExecKernel(object);
+			processExecKernel(object, mod);
 		}
 		List<Map<String, Object>> obj = ((List<Map<String, Object>>)(object.get("obj")));
 		int totalPages = 0;
 		if(obj != null) {
 			totalPages = obj.size();
 		}
-		int rowBeginIndex = object.containsKey("pageBegin")? Integer.valueOf(object.get("pageBegin").toString()):0 ;
+		int rowBeginIndex = object.containsKey("pageBegin")? Integer.valueOf(object.get("pageBegin").toString()):0;
 		int rowEndIndex = object.containsKey("pageEnd")?Integer.valueOf(object.get("pageEnd").toString()):totalPages>15?15:totalPages;
 		object.put("pageBegin", rowBeginIndex);
 		object.put("pageEnd", rowEndIndex);
@@ -213,4 +212,9 @@ public class PLSQLCommandImp {
 		}
 		object.put("spec", spec);
 	}
+
+	
+
+	
+
 }

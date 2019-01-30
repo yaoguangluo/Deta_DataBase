@@ -14,6 +14,7 @@ import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.db.reflection.Cell;
 import org.lyg.db.reflection.Row;
+import org.lyg.db.reflection.Table;
 
 @SuppressWarnings("unchecked")
 public class InsertRowsImp {
@@ -64,7 +65,7 @@ public class InsertRowsImp {
 		return output;
 	}
 
-	public static Map<String, Object> insertRowByBaseName(String baseName, String tableName, JSONObject jsobj) {
+	public static Map<String, Object> insertRowByBaseName(String baseName, String tableName, JSONObject jsobj, boolean mod) throws Exception {
 		Map<String, Object> output = new HashMap<>();
 		String tablePath = CacheManager.getCacheInfo("DBPath").getValue().toString();
 		tablePath += "/" + baseName + "/" + tableName;
@@ -91,31 +92,50 @@ public class InsertRowsImp {
 						}
 						String needCreatCulumnPath = DBTableRowIndexPath + "/" + culumnName;
 						File needCreatCulumn = new File(needCreatCulumnPath);
-						needCreatCulumn.mkdir();
-						FileWriter fw = null;
-						try {
-							fw = new FileWriter(needCreatCulumnPath + "/value.lyg", true);
-							fw.write(null == culumnValue ? "" : culumnValue);
-							fw.close();
-							//add buffer
-							Cell cell = new Cell();
-							cell.setCellValue(null == culumnValue ? "" : culumnValue);
+						if(!needCreatCulumn.exists()) {
+							if(mod) {
+								needCreatCulumn.mkdir();
+							}
+						}
+						File needCreatCulumnPathFile= new File(needCreatCulumnPath + "/value.lyg");
+						if(needCreatCulumnPathFile.exists() && !needCreatCulumnPathFile.canWrite()) {
+							throw new Exception();
+						}
+						if(mod) {
+							FileWriter fw = null;
+							try {
+								fw = new FileWriter(needCreatCulumnPath + "/value.lyg", true);
+								fw.write(null == culumnValue? "" : culumnValue);
+								fw.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						//add buffer
+						Cell cell = new Cell();
+						cell.setCellValue(null == culumnValue? "" : culumnValue);
+						if(mod) {
 							row.putCell(culumnName, cell);
-						} catch (IOException e) {
-							e.printStackTrace();
 						}
 					}
 					String needCreatCulumnPath = DBTableRowIndexPath + "/is_delete_0";
 					File needCreatCulumn = new File(needCreatCulumnPath);
-					needCreatCulumn.mkdir();
+					if(!needCreatCulumn.exists()) {
+						if(mod){
+							needCreatCulumn.mkdir();
+						}
+					}
 				}
-				DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName).putRow("row" + rowInsertIndex, row);
+				Table table = DetaDBBufferCacheManager.db.getBase(baseName).getTable(tableName);
+				if(mod) {
+					table.putRow("row" + rowInsertIndex, row);
+				}
 			}
 		}
 		return output;
 	}
 
-	public static void insertRowByAttributes(Map<String, Object> object) {
+	public static void insertRowByAttributes(Map<String, Object> object, boolean mod) throws Exception {
 		JSONObject jsobj = new JSONObject();
 		//for late will make an exception record queue system, to control all of the db write;
 		List<String[]> culumnValues = (List<String[]>)object.get("culumnValue");
@@ -125,7 +145,7 @@ public class InsertRowsImp {
 			String[] strings = iterator.next();
 			jsobj.put(strings[1], strings[2]);
 		}	
-		insertRowByBaseName(object.get("baseName").toString(), object.get("tableName").toString(), jsobj);
+		insertRowByBaseName(object.get("baseName").toString(), object.get("tableName").toString(), jsobj, mod);
 	}
 }
 	

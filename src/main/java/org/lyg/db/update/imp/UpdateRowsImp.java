@@ -19,6 +19,7 @@ import org.lyg.db.plsql.imp.ProcessAggregationPLSQL;
 import org.lyg.db.plsql.imp.ProcessConditionPLSQL;
 import org.lyg.db.plsql.imp.ProcessGetCulumnsPLSQL;
 import org.lyg.db.reflection.Cell;
+import org.lyg.db.reflection.Row;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings("unchecked")
 public class UpdateRowsImp {
@@ -127,7 +128,7 @@ public class UpdateRowsImp {
 		return output;
 	}
 
-	public static Object updateRowsByRecordConditions(Map<String, Object> object) throws IOException {
+	public static Object updateRowsByRecordConditions(Map<String, Object> object, boolean mod) throws IOException {
 		String DBPath = CacheManager.getCacheInfo("DBPath").getValue().toString() + "/" + object.get("baseName").toString();
 		String DBtablePath = DBPath + "/" + object.get("tableName").toString();
 		String DBTableRowsPath = DBtablePath + "/rows";		
@@ -146,27 +147,32 @@ public class UpdateRowsImp {
 				String filePath = DBTableRowsPath + "/" + rowIndex + "/" +culumns[1] + "/value.lyg";
 				File currentCellChange = new File(filePath);
 				if(currentCellChange.exists()) {
-					currentCellChange.delete();
-					FileWriter fw = null;
-					try {
-						fw = new FileWriter(filePath, true);
-						fw.write(culumns[2]);
-						fw.close();
-						Cell cell = new Cell();
-						cell.setCellValue(culumns[2]);
-						DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString())
-						.getTable(object.get("tableName").toString()).getRow(rowIndex).putCell(culumns[1], cell);
-					} catch (IOException e) {
-						fw.close();
-						e.printStackTrace();
+					if(mod) {
+						currentCellChange.delete();
+						FileWriter fw = null;
+						try {
+							fw = new FileWriter(filePath, true);
+							fw.write(culumns[2]);
+							fw.close();
+						} catch (IOException e) {
+							fw.close();
+							e.printStackTrace();
+						}
 					}
-				}
-			}
+					Cell cell = new Cell();
+					cell.setCellValue(culumns[2]);
+					Row row = DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString())
+					.getTable(object.get("tableName").toString()).getRow(rowIndex);
+					if(mod) {
+						row.putCell(culumns[1], cell);
+					}
+				}	
+			}	
 		}
 		return object;
 	}
 	
-	public static Object updateRowsByAttributesOfCondition(Map<String, Object> object) throws IOException {
+	public static Object updateRowsByAttributesOfCondition(Map<String, Object> object, boolean mod) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -223,7 +229,7 @@ public class UpdateRowsImp {
 		return output;
 	}
 
-	public static List<Map<String, Object>> updateRowsByAttributesOfAggregation(Map<String, Object> object) {
+	public static List<Map<String, Object>> updateRowsByAttributesOfAggregation(Map<String, Object> object, boolean mod) {
 		if(!object.containsKey("obj")) {
 			return new ArrayList<>();
 		}

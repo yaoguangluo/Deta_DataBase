@@ -18,7 +18,7 @@ import org.lyg.db.plsql.imp.ProcessRelationPLSQL;
 import org.lyg.db.reflection.Spec;
 @SuppressWarnings({"unused", "unchecked"})
 public class UpdateJoinRowsImp {
-	public static Object updateRowsByAttributesOfJoinCondition(Map<String, Object> object) throws IOException {
+	public static Object updateRowsByAttributesOfJoinCondition(Map<String, Object> object, boolean mod) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
 			object.put("recordRows", recordRows);
@@ -75,7 +75,7 @@ public class UpdateJoinRowsImp {
 		return output;
 	}
 
-	public static Object updateRowsByAttributesOfJoinAggregation(Map<String, Object> object) {
+	public static Object updateRowsByAttributesOfJoinAggregation(Map<String, Object> object, boolean mod) {
 		if(!object.containsKey("joinObj")) {
 			return new ArrayList<>();
 		}
@@ -116,7 +116,7 @@ public class UpdateJoinRowsImp {
 		return obj;
 	}
 
-	public static Object updateRowsByAttributesOfJoinRelation(Map<String, Object> object) {
+	public static Object updateRowsByAttributesOfJoinRelation(Map<String, Object> object, boolean mod) {
 		if(!object.containsKey("updateObj")||!object.containsKey("updateJoinObj")) {
 			return new ArrayList<>();
 		}

@@ -1,7 +1,5 @@
 package org.lyg.vpc.process.companyImpl;
 
-import java.io.FileNotFoundException;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
@@ -30,7 +28,7 @@ public class LoginServiceImpl {
 		LoginDAOImpl.updateUsrTokenByUId(uId, key, uPassword, uTime);
 	}
 
-	public static void insertRowByTablePath(String baseName, String tableName, JSONObject jsobj) throws FileNotFoundException, IOException {
+	public static void insertRowByTablePath(String baseName, String tableName, JSONObject jsobj) throws Exception {
 		LoginDAOImpl.insertRowByTablePath(baseName, tableName, jsobj);
 	}
 
