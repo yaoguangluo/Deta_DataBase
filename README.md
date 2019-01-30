@@ -1,4 +1,4 @@
-# 当前版本0.8.3
+# 当前版本0.8.5
 
 ## 德塔数据库源码，该数据的亮点为：一次执行多项复杂任务， 极为人性化的简易命令行 PLSQL 编程语言模型，打破现在所有传统关系数据库数据的单任务执行模式。基于双向队列的日志分析功能和命令语句执行方式和量子碎片文件存储思想，永远告别死锁。同时提供rest数据库操作接口和plsql命令行执行接口2种需求，满足各种场合的数据库操作应用。该数据库admin系统建立在deta VPCS HTTP服务器中， 整个系统启动时间 50毫秒。有效和运维交互。
 
@@ -46,16 +46,20 @@
 ##### 已完善功能：plsql日志binlog 逐行写记录为优化版实现。罗瑶光2019-01-30
 ##### 已完善功能：plsql编程规范文档1.0版发布。罗瑶光2019-01-30 https://github.com/yaoguangluo/VPCS_Theroy/blob/master/Deta_Database_PLSQL%20_V1.0.pdf
 ##### 已完善功能：plsql 日志读过滤 和 写安全机制。。罗瑶光2019-01-30 
+##### 已完善功能：写错误的rollback 函数。 罗瑶光2019-01-30 
+##### 已完善功能：REST CALL ROLLBACK函数。 罗瑶光2019-01-30 
+##### 已完善功能：测试和真实运行plsql写操作 restcall 函数。方便为后端业务整体rollback功能打下扎实基础。罗瑶光2019-01-30 
+
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 #####  正在完善功能：基于 VPCS 思想的写操作日志管理系统。
-##### 正在完善功能：写错误的rollback 函数 
+#####  正在完善功能：binlog 函数 数据恢复
 
+###### 未完善功能：第二次固定变量名称编程规范整体整理。
 ###### 未完善功能：binlog 日志 大数据文件分页。
 ###### 未完善功能：binlog 日志加入追踪系统和5W系统。
-###### 未完善功能：binlog 函数 数据恢复
 ###### 未完善功能：日志管理系统的自动触发器修复数据库机制。
-###### 未完善功能：第二次固定变量名称编程规范整体整理。
+###### 未完善功能：第三次固定变量名称编程规范整体整理。
 ###### 未完善功能：人工智能分析病毒篡改数据库文件的条件。
 ###### 未完善功能：人工智能分析人为的语法错误修复。
 ###### 未完善功能：人工智能分析非人为的数据异常操作和损毁的自动完善机制。
@@ -63,136 +67,16 @@
 ###### 未完善功能：基于sort key 后序treeMap
 ###### 未完善功能：引擎算法优化
 ###### 未完善功能：序列化堆2分搜索加速
-###### 未完善功能：第三次固定变量名称编程规范整体整理。
+###### 未完善功能：第四次固定变量名称编程规范整体整理。
 ###### 未完善功能：jvmsets bit优化
 ###### 未完善功能：写错误的rollback 函数
 ###### 未完善功能：消息队列进行区域链接热备恢复。
 ###### 未完善功能：研发更多实用的函数计划。
 ###### 未完善功能：所有错误日志属性分级格式化记录。
-###### 未完善功能：第四次固定变量名称编程规范整体整理。
+###### 未完善功能：第五次固定变量名称编程规范整体整理。
 ###### 未完善功能：企业级或者商业版进行sonar认证
 
 ## 德塔 PL/SQL 数据分析语言 说明文档。
+https://github.com/yaoguangluo/VPCS_Theroy/blob/master/Deta_Database_PLSQL%20_V1.0.pdf
 
-
-### Deta plsql 语法:
-##### setRoot:[path];
-##### baseName:[baseName];
-##### tableName:[tableName]'[operation];
-##### getCulumns:[difinition1]:[difinition2]:[difinition3]:[difinition4]:[difinition5]:......;
-##### culumnName:[culumnName]:[dataType];
-##### changeCulumnName:[newCulumnName]:[oldCulumnName];
-##### culumnValue:[culumnName]:[culumnValue];
-##### condition:[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-##### join:[baseName]:[tableName];
-##### relation[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-##### aggregate[operation]:[difinition1]:[difinition2]:[difinition3]:...;
-
-
-
-#### 1 select with semi join 的一个Deta PLSQL 真实例子 
-###### setRoot:C:/DetaDB;
-###### baseName:backend;
-###### tableName:usr:select;
-###### condition:or:u_id|<=|3:u_id|>|7;
-###### condition:and:u_email|!equal|321:u_name|!equal|123;
-###### getCulumns:u_id|as|detaId:u_email|as|detaEmail;
-###### join:backend:usrToken;
-###### condition:and:u_level|equal|low;
-###### getCulumns:u_id|as|sId:u_level:u_password|as|SSID;
-###### relation:and:detaId|==|sId;
-###### aggregation:limit:0|~|1;
-
-#### 1 select 例子
-##### tableName:test:select;
-##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-
-#### 1.1 select where in 例子
-##### setRoot:C:/DetaDB;
-##### baseName:backend;
-##### tableName:usr:select;
-##### condition:or:u_id|in|3,4,5;
-
-#### 2 select join 例子
-##### tableName:utest:select;
-##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-##### join:stest;
-##### relation:or:uid|==|sid:ussd|==|sssd;
-##### relation:and:utoken|=!|stoken:umap|==|smap;
-
-
-
-#### 2.1 select join 复杂例子
-
-##### tableName:utest:select;
-##### condition:or:utestCulumn1|<|20:utestCulumn2|==|fire;
-##### condition:and:utestCulumn1|>|100:utestCulumn2|==|fire;
-##### getCulumns:utestCulumn1|as|uid::utestCulumn2|as|ussd:utoken:umap;
-##### join:backend:stest;
-##### condition:and:stestCulumn1|>|100:stestCulumn2|==|fire;
-##### getCulumns:stestCulumn1|as|sid|:stestCulumn2|as|sssd:stoken:smap;
-##### relation:or:uid|==|sid:ussd|==|sssd;
-##### relation:and:utoken|=!|stoken:umap|==|smap;
-##### aggregation:limit:2|~|10;
-
-
-
-#### 3 insert 例子
-##### tableName:test:insert;
-##### culumnValue:date:19850525;
-##### culumnValue:date1:19850526;
-##### culumnValue:date2:19850527;
-##### culumnValue:date3:19850528;
-##### culumnValue:date4:19850529;
-
-
-
-#### 4 update 例子
-
-##### tableName:test:update;
-##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-##### culumnValue:date:19850525;
-##### culumnValue:date1:19850526;
-
-
-
-#### 4.1 update 复杂例子
-##### tableName:test:update;
-##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-##### join:backend:utest;
-##### condition:and:uCulumn3|<|20;
-##### relation:and:testCulumn1|==|uCulumn1:testCulumn2|!=|uCulumn2;
-##### culumnValue:date:19850525;
-##### culumnValue:date1:19850526;
-
-
-
-#### 5 delete 例子
-##### tableName:test:delete;
-##### condition:or:testCulumn1|<|20:testCulumn2|==|fire;
-##### condition:and:testCulumn1|>|100:testCulumn2|==|fire;
-
-
-
-#### 6 create 例子
-##### tableName:test:create;
-##### culumnName:pk:culumn1:string;
-##### culumnName:uk:culumn1:long;
-##### culumnName:uk:culumn1:obj;
-##### culumnName:nk:culumn1:double;
-
-
-
-#### 7 drop 例子
-##### tableName:test:drop;
-
-
-
-#### 8 change 例子
-##### tableName:test:change;
-##### changeCulumnName:oldCulumnName:newCulumnName;
 
