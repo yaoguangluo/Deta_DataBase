@@ -170,7 +170,6 @@ public class PLSQLCommandImp {
 				DeleteRowsImp.deleteRowByAttributesOfCondition(object);
 			}
 		}
-		
 		object.remove("condition");
 		object.remove("culumnName");
 		object.remove("changeCulumnName");

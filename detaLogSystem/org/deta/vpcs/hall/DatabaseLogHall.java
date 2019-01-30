@@ -34,19 +34,18 @@ public class DatabaseLogHall {
 		}
 	}
 	
-	public static void writeLogFile(String plsql) {
+	public static void writeLogFile(long when, String who, String plsql) {
 		checkCurrentFileRange();
 		//zip text string and write; im thinking about a new method to make string write small.
+		String logString ="#@" + when + "-" + who + "@:" + plsql;
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(logCurrentFilePath, true);
-			fw.write("\r\n\r\n");
-			fw.write(System.currentTimeMillis() + ":" + new String(GzipUtil.compress(plsql.getBytes(StableData.CHARSET_UTF8)), StableData.CHARSET_UTF8));
+			fw.write(new String(GzipUtil.compress(logString.getBytes(StableData.CHARSET_UTF8)), StableData.CHARSET_UTF8));
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	private static void checkCurrentFileRange() {
