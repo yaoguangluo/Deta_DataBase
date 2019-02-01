@@ -19,7 +19,6 @@ public class DatabaseLogHall {
 		//binlog
 	}
 
-	//deta plsql format: time + executeName + plsql string; 
 	private static void initCurrentFilePath() {
 		 long yearMonthDay = System.currentTimeMillis();
 		 long day = yearMonthDay/(1000 * 60 * 60 * 24);
@@ -76,6 +75,8 @@ public class DatabaseLogHall {
 		if(file.isDirectory()) {
 			File[] files=file.listFiles();
 			//...
+			//read file
+			//list file, unzip files, loop time stamp, execplsql
 		}
 	}
 }
