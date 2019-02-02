@@ -53,6 +53,7 @@
 //refer https://wenda.so.com/q/1512966734215123
 ##### 已完善功能：binlog 函数 数据压缩热备，解压zip 格式没有检查和测试。 罗瑶光2019-01-31
 //refer http://www.blogjava.net/dreamstone/archive/2007/08/09/134986.html
+##### 已完善功能：socket握手多核模式。保证100,000 QPS 吞吐量.罗瑶光2019-02-02
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
 #####  正在完善功能：基于 VPCS 思想的写操作日志管理系统。
