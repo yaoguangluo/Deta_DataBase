@@ -164,7 +164,7 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 					$scope.loginInfo = response.data.loginInfo;
 					$scope.returnResult = response.data.returnResult;
 					if($scope.loginInfo == 'unsuccess'){
-						window.location.href="db.html";
+						window.location.href = "db.html";
 						alert("操作失败！" + $scope.loginInfo + ' ' + $scope.returnResult);
 					}else{
 						$scope.totalPages = response.data.totalPages;
@@ -172,7 +172,7 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 						$scope.click(tablePath,$scope.pageBegin,$scope.pageBegin,'next');
 					}
 				}, function errorCallback(response) {
-					window.location.href="db.html";
+					window.location.href = "db.html";
 					$scope.backFeed = "error delete";
 				});
 	}

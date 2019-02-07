@@ -22,7 +22,7 @@ import org.lyg.cache.CacheManager;
 
 public class BootBackup {  
 	private BootBackup(){}   
-	public static void BootBackupByUsingGzip(String zipPath){  
+	public static void bootBackupByUsingGzip(String zipPath){  
 		String sourceFilePath = CacheManager.getCacheInfo("DBPath").getValue().toString();
 		String zipFilePath = zipPath;  
 		long time = System.currentTimeMillis();
@@ -35,7 +35,9 @@ public class BootBackup {
 		}  
 		//delete all binlog file;
 	}     
-
+	//sourceFilePath is a root category of 待压缩的文件目录
+	//zipFilePath is a zip category of 压缩的文件目录到
+	//fileName is a zip file name
 	public static boolean fileToZip(String sourceFilePath, String zipFilePath, String fileName){  
 		boolean flag = false;  
 		File sourceFile = new File(sourceFilePath);  
@@ -55,20 +57,29 @@ public class BootBackup {
 					if(null == sourceFiles || sourceFiles.length < 1){  
 						System.out.println("待压缩的文件目录：" + sourceFilePath + "里面不存在文件，无需压缩.");  
 					}else{  
+						File zipFileCate = new File(zipFilePath);  
+						zipFileCate.mkdirs();
 						fileOutputStream = new FileOutputStream(zipFile);  
 						zipOutputStream = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));  
 						byte[] bufs = new byte[1024 * 10];  
-						for(int i=0; i<sourceFiles.length; i++){  
+						for(int i = 0; i < sourceFiles.length; i++){  
 							//创建ZIP实体，并添加进压缩包  
-							ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());  
-							zipOutputStream.putNextEntry(zipEntry);  
+//							System.out.println(sourceFiles[i].getPath());
+//							ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());  
+//							zipOutputStream.putNextEntry(zipEntry);  
 							//读取待压缩的文件并写进压缩包里  
-							fileInputStream = new FileInputStream(sourceFiles[i]);  
-							bufferedInputStream = new BufferedInputStream(fileInputStream, 1024 * 10);  
-							int read = 0;  
-							while((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1){  
-								zipOutputStream.write(bufs,0,read);  
-							}  
+							if(sourceFiles[i].isDirectory()) {	
+								nestFile(sourceFiles[i], zipOutputStream);
+							}else if(sourceFiles[i].isFile()) {
+								ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getPath());  
+								zipOutputStream.putNextEntry(zipEntry);  
+								fileInputStream = new FileInputStream(sourceFiles[i]);  
+								bufferedInputStream = new BufferedInputStream(fileInputStream, 1024 * 10);  
+								int read = 0;  
+								while((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1){  
+									zipOutputStream.write(bufs, 0, read);  
+								}  
+							}	 
 						}  
 						flag = true;  
 					}  
@@ -90,5 +101,27 @@ public class BootBackup {
 			}  
 		}  
 		return flag;  
+	}
+	private static void nestFile(File sourceFiles, ZipOutputStream zipOutputStream) throws IOException {
+		File[] listFiles = sourceFiles.listFiles();
+		for(int i = 0; i < listFiles.length; i++){  
+//			ZipEntry zipEntry = new ZipEntry(listFiles[i].getName());  
+//			zipOutputStream.putNextEntry(zipEntry);  
+			//读取待压缩的文件并写进压缩包里  
+			if(listFiles[i].isDirectory()) {
+				nestFile(listFiles[i], zipOutputStream);
+			}else if(listFiles[i].isFile()) {
+				ZipEntry zipEntry = new ZipEntry(listFiles[i].getPath());  
+				zipOutputStream.putNextEntry(zipEntry); 
+				FileInputStream fileInputStream = new FileInputStream(listFiles[i]);  
+				BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream, 1024 * 10);  
+				int read = 0;  
+				byte[] bufs = new byte[1024 * 10];  
+				while((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1){  
+					zipOutputStream.write(bufs,0,read);  
+				}  
+				bufferedInputStream.close();
+			}
+		}
 	}  
 }

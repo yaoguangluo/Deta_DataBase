@@ -48,6 +48,9 @@ public class DetaUtil {
 				e.printStackTrace();
 			}
 		}
+		Cache c = new Cache();
+		c.setValue("C:/DetaLog");
+		CacheManager.putCache("LogPath", c);
 		DetaDBUtil.initCulumnNameType();
 	}
 }

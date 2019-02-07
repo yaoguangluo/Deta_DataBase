@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 import org.deta.boot.vpc.process.TimeProcess;
 import org.deta.boot.vpc.sleeper.Sleeper;
 import org.deta.boot.vpc.sleeper.SleeperHall;
+import org.deta.db.backup.BootBackup;
 import org.deta.vpcs.hall.DatabaseLogHall;
+import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.common.utils.DetaUtil;
 import org.lyg.stable.StableData;
@@ -42,6 +44,7 @@ public class ServerInitController {
 			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
 			DatabaseLogHall.createBinLogHall();
 			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
+			BootBackup.bootBackupByUsingGzip(CacheManager.getCacheInfo("LogPath").getValue().toString()+"/zipCover");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
