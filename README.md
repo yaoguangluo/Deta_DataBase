@@ -49,7 +49,6 @@
 ##### 已完善功能：写错误的rollback 函数。 罗瑶光2019-01-30 
 ##### 已完善功能：REST CALL ROLLBACK函数。 罗瑶光2019-01-30 
 ##### 已完善功能：测试和真实运行plsql写操作 restcall 函数。方便为后端业务整体rollback功能打下扎实基础。罗瑶光2019-01-30 
-##### 已完善功能：binlog 函数 数据压缩热备，压缩zip 格式没有检查和测试。 罗瑶光2019-01-31
 //refer https://wenda.so.com/q/1512966734215123
 ##### 已完善功能：binlog 函数 数据压缩热备，解压zip 格式没有检查和测试。 罗瑶光2019-01-31
 //refer http://www.blogjava.net/dreamstone/archive/2007/08/09/134986.html
