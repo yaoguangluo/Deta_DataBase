@@ -180,7 +180,8 @@ am.controller('db', ['$cookieStore', '$scope', '$http', function ($cookieStore, 
 		console.info(LYGQuery);
 		console.info($cookieStore.get('token'));
 		$http.get('execDetaPLSQL?LYGQuery=' + encodeURIComponent(LYGQuery) + '&token=' 
-				+ encodeURIComponent($cookieStore.get('token')), headers)
+				+ encodeURIComponent($cookieStore.get('token')) + '&mod=' 
+				+ encodeURIComponent('true'), headers)
 				.then(function successCallback(response) {
 					$scope.loginInfo = response.data.loginInfo;
 					$scope.returnResult = response.data.returnResult;

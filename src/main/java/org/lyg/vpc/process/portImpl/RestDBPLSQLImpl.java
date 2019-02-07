@@ -8,6 +8,11 @@ import org.lyg.common.utils.StringUtil;
 import org.lyg.db.plsql.imp.ExecPLSQLImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 
+//
+//baseName:backend;
+//tableName:usr:update;
+//condition:or:u_id|<|200;
+//culumnValue:u_email:77777;
 public class RestDBPLSQLImpl {
 	public static Map<String, Object> restDBPLSQLImpl(String token,
 			String email, String password, String auth, String plsql, String mod) throws Exception{

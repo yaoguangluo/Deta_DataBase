@@ -40,6 +40,7 @@ public class DatabaseLogHall {
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(logCurrentFilePath, true);
+			fw.write("\n\r\n");
 			fw.write(new String(GzipUtil.compress(logString.getBytes(StableData.CHARSET_UTF8)), StableData.CHARSET_UTF8));
 			fw.close();
 		} catch (IOException e) {
