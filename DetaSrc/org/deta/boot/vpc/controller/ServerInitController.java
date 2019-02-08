@@ -12,6 +12,7 @@ import org.deta.boot.vpc.process.TimeProcess;
 import org.deta.boot.vpc.sleeper.Sleeper;
 import org.deta.boot.vpc.sleeper.SleeperHall;
 import org.deta.db.backup.BootBackup;
+import org.deta.db.resume.UnZip;
 import org.deta.vpcs.hall.DatabaseLogHall;
 import org.lyg.cache.CacheManager;
 import org.lyg.cache.DetaDBBufferCacheManager;
@@ -45,6 +46,7 @@ public class ServerInitController {
 			DatabaseLogHall.createBinLogHall();
 			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
 			BootBackup.bootBackupByUsingGzip(CacheManager.getCacheInfo("LogPath").getValue().toString()+"/zipCover");
+			UnZip.unZipWithPath("C:/DetaLog/zipCover/zip_1549583065203.zip", "C:/DetaLog/zipCover/cover");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

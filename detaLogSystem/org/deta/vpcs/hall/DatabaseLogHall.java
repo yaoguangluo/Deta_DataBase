@@ -70,14 +70,18 @@ public class DatabaseLogHall {
 	
 	@SuppressWarnings("unused")
 	private static void coverageByTime(String time) {
-		//loop unzip loggers,
-		//find point of time,and start read and exec the plsql from the loggers.
-		File file = new File(logCategoryPath);
-		if(file.isDirectory()) {
-			File[] files=file.listFiles();
-			//...
-			//read file
-			//list file, unzip files, loop time stamp, execplsql
-		}
+//		//loop unzip loggers,
+//		//find point of time, and start read and exec the plsql from the loggers.
+//		File file = new File(logCategoryPath);
+//		if(file.isDirectory()) {
+//			File[] files = file.listFiles();
+//			//...
+//			//read file
+//			//list file, unzip files, loop time stamp, execplsql
+//		}
+	
+//	1删除已损坏的数据库
+//	2解压备份数据库
+//	3循环执行备份plsql命令，直到等于大于时间戳完成返回。	
 	}
 }

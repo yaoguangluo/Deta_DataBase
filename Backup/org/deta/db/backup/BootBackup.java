@@ -61,14 +61,15 @@ public class BootBackup {
 						zipFileCate.mkdirs();
 						fileOutputStream = new FileOutputStream(zipFile);  
 						zipOutputStream = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));  
+//						ZipEntry zipEntry = new ZipEntry(sourceFiles);  
+//						zipOutputStream.putNextEntry(zipEntry);  
 						byte[] bufs = new byte[1024 * 10];  
 						for(int i = 0; i < sourceFiles.length; i++){  
 							//创建ZIP实体，并添加进压缩包  
-//							System.out.println(sourceFiles[i].getPath());
-//							ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());  
-//							zipOutputStream.putNextEntry(zipEntry);  
 							//读取待压缩的文件并写进压缩包里  
 							if(sourceFiles[i].isDirectory()) {	
+								ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getPath());  
+								zipOutputStream.putNextEntry(zipEntry); 
 								nestFile(sourceFiles[i], zipOutputStream);
 							}else if(sourceFiles[i].isFile()) {
 								ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getPath());  
@@ -109,6 +110,8 @@ public class BootBackup {
 //			zipOutputStream.putNextEntry(zipEntry);  
 			//读取待压缩的文件并写进压缩包里  
 			if(listFiles[i].isDirectory()) {
+				ZipEntry zipEntry = new ZipEntry(listFiles[i].getPath());  
+				zipOutputStream.putNextEntry(zipEntry); 
 				nestFile(listFiles[i], zipOutputStream);
 			}else if(listFiles[i].isFile()) {
 				ZipEntry zipEntry = new ZipEntry(listFiles[i].getPath());  
@@ -118,7 +121,7 @@ public class BootBackup {
 				int read = 0;  
 				byte[] bufs = new byte[1024 * 10];  
 				while((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1){  
-					zipOutputStream.write(bufs,0,read);  
+					zipOutputStream.write(bufs, 0, read);  
 				}  
 				bufferedInputStream.close();
 			}
