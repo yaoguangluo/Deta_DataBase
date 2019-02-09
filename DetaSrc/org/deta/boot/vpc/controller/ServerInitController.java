@@ -30,7 +30,7 @@ public class ServerInitController {
 		}
 	}
 
-	public static void init() throws IOException {
+	public static void initService() throws IOException {
 		try {
 			port = Integer.parseInt(properties.getProperty(StableData.TCP_PORT));
 			server = new ServerSocket(port);
@@ -61,7 +61,7 @@ public class ServerInitController {
 		TimeProcess timeProcess=new TimeProcess();
 		timeProcess.begin();
 		SleeperHall sleeperHall = new SleeperHall();
-		init();
+		initService();
 		timeProcess.end();
 		System.out.println("----德塔VPCS数据库服务器启动一切正常-总耗时:" + timeProcess.duration()+ "毫秒");
 		ExecutorService executorService = Executors.newFixedThreadPool(1);

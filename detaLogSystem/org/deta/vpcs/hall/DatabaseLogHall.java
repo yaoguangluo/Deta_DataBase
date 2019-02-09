@@ -12,10 +12,13 @@ import org.lyg.common.utils.GzipUtil;
 import org.lyg.db.plsql.imp.ExecPLSQLImp;
 import org.lyg.stable.StableData;
 
+@SuppressWarnings("unused")
 public class DatabaseLogHall {
+	
 	static String logCategoryPath;
 	static String logCurrentFilePath;
 	static String logCurrentFile;
+	
 	public static void createBinLogHall() throws Exception {
 		//db write operation
 		initLogCategoryPath();
@@ -74,7 +77,6 @@ public class DatabaseLogHall {
 		//makenew file;
 	}
 
-	@SuppressWarnings("unused")
 	private static void coverageByTime(long time) throws Exception {
 		//	1删除已损坏的数据库 已完成
 		File needClear = new File("C:/DetaDB");
@@ -85,9 +87,10 @@ public class DatabaseLogHall {
 		BufferedReader reader = new BufferedReader(new FileReader("C:/DetaLog/log/logger.det"));
 		String tempString;
 		while ((tempString = reader.readLine()) != null) {
+			//解gzip压缩并执行数据库恢复
 			tempString = new String(GzipUtil.uncompress(tempString.getBytes(StableData.CHARSET_UTF8)), StableData.CHARSET_UTF8);
 			long currentTime =Long.valueOf(tempString.split("@:")[1]);
-			if(currentTime<time) {
+			if(currentTime < time) {//逐条恢复到点。
 				ExecPLSQLImp.ExecPLSQL(tempString.split("@:")[3], true);
 			}
 		}
