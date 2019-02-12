@@ -1,5 +1,4 @@
 package org.lyg.db.reflection;
-@SuppressWarnings("unused")
 public class Cell{
 	public Object getCellValue() {
 		return cellValue;

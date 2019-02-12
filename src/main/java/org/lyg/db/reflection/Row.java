@@ -1,6 +1,5 @@
 package org.lyg.db.reflection;
 import java.util.concurrent.ConcurrentHashMap;
-@SuppressWarnings("unused")
 public class Row{
 	public ConcurrentHashMap<String, Cell> getCells() {
 		return cells;
