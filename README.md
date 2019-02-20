@@ -2,9 +2,9 @@
 
 ## 德塔数据库源码，该数据的亮点为：一次执行多项复杂任务， 极为人性化的简易命令行 PLSQL 编程语言模型，打破现在所有传统关系数据库数据的单任务执行模式。基于双向队列的日志分析功能和命令语句执行方式和量子碎片文件存储思想，永远告别死锁。自动修复数据库，自动rollback异常数据操作，同时提供rest数据库操作接口和plsql命令行执行接口2种需求，满足各种场合的数据库操作应用。该数据库admin系统建立在deta VPCS HTTP服务器中， 整个系统启动时间 50毫秒。有效和运维交互。
 
-##### 已完善功能：单表增删改查 。功能作者： 罗瑶光
-##### 已完善功能：操作权限
-##### 已完善功能：超时 (token的早期不可逆加密方式思路来自10年前的中科大的筛子加密论文，后本人修改为2次组合加密，并采用mine decode 方式解码，在这感谢中科大) 具体例子：https://blog.csdn.net/weizhiiceboy3/article/details/51955026 等， 感谢csdn 如果需要更高级别的需求，可以将该方法进行客户端2次加密， 形成广义非对称加密模型。
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：单表增删改查 。功能作者： 罗瑶光
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：操作权限
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：超时 (token的早期不可逆加密方式思路来自10年前的中科大的筛子加密论文，后本人修改为2次组合加密，并采用mine decode 方式解码，在这感谢中科大) 具体例子：https://blog.csdn.net/weizhiiceboy3/article/details/51955026 等， 感谢csdn 如果需要更高级别的需求，可以将该方法进行客户端2次加密， 形成广义非对称加密模型。
 
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：hash存储。功能作者： 罗瑶光
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：并发。功能作者： 罗瑶光
