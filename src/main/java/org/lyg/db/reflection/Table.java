@@ -1,6 +1,5 @@
 package org.lyg.db.reflection;
 import java.util.concurrent.ConcurrentHashMap;
-@SuppressWarnings("unused")
 public class Table{
 	public Spec getSpec() {
 		return spec;
