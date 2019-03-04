@@ -43,13 +43,13 @@ public class ServerInitController {
 			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
 			DatabaseLogHall.createBinLogHall();
 			System.out.println("----德塔VPCS数据库服务器启动整库过程映射服务:成功！");
-//			BootBackup.bootBackupByUsingGzip(CacheManager.getCacheInfo("LogPath").getValue().toString()+"/zipCover");
-//			UnZip.unZipWithPath("C:/DetaLog/zipCover/zip_1549583065203.zip", "C:/DetaLog/zipCover/cover");
+			//			BootBackup.bootBackupByUsingGzip(CacheManager.getCacheInfo("LogPath").getValue().toString()+"/zipCover");
+			//			UnZip.unZipWithPath("C:/DetaLog/zipCover/zip_1549583065203.zip", "C:/DetaLog/zipCover/cover");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void haoHiYooFaker(SleeperHall sleeperHall) {
 		sleeperHall.callSkivvy(); 
 	}

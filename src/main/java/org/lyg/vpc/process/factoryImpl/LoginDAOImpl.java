@@ -12,14 +12,14 @@ import org.lyg.vpc.view.UsrFull;
 import org.lyg.vpc.view.UsrToken;
 
 public class LoginDAOImpl {
-//	@Autowired
-//	private SelectRows selectRows;
-//	
-//	@Autowired
-//	private UpdateRows updateRows;
-//	
-//	@Autowired
-//	private InsertRows insertRows;
+	//	@Autowired
+	//	private SelectRows selectRows;
+	//	
+	//	@Autowired
+	//	private UpdateRows updateRows;
+	//	
+	//	@Autowired
+	//	private InsertRows insertRows;
 
 	public static Usr selectUsrByUId(Integer uId) throws IOException {
 		List<Map<String, Object>> list = SelectRowsImp.selectRowsByAttribute("backend", "usr", "u_id", "" + uId);	
@@ -108,16 +108,16 @@ public class LoginDAOImpl {
 	public static void insertUsr(String uName, String uAge, String uSex, String uPhone, String uAddress, String uWeChat,
 			String uClass, String uEmail, String uQq) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void insertUsroken(Integer uId, String uKey, String uPassword, long uTime) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void insertRowByTablePath(String baseName, String tableName, JSONObject jsobj) throws Exception {
 		InsertRowsImp.insertRowByBaseName(baseName, tableName, jsobj, true);
 	}
-	
+
 }

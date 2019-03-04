@@ -1,11 +1,11 @@
 package org.lyg.vpc.process.portImpl;
- 
+
 import org.json.JSONObject;
 import org.lyg.db.insert.imp.InsertRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
- 
+
 public class RestDBInsertImpl {
 	public static Map<String, Object> insertRowByTablePath(String tablePath, String pageIndex
 			, String culumnOfNewRow, String token, String email, String password, String auth) throws Exception {
@@ -44,7 +44,7 @@ public class RestDBInsertImpl {
 			output.put("returnResult", checkStatus);
 			return output;
 		}
-		
+
 		checkStatus = LoginServiceImpl.checkTokenStatus(token, "common");
 		if(checkStatus.contains("invalid")&&(auth.contains("1"))) {
 			output.put("loginInfo", "unsuccess");

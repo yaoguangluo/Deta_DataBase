@@ -14,11 +14,9 @@ import org.lyg.stable.StableData;
 
 @SuppressWarnings("unused")
 public class DatabaseLogHall {
-	
 	static String logCategoryPath;
 	static String logCurrentFilePath;
 	static String logCurrentFile;
-	
 	public static void createBinLogHall() throws Exception {
 		//db write operation
 		initLogCategoryPath();

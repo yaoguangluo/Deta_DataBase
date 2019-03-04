@@ -4,7 +4,7 @@ public class LYGPasswordDecode{
 	public String LYGPasswordCodeFront(String value){
 		String output="";
 		for(int i=0;i<value.length();i++){
-			
+
 			if(value.charAt(i)=="a".charAt(0)){
 				output=output+"z";	
 			}

@@ -43,7 +43,7 @@ public class VPCSResponse{
 	public void setResponseContentType(String responseContentType) {
 		ResponseContentType = responseContentType;
 	}
-	
+
 	private Socket socket;
 	private SleeperHall sleeperHall;
 	private Integer hashCode;
@@ -61,7 +61,7 @@ public class VPCSResponse{
 		socket.close();
 		this.sleeperHall.removeThreadById(this.hashCode);
 	}
-	
+
 	public void returnErrorCode(Integer errorCode) throws IOException {
 		if(socket.isClosed()) {
 			this.sleeperHall.removeThreadById(this.hashCode);

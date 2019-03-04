@@ -1,11 +1,11 @@
 package org.lyg.vpc.process.portImpl;
-  
+
 import org.json.JSONObject;
 import org.lyg.db.update.imp.UpdateRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
- 
+
 public class RestDBUpdateImpl {
 	public static Map<String, Object> updateRowByTablePathAndIndex(String tablePath, String pageIndex,
 			String culumnOfUpdateRow, String token, String email, String password, String auth) throws Exception {

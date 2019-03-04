@@ -3,7 +3,7 @@ import org.lyg.db.select.imp.SelectRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
- 
+
 public class RestDBSelectImpl {
 	public static Map<String, Object> selectRowsByAttribute(String baseName,
 			String tableName, String culumnName, String value, String token,
@@ -54,17 +54,17 @@ public class RestDBSelectImpl {
 			output.put("returnResult", "invalid request");
 			return output;
 		}	
-		
-//		if(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction) != null) {
-//			output = (Map<String, Object>)(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction).getValue());
-//			return output;
-//		} 
+
+		//		if(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction) != null) {
+		//			output = (Map<String, Object>)(CacheManager.getCacheInfo(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction).getValue());
+		//			return output;
+		//		} 
 		output = SelectRowsImp.selectRowsByTablePath(tablePath, pageBegin, pageEnd, direction);
-//		if(tablePath.equalsIgnoreCase("c:/DetaDB/frontend/login")) {
-//			Cache c = new Cache();
-//			c.setValue(output);
-//			CacheManager.putCache(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction, c);
-//		}
+		//		if(tablePath.equalsIgnoreCase("c:/DetaDB/frontend/login")) {
+		//			Cache c = new Cache();
+		//			c.setValue(output);
+		//			CacheManager.putCache(tablePath + ":" + pageBegin + ":" + pageEnd + ":" + direction, c);
+		//		}
 		return output;
 	}
 }

@@ -9,7 +9,7 @@ import org.deta.boot.vpc.vision.VPCSRequest;
 import org.deta.boot.vpc.vision.VPCSResponse;
 import org.lyg.stable.StableData;
 public class RequestRecordController {
-	
+
 	public static void requestIpRecoder(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {
 		vPCSRequest.setRequestIp(vPCSResponse.getSocket().getInetAddress().getHostAddress());
 		vPCSRequest.setRequestName(vPCSResponse.getSocket().getInetAddress().getHostName());
@@ -41,7 +41,7 @@ public class RequestRecordController {
 			}
 		}
 		if(content[StableData.INT_ZERO].contains(StableData.STRING_QUATE)){
-//			vPCSRequest.setRequestIsRest(false);
+			//			vPCSRequest.setRequestIsRest(false);
 		}
 		if(vPCSRequest.getRequestIsRest()){
 			String[] column = content[StableData.INT_ONE].split(StableData.STRING_JUNCTION);

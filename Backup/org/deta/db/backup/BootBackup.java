@@ -61,8 +61,8 @@ public class BootBackup {
 						zipFileCate.mkdirs();
 						fileOutputStream = new FileOutputStream(zipFile);  
 						zipOutputStream = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));  
-//						ZipEntry zipEntry = new ZipEntry(sourceFiles);  
-//						zipOutputStream.putNextEntry(zipEntry);  
+						//						ZipEntry zipEntry = new ZipEntry(sourceFiles);  
+						//						zipOutputStream.putNextEntry(zipEntry);  
 						byte[] bufs = new byte[1024 * 10];  
 						for(int i = 0; i < sourceFiles.length; i++){  
 							//创建ZIP实体，并添加进压缩包  
@@ -106,8 +106,8 @@ public class BootBackup {
 	private static void nestFile(File sourceFiles, ZipOutputStream zipOutputStream) throws IOException {
 		File[] listFiles = sourceFiles.listFiles();
 		for(int i = 0; i < listFiles.length; i++){  
-//			ZipEntry zipEntry = new ZipEntry(listFiles[i].getName());  
-//			zipOutputStream.putNextEntry(zipEntry);  
+			//			ZipEntry zipEntry = new ZipEntry(listFiles[i].getName());  
+			//			zipOutputStream.putNextEntry(zipEntry);  
 			//读取待压缩的文件并写进压缩包里  
 			if(listFiles[i].isDirectory()) {
 				ZipEntry zipEntry = new ZipEntry(listFiles[i].getPath());  

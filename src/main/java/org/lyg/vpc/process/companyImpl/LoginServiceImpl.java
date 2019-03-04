@@ -11,8 +11,8 @@ import org.lyg.vpc.view.Usr;
 import org.lyg.vpc.view.UsrToken;
 public class LoginServiceImpl {
 
-//	@Autowired
-//	private LoginDAO loginDAO;
+	//	@Autowired
+	//	private LoginDAO loginDAO;
 
 	public static Usr findUsrByUEmail(String uEmail) throws IOException {
 		Usr usr = LoginDAOImpl.selectUsrByUEmail(uEmail);
@@ -56,7 +56,7 @@ public class LoginServiceImpl {
 		if(uTime + 600000 < nowTime) {
 			return "invalid 10分钟超时，请重新登陆。";
 		}
-		
+
 		if(level.contains("level")) {
 			String uLevel = usrToken.getuLevel();
 			if(!uLevel.contains("high")) {
@@ -105,7 +105,7 @@ public class LoginServiceImpl {
 		if(uTime + 600000 < nowTime) {
 			return "invalid 10分钟超时，请重新登陆。";
 		}
-		
+
 		if(level.contains("level")) {
 			String uLevel = usrToken.getuLevel();
 			if(!uLevel.contains("high")) {

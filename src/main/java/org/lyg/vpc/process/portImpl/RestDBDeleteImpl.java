@@ -1,12 +1,12 @@
 package org.lyg.vpc.process.portImpl;
- 
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.lyg.db.delete.imp.DeleteRowsImp;
 import org.lyg.vpc.process.companyImpl.LoginServiceImpl;
- 
+
 public class RestDBDeleteImpl {
 	public static Map<String, Object> deleteRowByTablePathAndIndex(String tablePath, String pageIndex, String token
 			, String email, String password, String auth) throws Exception {

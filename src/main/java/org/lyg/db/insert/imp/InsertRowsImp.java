@@ -148,4 +148,3 @@ public class InsertRowsImp {
 		insertRowByBaseName(object.get("baseName").toString(), object.get("tableName").toString(), jsobj, mod);
 	}
 }
-	

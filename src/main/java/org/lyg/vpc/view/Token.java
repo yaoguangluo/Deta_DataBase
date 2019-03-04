@@ -1,7 +1,7 @@
 package org.lyg.vpc.view;
- 
+
 public class Token {
-    public String getuEmail() {
+	public String getuEmail() {
 		return uEmail;
 	}
 	public void setuEmail(String uEmail) {
@@ -26,7 +26,7 @@ public class Token {
 		this.uTime = uTime;
 	}
 	private String uEmail;
-    private String uKey;
-    private String mPassword;
-    private long uTime;
+	private String uKey;
+	private String mPassword;
+	private long uTime;
 }

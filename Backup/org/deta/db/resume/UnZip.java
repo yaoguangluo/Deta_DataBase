@@ -27,13 +27,11 @@ public class UnZip {
 					continue;
 				}
 				BufferedInputStream bufferedInputStream = new BufferedInputStream(zipFile.getInputStream(entry));
-			//	File file = new File(filePath + entry.getName());
 				File file = new File(entry.getName());
 				File parent = file.getParentFile();
 				if(parent != null && (!parent.exists())){
 					parent.mkdirs();
 				}
-			//	System.out.println(file.getPath());
 				if(!file.getPath().contains(".lyg")) {
 					file.mkdirs();
 				}else {

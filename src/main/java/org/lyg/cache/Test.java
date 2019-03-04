@@ -2,7 +2,7 @@ package org.lyg.cache;
 import org.lyg.cache.Cache;
 import org.lyg.cache.CacheManager;
 
-public class test {
+public class Test {
 	public static void main(String[] args) { 
 		// CacheManager.putCache("abc", new Cache());
 		Cache c= new Cache();

@@ -108,7 +108,7 @@ public class ProcessConditionPLSQL {
 					}
 				}	
 			}
-			
+
 			if(sets[1].equalsIgnoreCase("in")) {
 				String rowCellFromString = row.getCell(sets[0]).getCellValue().toString();
 				String set = "," + sets[2] + ",";
@@ -220,7 +220,7 @@ public class ProcessConditionPLSQL {
 					outputTemp.add(row);
 				}	
 			}
-			
+
 			if(sets[1].equalsIgnoreCase("in")) {
 				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
 						.get(sets[0]))).get("culumnValue").toString();
@@ -229,7 +229,7 @@ public class ProcessConditionPLSQL {
 					outputTemp.add(row);
 				}	
 			}
-			
+
 			if(sets[1].equalsIgnoreCase("!in")) {
 				String rowCellFromString = ((Map<String, Object>)(((Map<String, Object>)(row.get("rowValue")))
 						.get(sets[0]))).get("culumnValue").toString();

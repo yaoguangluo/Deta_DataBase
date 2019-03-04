@@ -43,23 +43,23 @@ public class RequestFilterController {
 	}
 
 	public static void requestLinkFilter(VPCSRequest vpcsRequest, VPCSResponse vPCSResponse) throws IOException {
-//		//限制ddos
-//		String ipCount = DetaDBUtil.cacheRequest("get?key=" + vpcsRequest.getRequestIp() + "&email=" 
-//				+ "313699483@qq.com" + "&password=" + "Fengyue1985!");
-//
-//		if(null == ipCount){
-//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + "1" + "&time=" 
-//					+ (2000+System.currentTimeMillis()) + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
-//		}else if(ipCount.contains("unsuccess")){
-//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + "1" + "&time=" 
-//					+ (2000+System.currentTimeMillis()) + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
-//		}else if(Integer.valueOf(ipCount) <= 30){
-//			int digit = Integer.valueOf(ipCount) + 1;
-//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + digit + "&time=" 
-//					+ 0 + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
-//		}else{
-//			vPCSResponse.returnErrorCode(400);
-//		}
+		//		//限制ddos
+		//		String ipCount = DetaDBUtil.cacheRequest("get?key=" + vpcsRequest.getRequestIp() + "&email=" 
+		//				+ "313699483@qq.com" + "&password=" + "Fengyue1985!");
+		//
+		//		if(null == ipCount){
+		//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + "1" + "&time=" 
+		//					+ (2000+System.currentTimeMillis()) + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
+		//		}else if(ipCount.contains("unsuccess")){
+		//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + "1" + "&time=" 
+		//					+ (2000+System.currentTimeMillis()) + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
+		//		}else if(Integer.valueOf(ipCount) <= 30){
+		//			int digit = Integer.valueOf(ipCount) + 1;
+		//			DetaDBUtil.cacheRequest("put?key=" + vpcsRequest.getRequestIp() + "&value=" + digit + "&time=" 
+		//					+ 0 + "&email=" + "313699483@qq.com" + "&password=" + "Fengyue1985!");
+		//		}else{
+		//			vPCSResponse.returnErrorCode(400);
+		//		}
 	}
 
 	public static void initBlockList() throws IOException {

@@ -64,15 +64,15 @@ public class PLSQLCommandImp {
 
 	public static void processJoin(String[] acknowledge, Map<String, Object> object) {
 		if(object.get("countJoins").toString().equals("1")) {
-				object.put("countJoins", "n");
+			object.put("countJoins", "n");
 		}
 		if(object.get("countJoins").toString().equals("0")) {
-				object.put("countJoins", "1");
+			object.put("countJoins", "1");
 		}
 		object.put("joinBaseName", acknowledge[1]);
 		object.put("joinTableName", acknowledge[2]);
 	}
-	
+
 	public static void processExec(String[] acknowledge, Map<String, Object> object, boolean mod) throws Exception {
 		if(object.get("start").toString().equals("1")) {
 			if(!acknowledge[0].equalsIgnoreCase(object.get("lastCommand").toString())
@@ -92,7 +92,7 @@ public class PLSQLCommandImp {
 	private static void processExecKernel(Map<String, Object> object, boolean mod) throws Exception{
 		if(object.get("type").toString().equalsIgnoreCase("select") && 
 				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
-				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
+						(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("obj", SelectRowsImp.selectRowsByAttributesOfCondition(object));
 			}
@@ -106,7 +106,7 @@ public class PLSQLCommandImp {
 		}
 		if(object.get("type").toString().equalsIgnoreCase("select") && 
 				(object.get("countJoins").toString().equalsIgnoreCase("n") ||
-				(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
+						(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("joinObj", SelectJoinRowsImp.selectRowsByAttributesOfJoinCondition(object));
 			}
@@ -130,7 +130,7 @@ public class PLSQLCommandImp {
 		//离散数学的conjuction变换  a^&&b^&&c * kernel[] = (a^&&b^)^^&&c * kernel[] = (a||b)^&&c * kernel[]
 		if(object.get("type").toString().equalsIgnoreCase("update") && 
 				(object.get("countJoins").toString().equalsIgnoreCase("0") ||
-				(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
+						(object.get("countJoins").toString().equalsIgnoreCase("1") && object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("updateObj", UpdateRowsImp.updateRowsByAttributesOfCondition(object, mod));
 			}
@@ -144,7 +144,7 @@ public class PLSQLCommandImp {
 		}
 		if(object.get("type").toString().equalsIgnoreCase("update") && 
 				(object.get("countJoins").toString().equalsIgnoreCase("n") ||
-				(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
+						(object.get("countJoins").toString().equalsIgnoreCase("1") && !object.get("newCommand").toString().equalsIgnoreCase("join")))){
 			if(object.containsKey("condition")) {
 				object.put("updateJoinObj", UpdateJoinRowsImp.updateRowsByAttributesOfJoinCondition(object, mod));
 			}
@@ -212,9 +212,4 @@ public class PLSQLCommandImp {
 		}
 		object.put("spec", spec);
 	}
-
-	
-
-	
-
 }

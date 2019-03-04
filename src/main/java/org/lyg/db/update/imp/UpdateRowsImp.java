@@ -162,7 +162,7 @@ public class UpdateRowsImp {
 					Cell cell = new Cell();
 					cell.setCellValue(culumns[2]);
 					Row row = DetaDBBufferCacheManager.db.getBase(object.get("baseName").toString())
-					.getTable(object.get("tableName").toString()).getRow(rowIndex);
+							.getTable(object.get("tableName").toString()).getRow(rowIndex);
 					if(mod) {
 						row.putCell(culumns[1], cell);
 					}
@@ -171,7 +171,7 @@ public class UpdateRowsImp {
 		}
 		return object;
 	}
-	
+
 	public static Object updateRowsByAttributesOfCondition(Map<String, Object> object, boolean mod) throws IOException {
 		if(!object.containsKey("recordRows")) {
 			Map<String, Boolean> recordRows = new ConcurrentHashMap<>();
@@ -237,7 +237,7 @@ public class UpdateRowsImp {
 		List<String[]> aggregationValues = (List<String[]>) object.get("aggregation");
 		Iterator<String[]> iterator = aggregationValues.iterator();
 		while(iterator.hasNext()) {
-		//	boolean overMap = obj.size() == 0? false: true;
+			//	boolean overMap = obj.size() == 0? false: true;
 			String[] aggregationValueArray = iterator.next();
 			String type = aggregationValueArray[1];
 			boolean limitMap = type.equalsIgnoreCase("limit")?true:false;
