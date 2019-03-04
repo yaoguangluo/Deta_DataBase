@@ -58,8 +58,8 @@
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：数据库按时间点进行整库恢复已完成，待检测。 罗瑶光2019-02-08
 
 #### 数据库1.0未检测版本已经小节。
-###### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：第二次固定变量名称编程规范整体整理 完成了编辑格式清理。
-###### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：第二次固定变量名称编程规范整体整理 完成了命名格式清理。
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：第二次固定变量名称编程规范整体整理 完成了编辑格式清理。 罗瑶光2019-03-05
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：第二次固定变量名称编程规范整体整理 完成了命名格式清理。 罗瑶光2019-03-05
 
 
 ###### 预先搁置功能：table函数 的primary key， unique key函数管理系统设计。；（属于2级优先，先搁置）
