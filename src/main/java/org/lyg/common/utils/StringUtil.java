@@ -7,7 +7,7 @@ import java.util.Base64;
 
 public class StringUtil {
 	public static String encode(String input) throws Exception {
-		String result = Base64.getMimeEncoder().encode(input.getBytes("UTF-8")).toString();
+		String result = Base64.getEncoder().encodeToString(input.getBytes("UTF-8"));
 		return result;
 	}
 

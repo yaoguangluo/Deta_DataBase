@@ -45,16 +45,16 @@ public class RestMapVision {
 		String output = VPC.forward(vPCSRequest.getRequestLink(), vPCSRequest.getRequestValue());
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(vPCSResponse.getSocket()
 				.getOutputStream(),StableData.CHARSET_UTF_8)),true);
-		pw.println(StableData.HEADER_HTTP_200_OK);
-		pw.println(StableData.STRING_ENTER); 
+		pw.println("HTTP/1.1 200 OK\n\n"); 
 		output=output.charAt(StableData.INT_ZERO)=='"'?output.substring(StableData.INT_ONE,output.length())
 				:output;
 		output=output.charAt(output.length()-StableData.INT_ONE)=='"'?output.substring(StableData.INT_ZERO
 				, output.length()-StableData.INT_ONE):output;
 		pw.println(output.replace("\\\"","\""));
+		System.out.println("db:"+4);
 		pw.flush();
 		pw.close();	
-		vPCSResponse.getSleeperHall().removeThreadById(vPCSResponse.getSocket().hashCode());
+		vPCSResponse.getSleeperHall().removeThreadById(vPCSResponse.getSocket().hashCode());	
 	}
 
 	public static void processView(VPCSRequest vPCSRequest, VPCSResponse vPCSResponse) {
