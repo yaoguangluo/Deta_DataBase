@@ -5,13 +5,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 //import java.net.ServerSocket;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import org.deta.boot.vpc.process.TimeProcess;
 import org.deta.boot.vpc.sleeper.Sleeper;
 import org.deta.boot.vpc.sleeper.SleeperHall;
-
 import org.deta.vpcs.hall.DatabaseLogHall;
 import org.lyg.cache.DetaDBBufferCacheManager;
 import org.lyg.common.utils.DetaUtil;
@@ -64,13 +60,12 @@ public class ServerInitController {
 		initService();
 		timeProcess.end();
 		System.out.println("----德塔VPCS数据库服务器启动一切正常-总耗时:" + timeProcess.duration()+ "毫秒");
-		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		while(true){
 			if(sleeperHall.getThreadsCount() < StableData.SLEEPERS_RANGE){
 				Sleeper sleeper = new Sleeper();
 				try {
 					sleeper.hugPillow(sleeperHall, server.accept(), sleeper.hashCode());
-					executorService.submit(sleeper);
+					sleeper.start();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

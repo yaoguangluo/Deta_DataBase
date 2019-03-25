@@ -82,7 +82,7 @@ public class LoginServiceImpl {
 	}
 
 	public static String checkTokenStatusAndGetLevel(String token, String level, Map<String, Object> output) throws Exception {
-		if (null == token) {
+		if (null == token || token.equalsIgnoreCase("undefined")) {
 			return "invalid ÃØÔ¿¶ªÊ§ÇëÖØÐÂµÇÂ½¡£";
 		}
 		String json = StringUtil.decode(token);
