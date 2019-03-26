@@ -27,7 +27,7 @@ public class RestControllerPortImpl {
 			return result;
 		}
 		result.put("end", aa);
-		System.out.println("4444" + result.get("end"));
+	//	System.out.println("4444" + result.get("end"));
 		// String AA = helloBean.saySomething(aa);
 		// result.put("end", AA);
 		return result;
