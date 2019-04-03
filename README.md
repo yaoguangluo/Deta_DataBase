@@ -1,4 +1,5 @@
 # 🚀 Deta quantum-field json PLSQL database integrated in deta VPCS http server. size 30KB / 量子碎片去死锁带binlog动态回滚的PLSQL数据库，启动50毫秒，100,000~4,000,000  QPS 注: http://tinos.qicp.vip/ Deta官方网站已经采用该数据库. 
+## 基于Deta官方网站所有实际功能 需要逐步完善 需求函数细节.
 
 ## 德塔数据库源码，该数据的亮点为：一次执行多项复杂任务， 极为人性化的简易命令行 PLSQL 编程语言模型，打破现在所有传统关系数据库数据的单任务执行模式。基于双向队列的日志分析功能和命令语句执行方式和量子碎片文件存储思想，永远告别死锁。自动修复数据库，自动rollback异常数据操作，同时提供rest数据库操作接口和plsql命令行执行接口2种需求，满足各种场合的数据库操作应用。该数据库admin系统建立在deta VPCS HTTP服务器中， 整个系统启动时间 50毫秒。有效和运维交互。
 
