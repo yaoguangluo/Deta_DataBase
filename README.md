@@ -4,7 +4,7 @@
 说明书地址：
 https://github.com/yaoguangluo/Deta_Resource/blob/master/%E5%BE%B7%E5%A1%94Socket%E6%B5%81%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E8%A8%80%E5%BC%95%E6%93%8E%E7%B3%BB%E7%BB%9FAPI%201.0.0%20%E8%AF%B4%E6%98%8E%E4%B9%A6%20final.docx
 
-## 正在将 非个人著作权的 3个JAVA文件（zip unzip 和 cacheManager 移动到如下项目中）
+## 正在将 非个人著作权的 3个JAVA文件（zip unzip，中科大非对称加密 和 cacheManager 移动到如下项目中）
 https://github.com/yaoguangluo/Data_Processor/tree/master/DP （zip 筛子加密和 cache 包）
 
 ## 德塔数据库源码，该数据的亮点为：一次执行多项复杂任务， 极为人性化的简易命令行 PLSQL 编程语言模型，打破现在所有传统关系数据库数据的单任务执行模式。基于双向队列的日志分析功能和命令语句执行方式和量子碎片文件存储思想，永远告别死锁。自动修复数据库，自动rollback异常数据操作，同时提供rest数据库操作接口和plsql命令行执行接口2种需求，满足各种场合的数据库操作应用。该数据库admin系统建立在deta VPCS HTTP服务器中， 整个系统启动时间 50毫秒。有效和运维交互。
