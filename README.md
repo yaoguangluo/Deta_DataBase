@@ -1,6 +1,6 @@
-# 🚀 <<暂时100%(首创)个人著作权开源项目, 作者思考参考 codeproject的join 思想编写（相交机制不同，不采用）, 之后如采用就成了97% 德塔会改用企业著作权申请>>Deta quantum-field json PLSQL database integrated in deta VPCS http server. size 30KB / 量子碎片去死锁带binlog动态回滚的PLSQL数据库，启动50毫秒，100,000~4,000,000  QPS 注: http://tinos.qicp.vip/ Deta官方网站已经采用该数据库. 
+# 🚀 <<暂时100%(首创)个人著作权开源项目>>, 作者思考参考 codeproject的join 思想编写（相交机制不同，不采用）, Deta quantum-field json PLSQL database integrated in deta VPCS http server. size 30KB / 量子碎片去死锁带binlog动态回滚的PLSQL数据库，启动50毫秒，100,000~4,000,000  QPS 注: http://tinos.qicp.vip/ Deta官方网站已经采用该数据库. 
 ## 基于Deta官方网站所有实际功能 需要逐步完善 需求函数细节.
-## 《Deta socket流 PLSQL 数据库引擎系统和编程语言》正在做中华人民共和国个人著作权申请。20190624
+## 《Deta socket 流 PLSQL 数据库编程语言 与 引擎系统》正在做中华人民共和国个人著作权申请。20190624
 ## 正在将 非个人著作权的 3个JAVA文件（zip unzip 和 cacheManager 移动到如下项目中）
 https://github.com/yaoguangluo/Data_Processor/tree/master/DP （zip 和 cache 包）
 ## 德塔数据库源码，该数据的亮点为：一次执行多项复杂任务， 极为人性化的简易命令行 PLSQL 编程语言模型，打破现在所有传统关系数据库数据的单任务执行模式。基于双向队列的日志分析功能和命令语句执行方式和量子碎片文件存储思想，永远告别死锁。自动修复数据库，自动rollback异常数据操作，同时提供rest数据库操作接口和plsql命令行执行接口2种需求，满足各种场合的数据库操作应用。该数据库admin系统建立在deta VPCS HTTP服务器中， 整个系统启动时间 50毫秒。有效和运维交互。
