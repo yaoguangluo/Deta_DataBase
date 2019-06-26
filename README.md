@@ -1,4 +1,8 @@
 # 🚀 <<100%(首创)个人著作权开源项目: 2019R11L885247>>, Deta quantum-field json PLSQL database integrated in deta VPCS http server. size 30KB / 量子碎片去死锁带binlog动态回滚的PLSQL数据库，启动50毫秒，100,000~4,000,000  QPS 注: http://tinos.qicp.vip/ Deta官方网站已经采用该数据库. 
+## 这个项目的 gitee地址： https://gitee.com/DetaChina/Deta_PLSQL_DB 作者进行详细注释。
+## 注释：前端的angular，js,css 等非 vpcs socket流数据库（增删改查）引擎部分，其不属于个人著作权申请范围，详细文档地址如下：
+https://github.com/yaoguangluo/Deta_Resource/blob/master/%E5%BE%B7%E5%A1%94Socket%E6%B5%81%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E8%A8%80%E5%BC%95%E6%93%8E%E7%B3%BB%E7%BB%9F1.0.0%20%E6%BA%90%E7%A0%81%20final.docx
+
 ## 基于Deta官方网站所有实际功能 需要逐步完善 需求函数细节.
 ## 《Deta socket 流 PLSQL 数据库编程语言 与 引擎系统》正在做中华人民共和国个人著作权申请 。20190624
 https://gitee.com/DetaChina/Deta_PLSQL_DB
