@@ -10,11 +10,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 public class VtoV{
 	public static JSONObject XmlToJsonObject(String response ){
+		//下面这行代码独立作者 罗瑶光 2016年已转让给走四方。本系统没有用到这函数。
 		JSONObject responseJson = XML.toJSONObject(response);
 		return responseJson;
 	}
 
 	public static Map<String, Object> JsonObjectToMap(JSONObject response ){
+		//下面这行代码独立作者 罗瑶光 2016年已转让给走四方。本系统没有用到这函数。
 		Gson gson = new Gson();
 		Type type = new TypeToken<Map<String, Object>>(){}.getType();
 		Map<String, Object> responseMap = gson.fromJson(response.toString(), type);
@@ -22,6 +24,7 @@ public class VtoV{
 	}
 
 	public static String MapToJsonString(Map<String, Object> response ){
+		//下面这行代码独立作者 罗瑶光 2016年已转让给走四方。本系统没有用到这函数
 		Gson gson = new Gson();
 		return gson.toJson(response);
 	}
@@ -37,6 +40,7 @@ public class VtoV{
 	}
 
 	public static Map<String, Object> XmlToMap(String response){
+		//下面这行代码独立作者 罗瑶光 2016年已转让给走四方。本系统没有用到这函数。
 		JSONObject responseJson = XML.toJSONObject(response);
 		Gson gson = new Gson();
 		Type type = new TypeToken<Map<String, Object>>(){}.getType();
@@ -45,6 +49,7 @@ public class VtoV{
 	}
 
 	public static String MapToXml(Map<String, Object> response){
+		//下面这行代码独立作者 罗瑶光 2016年已转让给走四方。本系统没有用到这函数。
 		Gson gson = new Gson();
 		String json = gson.toJson(response);
 		JSONObject jsonObj = new JSONObject(json);
