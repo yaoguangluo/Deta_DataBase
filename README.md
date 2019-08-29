@@ -64,7 +64,7 @@ https://github.com/yaoguangluo/Data_Processor/tree/master/DP （zip 筛子加密
 //refer https://wenda.so.com/q/1512966734215123
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：binlog 函数 数据压缩热备，解压zip 格式没有检查和测试。 罗瑶光2019-01-31
 //refer http://www.blogjava.net/dreamstone/archive/2007/08/09/134986.html
-##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：socket握手多核模式。保证100,000 QPS 吞吐量.罗瑶光2019-02-02
+##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：socket握手多核模式（该功能因需要硬件支持已去掉）。保证100,000 QPS 吞吐量.罗瑶光2019-02-02
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：rollback写操作并 binlog gzip 压缩文件记录 带时间和操作人。 罗瑶光2019-02-07
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：数据库热备函数已检测，运行成功。 罗瑶光2019-02-08
 ##### ![实例](http://progressed.io/bar/100?title=completed)已完善功能：数据库按时间点进行整库恢复已完成，待检测。 罗瑶光2019-02-08
