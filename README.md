@@ -1,3 +1,4 @@
+# 最新见 https://github.com/yaoguangluo/ChromosomeDNA
 
 # 🚀 <<100%(首创)个人著作权开源项目: 2019R11L885247, 软著登字第4317518号>>, Deta quantum-field json PLSQL database integrated in deta VPCS http server. size 30KB / 量子碎片去死锁带binlog动态回滚的PLSQL数据库，启动50毫秒，100,000~4,000,000  QPS 注: http://tinos.qicp.vip/ Deta官方网站已经采用该数据库. 
 ## 注释：前端的angular，js,css等不属于个人著作权申请范围（vpcs socket流， 德塔plsql语言 和 德塔数据库引擎），详细文档地址如下：
